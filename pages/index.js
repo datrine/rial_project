@@ -1,10 +1,5 @@
-import { useEffect, useState } from "react";
 import Link from 'next/link';
 import Head from 'next/head'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch, faTimes, faBars, faHome, faListAlt, faCartPlus, faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
-import { MobileMenu } from "../comps/menuMobile"
-import { screenSize, screenType } from "../utils/browser"
 
 export default function Home() {
   return <>
@@ -31,7 +26,6 @@ export default function Home() {
       <link rel="stylesheet" href="assets/css/style.css" />
     </Head>
     <>
-
       {/*<!-- Preloader Start -->*/}
       <div id="preloader-active">
         <div className="preloader d-flex align-items-center justify-content-center">
@@ -45,7 +39,254 @@ export default function Home() {
       </div>
       {/*<!-- Preloader Start -->*/}
       <BodyHeader />
-      <BodyMain />
+      <main>
+        {/*<!-- Slider Area Start-->*/}
+        <div className="slider-area ">
+          <div className="slider-active">
+            <div className="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
+              <div className="container">
+                <div className="row d-flex align-items-center">
+                  <div className="col-lg-6 col-md-9 ">
+                    <div className="hero__caption">
+                      <h4 data-animation="fadeInUp" data-delay=".5s">Welcome To Riah Top-up</h4>
+                      <h1 data-animation="fadeInUp" data-delay=".6s">Your Affordable and Reliable<br />Topup Platform</h1>
+                      <p data-animation="fadeInUp" data-delay=".8s">Buy data plans at cheaper rates and your cable Tv subscription  at good rates.</p>
+                      {/*<!-- Slider btn -->*/}
+                      <div className="slider-btns">
+                        {/*<!-- Hero-btn -->*/}
+                        <Link href="login.php" passHref><a data-animation="fadeInLeft" data-delay="1.0s"
+                          className="btn radius-btn">Get Started</a></Link>
+
+                        {/*  <!-- Video Btn -->*/}
+
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="hero__img d-none d-lg-block f-right" data-animation="fadeInRight" data-delay="1s">
+                      <img src="/assets/img/hero/hero_right.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
+              <div className="container">
+                <div className="row d-flex align-items-center">
+                  <div className="col-lg-6 col-md-9 ">
+                    <div className="hero__caption">
+                      <h4 data-animation="fadeInUp" data-delay=".5s">Welcome To Riah Top-up</h4>
+                      <h1 data-animation="fadeInUp" data-delay=".6s">Your Affordable and Reliable<br />Topup Platform</h1>
+                      <p data-animation="fadeInUp" data-delay=".8s">Buy data plans at cheaper rates and your cable Tv subscription  at good rates.</p>
+                      {/*<!-- Slider btn -->*/}
+                      <div className="slider-btns">
+                        {/* <!-- Hero-btn -->*/}
+                        <Link href="/industries" passHref><a data-animation="fadeInLeft" data-delay="1.0s"
+                          className="btn radius-btn">Get Started</a></Link>
+
+                        {/*<!-- Video Btn -->*/}
+
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="hero__img d-none d-lg-block f-right" data-animation="fadeInRight" data-delay="1s">
+                      <img src="/assets/img/hero/hero_right.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*<!-- Slider Area End -->*/}
+
+        {/*<!-- Best Features Start -->*/}
+
+        {/*<!-- Best Features End -->*/}
+        {/*<!-- Services Area Start -->*/}
+
+        {/*<!-- Services Area End -->*/}
+        { /*<!-- Applic App Start -->*/}
+        <div className="applic-apps section-padding2">
+          <div className="container-fluid">
+            <div className="row">
+              {/*<!-- slider Heading -->*/}
+              <div className="col-xl-4 col-lg-4 col-md-8">
+                <div className="single-cases-info mb-30">
+                  <h3>OUR DATA PLANS </h3>
+                  <p>Leverage on our cheap data offering for all networks and do more in every area of your life. Whether you are a casual surfer or a heavy data addict, Riah Topup have an affordable data plan for you.</p>
+
+                  <h4 style={{
+                    fontSize: "22px", fontFamily: " 'Courier New', Courier, monospace",
+                    fontWeight: 600
+                  }} >ALL AIRTIME PURCHASE (2% DISCOUNT)</h4>
+                </div>
+              </div>
+              {/*<!-- OwL -->*/}
+              <div className="col-xl-8 col-lg-8 col-md-col-md-7">
+                <div className="app-active owl-carousel">
+                  <div className="single-cases-img">
+                    <img src="/assets/img/gallery/mtn.png" alt="" />
+                  </div>
+                  <div className="single-cases-img">
+                    <img src="/assets/img/gallery/glo.png" alt="" />
+                  </div>
+                  <div className="single-cases-img">
+                    <img src="/assets/img/gallery/airtel.png" alt="" />
+                  </div>
+                  <div className="single-cases-img">
+                    <img src="/assets/img/gallery/9mobile.png" alt="" />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*<!-- Applic App End -->*/}
+
+        {/*<!-- Best Pricing Start -->*/}
+        <section id="services" className="best-pricing pricing-padding" data-background="assets/img/gallery/best_pricingbg.jpg"
+          style={{ backgroundImage: " url(/assets/img/gallery/best_pricingbg.jpg)" }}>
+          <div className="container">
+            {/*<!-- Section Tittle -->*/}
+            <div className="row d-flex justify-content-center">
+              <div className="col-lg-6 col-md-8">
+                <div className="section-tittle section-tittle2 text-center">
+                  <h2>Our Service</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/*<!-- Best Pricing End -->
+
+  <!-- Pricing Card Start -->*/}
+        <div className="pricing-card-area">
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-4 col-lg-4 col-md-6">
+                <div className="single-card text-center mb-30">
+                  <div className="card-top">
+                    <span><i className="fa fas-coin"></i></span>
+                    <h4>GOTV<span>  Plan</span></h4>
+                  </div>
+                  <div className="card-bottom">
+                    <ul>
+                      <li>GOTV</li>
+                      <li>GOTV MAX &nbsp;&nbsp;&nbsp;3600</li>
+                      <li>GOTV JOLLI &nbsp;&nbsp;&nbsp;	2460</li>
+                      <li>GOTV JINJA 	&nbsp;&nbsp;&nbsp;	1640</li>
+                      <li> GOTV SMALLIE &nbsp;&nbsp;&nbsp;	800	</li>
+
+                    </ul>
+                    <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xl-4 col-lg-4 col-md-6">
+                <div className="single-card  text-center mb-30">
+                  <div className="card-top">
+                    <span> </span>
+                    <h4>DSTV<span>Plan</span></h4>
+                  </div>
+                  <div className="card-bottom">
+                    <ul>
+                      <li>DSTV PADI&nbsp;&nbsp;&nbsp;	1850 </li>
+                      <li> DSTV YANGA &nbsp;&nbsp;&nbsp;		2565</li>
+                      <li>DSTV CONFAM&nbsp;&nbsp;&nbsp;	4615	</li>
+                      <li>DSTV COMPACT&nbsp;&nbsp;&nbsp;	7900	</li>
+                      <li> DSTV PREMIUM&nbsp;&nbsp;&nbsp;	18400	</li>
+                      <li> DSTV ASIA &nbsp;&nbsp;&nbsp;		6,200	</li>
+                    </ul>
+                    <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xl-4 col-lg-4 col-md-6">
+                <div className="single-card shadow text-center mb-30">
+                  <div className="card-top">
+                    <span> </span>
+                    <h4>STARTIMES<span>Plan</span></h4>
+                  </div>
+                  <div className="card-bottom">
+                    <ul>
+                      <li>NOVA&nbsp;&nbsp;&nbsp;900 </li>
+                      <li>BASIC &nbsp;&nbsp;&nbsp;1700 </li>
+                      <li>SMART&nbsp;&nbsp;&nbsp;2,200 </li>
+                      <li>classNameIC &nbsp;&nbsp;&nbsp;2500 </li>
+                      <li>SUPER &nbsp;&nbsp;&nbsp;4200</li>
+                    </ul>
+                    <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xl-2 col-lg-2 col-md-6">
+
+              </div>
+              <div className="col-xl-4 col-lg-4 col-md-6">
+                <div className="single-card shadow  text-center mb-30">
+                  <div className="card-top">
+                    <span> </span>
+                    <h4>PHCN<span>Plan</span></h4>
+                  </div>
+                  <div className="card-bottom">
+                    <ul>
+
+                      <li>DSTV PADI&nbsp;&nbsp;&nbsp;₦1850 </li>
+                      <li> DSTV YANGA &nbsp;&nbsp;&nbsp;₦2565</li>
+                      <li>DSTV CONFAM&nbsp;&nbsp;&nbsp;₦4615	</li>
+                      <li>DSTV COMPACT&nbsp;&nbsp;&nbsp;₦7900	</li>
+                      <li> DSTV PREMIUM&nbsp;&nbsp;&nbsp;₦18400	</li>
+                      <li> DSTV ASIA &nbsp;&nbsp;&nbsp;₦6,200	</li>
+                    </ul>
+                    <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xl-4 col-lg-4 col-md-6">
+                <div className="single-card shadow text-center mb-30">
+                  <div className="card-top">
+                    <span><i className="fa fas-coin"></i></span>
+                    <h4>AIRTIME <span>TO CASH</span></h4>
+                  </div>
+                  <div className="card-bottom">
+                    <ul>
+                      <li>GOTV</li>
+                      <li>GOTV MAX &nbsp;&nbsp;&nbsp;₦3600</li>
+                      <li>GOTV JOLLI &nbsp;&nbsp;&nbsp;	₦2460</li>
+                      <li>GOTV JINJA 	&nbsp;&nbsp;&nbsp;	₦1640</li>
+                      <li> GOTV SMALLIE &nbsp;&nbsp;&nbsp;	₦800	</li>
+
+                    </ul>
+                    <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xl-2 col-lg-2 col-md-6">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        { /*<!-- Pricing Card End -->
+  <!-- Our Customer Start -->
+           
+  <!-- Our Customer End -->
+  <!-- Available App  Start-->
+ 
+  <!-- Available App End-->
+  <!-- Say Something Start -->
+
+  <!-- Say Something End -->*/}
+
+      </main>
 
       <BodySection />
       {/*<!-- ================ contact section end ================= -->*/}
@@ -87,329 +328,325 @@ export default function Home() {
 }
 
 let BodyHeader = () => {
-  return <>
-    <header>
-      {/* <!-- Header Start -->*/}
-      <div className="header-area header-transparrent ">
-        <div className="main-header header-sticky">
-          <div className="container">
-            <div className="row align-items-center">
-              {/*<!-- Logo -->*/}
-              <div className="col-xl-2 col-lg-2 col-md-2">
-                <div className="logo">
-                  <Link href="/index"><a>
-                    <img src="/assets/img/logo/Riah topup logo.png" width="200px" alt="" />
-                  </a>
-                  </Link>
-                </div>
+  return <header>
+    {/* <!-- Header Start -->*/}
+    <div className="header-area header-transparrent ">
+      <div className="main-header header-sticky">
+        <div className="container">
+          <div className="row align-items-center">
+            {/*<!-- Logo -->*/}
+            <div className="col-xl-2 col-lg-2 col-md-2">
+              <div className="logo">
+                <Link href="/index"><a>
+                  <img src="/assets/img/logo/Riah topup logo.png" width="200px" alt="" />
+                </a>
+                </Link>
               </div>
-              <div className="col-xl-10 col-lg-10 col-md-10">
-                {/*<!-- Main-menu -->*/}
-                <div className="main-menu f-right d-none d-lg-block">
-                  <nav>
-                    <ul id="navigation">
-                      <li className="active"><Link href="/index"><a> Home</a></Link></li>
-                      <li><Link passHref={true} href="#services"><a>Services</a></Link></li>
-                      <li><Link passHref={true} href="/login"><a>My Account</a></Link></li>
-                      <li><Link passHref={true} href="#contact"><a>Contact</a></Link></li>
-                    </ul>
-                  </nav>
-                </div>
+            </div>
+            <div className="col-xl-10 col-lg-10 col-md-10">
+              {/*<!-- Main-menu -->*/}
+              <div className="main-menu f-right d-none d-lg-block">
+                <nav>
+                  <ul id="navigation">
+                    <li className="active"><Link href="/index"><a> Home</a></Link></li>
+                    <li><Link passHref={true} href="#services"><a>Services</a></Link></li>
+                    <li><Link passHref={true} href="/login"><a>My Account</a></Link></li>
+                    <li><Link passHref={true} href="#contact"><a>Contact</a></Link></li>
+                  </ul>
+                </nav>
               </div>
-              {/* <!-- Mobile Menu -->*/}
-              <div className="col-12">
-                <div className="mobile_menu d-block d-lg-none">
-                  <div className="slicknav_menu">
-                    <Link passHref={true} href="#"><a aria-haspopup="true" role="button" tabIndex="0" aria-pressed="true"
-                      className="slicknav_btn slicknav_collapsed" style={{ outline: "none" }}>
-                      <span className="slicknav_menutxt">MENU</span>
-                      <span className="slicknav_icon">
-                        <span className="slicknav_icon-bar"></span>
-                        <span className="slicknav_icon-bar"></span>
-                        <span className="slicknav_icon-bar"></span>
-                      </span>
-                    </a></Link>
-                    <ul className="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu"
-                      style={{ display: "none" }}>
-                      <li className="active">
-                        <Link href="/index"><a role="menuitem" tabIndex="-1"> Home</a>
-                        </Link>
-                      </li>
+            </div>
+            {/* <!-- Mobile Menu -->*/}
+            <div className="col-12">
+              <div className="mobile_menu d-block d-lg-none">
+                <div className="slicknav_menu">
+                  <Link passHref={true} href="#"><a aria-haspopup="true" role="button" tabIndex="0" aria-pressed="true"
+                    className="slicknav_btn slicknav_collapsed" style={{ outline: "none" }}>
+                    <span className="slicknav_menutxt">MENU</span>
+                    <span className="slicknav_icon">
+                      <span className="slicknav_icon-bar"></span>
+                      <span className="slicknav_icon-bar"></span>
+                      <span className="slicknav_icon-bar"></span>
+                    </span>
+                  </a></Link>
+                  <ul className="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu"
+                    style={{ display: "none" }}>
+                    <li className="active">
+                      <Link href="/index"><a role="menuitem" tabIndex="-1"> Home</a>
+                      </Link>
+                    </li>
 
-                      <li>
-                        <Link passHref={true} href="#services"><a role="menuitem" tabIndex="-1">Services</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link passHref={true} href="login.php"><a role="menuitem" tabIndex="-1">My Account</a></Link>
-                      </li>
-                      <li>
-                        <Link passHref={true} href="#contact"><a role="menuitem" tabIndex="-1">Contact</a></Link>
-                      </li>
-                    </ul></div></div>
-              </div>
+                    <li>
+                      <Link passHref={true} href="#services"><a role="menuitem" tabIndex="-1">Services</a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link passHref={true} href="login.php"><a role="menuitem" tabIndex="-1">My Account</a></Link>
+                    </li>
+                    <li>
+                      <Link passHref={true} href="#contact"><a role="menuitem" tabIndex="-1">Contact</a></Link>
+                    </li>
+                  </ul></div></div>
             </div>
           </div>
         </div>
       </div>
-      {/* <!-- Header End -->*/}
-    </header>
+    </div>
+    {/* <!-- Header End -->*/}
+  </header>
 
-  </>
 }
 
 let BodyMain = ({ }) => {
-  return <>
-    <main>
+  return <main>
+    {/*<!-- Slider Area Start-->*/}
+    <div className="slider-area ">
+      <div className="slider-active">
+        <div className="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
+          <div className="container">
+            <div className="row d-flex align-items-center">
+              <div className="col-lg-6 col-md-9 ">
+                <div className="hero__caption">
+                  <h4 data-animation="fadeInUp" data-delay=".5s">Welcome To Riah Top-up</h4>
+                  <h1 data-animation="fadeInUp" data-delay=".6s">Your Affordable and Reliable<br />Topup Platform</h1>
+                  <p data-animation="fadeInUp" data-delay=".8s">Buy data plans at cheaper rates and your cable Tv subscription  at good rates.</p>
+                  {/*<!-- Slider btn -->*/}
+                  <div className="slider-btns">
+                    {/*<!-- Hero-btn -->*/}
+                    <Link href="login.php" passHref><a data-animation="fadeInLeft" data-delay="1.0s"
+                      className="btn radius-btn">Get Started</a></Link>
 
-      {/*<!-- Slider Area Start-->*/}
-      <div className="slider-area ">
-        <div className="slider-active">
-          <div className="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
-            <div className="container">
-              <div className="row d-flex align-items-center">
-                <div className="col-lg-6 col-md-9 ">
-                  <div className="hero__caption">
-                    <h4 data-animation="fadeInUp" data-delay=".5s">Welcome To Riah Top-up</h4>
-                    <h1 data-animation="fadeInUp" data-delay=".6s">Your Affordable and Reliable<br />Topup Platform</h1>
-                    <p data-animation="fadeInUp" data-delay=".8s">Buy data plans at cheaper rates and your cable Tv subscription  at good rates.</p>
-                    {/*<!-- Slider btn -->*/}
-                    <div className="slider-btns">
-                      {/*<!-- Hero-btn -->*/}
-                      <Link href="login.php" passHref><a data-animation="fadeInLeft" data-delay="1.0s"
-                        className="btn radius-btn">Get Started</a></Link>
+                    {/*  <!-- Video Btn -->*/}
 
-                      {/*  <!-- Video Btn -->*/}
-
-                    </div>
                   </div>
                 </div>
-                <div className="col-lg-6">
-                  <div className="hero__img d-none d-lg-block f-right" data-animation="fadeInRight" data-delay="1s">
-                    <img src="/assets/img/hero/hero_right.png" alt="" />
-                  </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="hero__img d-none d-lg-block f-right" data-animation="fadeInRight" data-delay="1s">
+                  <img src="/assets/img/hero/hero_right.png" alt="" />
                 </div>
               </div>
             </div>
           </div>
-          <div className="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
-            <div className="container">
-              <div className="row d-flex align-items-center">
-                <div className="col-lg-6 col-md-9 ">
-                  <div className="hero__caption">
-                    <h4 data-animation="fadeInUp" data-delay=".5s">Welcome To Riah Top-up</h4>
-                    <h1 data-animation="fadeInUp" data-delay=".6s">Your Affordable and Reliable<br />Topup Platform</h1>
-                    <p data-animation="fadeInUp" data-delay=".8s">Buy data plans at cheaper rates and your cable Tv subscription  at good rates.</p>
-                    {/*<!-- Slider btn -->*/}
-                    <div className="slider-btns">
-                      {/* <!-- Hero-btn -->*/}
-                      <Link href="/industries" passHref><a data-animation="fadeInLeft" data-delay="1.0s"
-                        className="btn radius-btn">Get Started</a></Link>
+        </div>
+        <div className="single-slider slider-height slider-padding sky-blue d-flex align-items-center">
+          <div className="container">
+            <div className="row d-flex align-items-center">
+              <div className="col-lg-6 col-md-9 ">
+                <div className="hero__caption">
+                  <h4 data-animation="fadeInUp" data-delay=".5s">Welcome To Riah Top-up</h4>
+                  <h1 data-animation="fadeInUp" data-delay=".6s">Your Affordable and Reliable<br />Topup Platform</h1>
+                  <p data-animation="fadeInUp" data-delay=".8s">Buy data plans at cheaper rates and your cable Tv subscription  at good rates.</p>
+                  {/*<!-- Slider btn -->*/}
+                  <div className="slider-btns">
+                    {/* <!-- Hero-btn -->*/}
+                    <Link href="/industries" passHref><a data-animation="fadeInLeft" data-delay="1.0s"
+                      className="btn radius-btn">Get Started</a></Link>
 
-                      {/*<!-- Video Btn -->*/}
+                    {/*<!-- Video Btn -->*/}
 
-                    </div>
                   </div>
                 </div>
-                <div className="col-lg-6">
-                  <div className="hero__img d-none d-lg-block f-right" data-animation="fadeInRight" data-delay="1s">
-                    <img src="/assets/img/hero/hero_right.png" alt="" />
-                  </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="hero__img d-none d-lg-block f-right" data-animation="fadeInRight" data-delay="1s">
+                  <img src="/assets/img/hero/hero_right.png" alt="" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/*<!-- Slider Area End -->*/}
+    </div>
+    {/*<!-- Slider Area End -->*/}
 
-      {/*<!-- Best Features Start -->*/}
+    {/*<!-- Best Features Start -->*/}
 
-      {/*<!-- Best Features End -->*/}
-      {/*<!-- Services Area Start -->*/}
+    {/*<!-- Best Features End -->*/}
+    {/*<!-- Services Area Start -->*/}
 
-      {/*<!-- Services Area End -->*/}
-      { /*<!-- Applic App Start -->*/}
-      <div className="applic-apps section-padding2">
-        <div className="container-fluid">
-          <div className="row">
-            {/*<!-- slider Heading -->*/}
-            <div className="col-xl-4 col-lg-4 col-md-8">
-              <div className="single-cases-info mb-30">
-                <h3>OUR DATA PLANS </h3>
-                <p>Leverage on our cheap data offering for all networks and do more in every area of your life. Whether you are a casual surfer or a heavy data addict, Riah Topup have an affordable data plan for you.</p>
+    {/*<!-- Services Area End -->*/}
+    { /*<!-- Applic App Start -->*/}
+    <div className="applic-apps section-padding2">
+      <div className="container-fluid">
+        <div className="row">
+          {/*<!-- slider Heading -->*/}
+          <div className="col-xl-4 col-lg-4 col-md-8">
+            <div className="single-cases-info mb-30">
+              <h3>OUR DATA PLANS </h3>
+              <p>Leverage on our cheap data offering for all networks and do more in every area of your life. Whether you are a casual surfer or a heavy data addict, Riah Topup have an affordable data plan for you.</p>
 
-                <h4 style={{
-                  fontSize: "22px", fontFamily: " 'Courier New', Courier, monospace",
-                  fontWeight: 600
-                }} >ALL AIRTIME PURCHASE (2% DISCOUNT)</h4>
-              </div>
-            </div>
-            {/*<!-- OwL -->*/}
-            <div className="col-xl-8 col-lg-8 col-md-col-md-7">
-              <div className="app-active owl-carousel">
-                <div className="single-cases-img">
-                  <img src="/assets/img/gallery/mtn.png" alt="" />
-                </div>
-                <div className="single-cases-img">
-                  <img src="/assets/img/gallery/glo.png" alt="" />
-                </div>
-                <div className="single-cases-img">
-                  <img src="/assets/img/gallery/airtel.png" alt="" />
-                </div>
-                <div className="single-cases-img">
-                  <img src="/assets/img/gallery/9mobile.png" alt="" />
-                </div>
-
-              </div>
+              <h4 style={{
+                fontSize: "22px", fontFamily: " 'Courier New', Courier, monospace",
+                fontWeight: 600
+              }} >ALL AIRTIME PURCHASE (2% DISCOUNT)</h4>
             </div>
           </div>
-        </div>
-      </div>
-      {/*<!-- Applic App End -->*/}
-
-      {/*<!-- Best Pricing Start -->*/}
-      <section id="services" className="best-pricing pricing-padding" data-background="assets/img/gallery/best_pricingbg.jpg"
-        style={{ backgroundImage: " url(/assets/img/gallery/best_pricingbg.jpg)" }}>
-        <div className="container">
-          {/*<!-- Section Tittle -->*/}
-          <div className="row d-flex justify-content-center">
-            <div className="col-lg-6 col-md-8">
-              <div className="section-tittle section-tittle2 text-center">
-                <h2>Our Service</h2>
+          {/*<!-- OwL -->*/}
+          <div className="col-xl-8 col-lg-8 col-md-col-md-7">
+            <div className="app-active owl-carousel">
+              <div className="single-cases-img">
+                <img src="/assets/img/gallery/mtn.png" alt="" />
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/*<!-- Best Pricing End -->
-
-  <!-- Pricing Card Start -->*/}
-      <div className="pricing-card-area">
-        <div className="container">
-          <div className="row">
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <div className="single-card text-center mb-30">
-                <div className="card-top">
-                  <span><i className="fa fas-coin"></i></span>
-                  <h4>GOTV<span>  Plan</span></h4>
-                </div>
-                <div className="card-bottom">
-                  <ul>
-                    <li>GOTV</li>
-                    <li>GOTV MAX &nbsp;&nbsp;&nbsp;3600</li>
-                    <li>GOTV JOLLI &nbsp;&nbsp;&nbsp;	2460</li>
-                    <li>GOTV JINJA 	&nbsp;&nbsp;&nbsp;	1640</li>
-                    <li> GOTV SMALLIE &nbsp;&nbsp;&nbsp;	800	</li>
-
-                  </ul>
-                  <Link href="login.php"><a className="btn card-btn1">Get Started</a>
-                  </Link>
-                </div>
+              <div className="single-cases-img">
+                <img src="/assets/img/gallery/glo.png" alt="" />
               </div>
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <div className="single-card  text-center mb-30">
-                <div className="card-top">
-                  <span> </span>
-                  <h4>DSTV<span>Plan</span></h4>
-                </div>
-                <div className="card-bottom">
-                  <ul>
-                    <li>DSTV PADI&nbsp;&nbsp;&nbsp;	1850 </li>
-                    <li> DSTV YANGA &nbsp;&nbsp;&nbsp;		2565</li>
-                    <li>DSTV CONFAM&nbsp;&nbsp;&nbsp;	4615	</li>
-                    <li>DSTV COMPACT&nbsp;&nbsp;&nbsp;	7900	</li>
-                    <li> DSTV PREMIUM&nbsp;&nbsp;&nbsp;	18400	</li>
-                    <li> DSTV ASIA &nbsp;&nbsp;&nbsp;		6,200	</li>
-                  </ul>
-                  <Link href="login.php"><a className="btn card-btn1">Get Started</a>
-                  </Link>
-                </div>
+              <div className="single-cases-img">
+                <img src="/assets/img/gallery/airtel.png" alt="" />
               </div>
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <div className="single-card shadow text-center mb-30">
-                <div className="card-top">
-                  <span> </span>
-                  <h4>STARTIMES<span>Plan</span></h4>
-                </div>
-                <div className="card-bottom">
-                  <ul>
-                    <li>NOVA&nbsp;&nbsp;&nbsp;900 </li>
-                    <li>BASIC &nbsp;&nbsp;&nbsp;1700 </li>
-                    <li>SMART&nbsp;&nbsp;&nbsp;2,200 </li>
-                    <li>classNameIC &nbsp;&nbsp;&nbsp;2500 </li>
-                    <li>SUPER &nbsp;&nbsp;&nbsp;4200</li>
-                  </ul>
-                  <Link href="login.php"><a className="btn card-btn1">Get Started</a>
-                  </Link>
-                </div>
+              <div className="single-cases-img">
+                <img src="/assets/img/gallery/9mobile.png" alt="" />
               </div>
-            </div>
-            <div className="col-xl-2 col-lg-2 col-md-6">
-
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <div className="single-card shadow  text-center mb-30">
-                <div className="card-top">
-                  <span> </span>
-                  <h4>PHCN<span>Plan</span></h4>
-                </div>
-                <div className="card-bottom">
-                  <ul>
-
-                    <li>DSTV PADI&nbsp;&nbsp;&nbsp;₦1850 </li>
-                    <li> DSTV YANGA &nbsp;&nbsp;&nbsp;₦2565</li>
-                    <li>DSTV CONFAM&nbsp;&nbsp;&nbsp;₦4615	</li>
-                    <li>DSTV COMPACT&nbsp;&nbsp;&nbsp;₦7900	</li>
-                    <li> DSTV PREMIUM&nbsp;&nbsp;&nbsp;₦18400	</li>
-                    <li> DSTV ASIA &nbsp;&nbsp;&nbsp;₦6,200	</li>
-                  </ul>
-                  <Link href="login.php"><a className="btn card-btn1">Get Started</a>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <div className="single-card shadow text-center mb-30">
-                <div className="card-top">
-                  <span><i className="fa fas-coin"></i></span>
-                  <h4>AIRTIME <span>TO CASH</span></h4>
-                </div>
-                <div className="card-bottom">
-                  <ul>
-                    <li>GOTV</li>
-                    <li>GOTV MAX &nbsp;&nbsp;&nbsp;₦3600</li>
-                    <li>GOTV JOLLI &nbsp;&nbsp;&nbsp;	₦2460</li>
-                    <li>GOTV JINJA 	&nbsp;&nbsp;&nbsp;	₦1640</li>
-                    <li> GOTV SMALLIE &nbsp;&nbsp;&nbsp;	₦800	</li>
-
-                  </ul>
-                  <Link href="login.php"><a className="btn card-btn1">Get Started</a>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-2 col-lg-2 col-md-6">
 
             </div>
           </div>
         </div>
       </div>
-      { /*<!-- Pricing Card End -->
-  <!-- Our Customer Start -->
-           
-  <!-- Our Customer End -->
-  <!-- Available App  Start-->
- 
-  <!-- Available App End-->
-  <!-- Say Something Start -->
+    </div>
+    {/*<!-- Applic App End -->*/}
 
-  <!-- Say Something End -->*/}
+    {/*<!-- Best Pricing Start -->*/}
+    <section id="services" className="best-pricing pricing-padding" data-background="assets/img/gallery/best_pricingbg.jpg"
+      style={{ backgroundImage: " url(/assets/img/gallery/best_pricingbg.jpg)" }}>
+      <div className="container">
+        {/*<!-- Section Tittle -->*/}
+        <div className="row d-flex justify-content-center">
+          <div className="col-lg-6 col-md-8">
+            <div className="section-tittle section-tittle2 text-center">
+              <h2>Our Service</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {/*<!-- Best Pricing End -->
 
-    </main>
-  </>
+<!-- Pricing Card Start -->*/}
+    <div className="pricing-card-area">
+      <div className="container">
+        <div className="row">
+          <div className="col-xl-4 col-lg-4 col-md-6">
+            <div className="single-card text-center mb-30">
+              <div className="card-top">
+                <span><i className="fa fas-coin"></i></span>
+                <h4>GOTV<span>  Plan</span></h4>
+              </div>
+              <div className="card-bottom">
+                <ul>
+                  <li>GOTV</li>
+                  <li>GOTV MAX &nbsp;&nbsp;&nbsp;3600</li>
+                  <li>GOTV JOLLI &nbsp;&nbsp;&nbsp;	2460</li>
+                  <li>GOTV JINJA 	&nbsp;&nbsp;&nbsp;	1640</li>
+                  <li> GOTV SMALLIE &nbsp;&nbsp;&nbsp;	800	</li>
+
+                </ul>
+                <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-4 col-lg-4 col-md-6">
+            <div className="single-card  text-center mb-30">
+              <div className="card-top">
+                <span> </span>
+                <h4>DSTV<span>Plan</span></h4>
+              </div>
+              <div className="card-bottom">
+                <ul>
+                  <li>DSTV PADI&nbsp;&nbsp;&nbsp;	1850 </li>
+                  <li> DSTV YANGA &nbsp;&nbsp;&nbsp;		2565</li>
+                  <li>DSTV CONFAM&nbsp;&nbsp;&nbsp;	4615	</li>
+                  <li>DSTV COMPACT&nbsp;&nbsp;&nbsp;	7900	</li>
+                  <li> DSTV PREMIUM&nbsp;&nbsp;&nbsp;	18400	</li>
+                  <li> DSTV ASIA &nbsp;&nbsp;&nbsp;		6,200	</li>
+                </ul>
+                <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-4 col-lg-4 col-md-6">
+            <div className="single-card shadow text-center mb-30">
+              <div className="card-top">
+                <span> </span>
+                <h4>STARTIMES<span>Plan</span></h4>
+              </div>
+              <div className="card-bottom">
+                <ul>
+                  <li>NOVA&nbsp;&nbsp;&nbsp;900 </li>
+                  <li>BASIC &nbsp;&nbsp;&nbsp;1700 </li>
+                  <li>SMART&nbsp;&nbsp;&nbsp;2,200 </li>
+                  <li>classNameIC &nbsp;&nbsp;&nbsp;2500 </li>
+                  <li>SUPER &nbsp;&nbsp;&nbsp;4200</li>
+                </ul>
+                <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-2 col-lg-2 col-md-6">
+
+          </div>
+          <div className="col-xl-4 col-lg-4 col-md-6">
+            <div className="single-card shadow  text-center mb-30">
+              <div className="card-top">
+                <span> </span>
+                <h4>PHCN<span>Plan</span></h4>
+              </div>
+              <div className="card-bottom">
+                <ul>
+
+                  <li>DSTV PADI&nbsp;&nbsp;&nbsp;₦1850 </li>
+                  <li> DSTV YANGA &nbsp;&nbsp;&nbsp;₦2565</li>
+                  <li>DSTV CONFAM&nbsp;&nbsp;&nbsp;₦4615	</li>
+                  <li>DSTV COMPACT&nbsp;&nbsp;&nbsp;₦7900	</li>
+                  <li> DSTV PREMIUM&nbsp;&nbsp;&nbsp;₦18400	</li>
+                  <li> DSTV ASIA &nbsp;&nbsp;&nbsp;₦6,200	</li>
+                </ul>
+                <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-4 col-lg-4 col-md-6">
+            <div className="single-card shadow text-center mb-30">
+              <div className="card-top">
+                <span><i className="fa fas-coin"></i></span>
+                <h4>AIRTIME <span>TO CASH</span></h4>
+              </div>
+              <div className="card-bottom">
+                <ul>
+                  <li>GOTV</li>
+                  <li>GOTV MAX &nbsp;&nbsp;&nbsp;₦3600</li>
+                  <li>GOTV JOLLI &nbsp;&nbsp;&nbsp;	₦2460</li>
+                  <li>GOTV JINJA 	&nbsp;&nbsp;&nbsp;	₦1640</li>
+                  <li> GOTV SMALLIE &nbsp;&nbsp;&nbsp;	₦800	</li>
+
+                </ul>
+                <Link href="login.php"><a className="btn card-btn1">Get Started</a>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-2 col-lg-2 col-md-6">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    { /*<!-- Pricing Card End -->
+<!-- Our Customer Start -->
+       
+<!-- Our Customer End -->
+<!-- Available App  Start-->
+
+<!-- Available App End-->
+<!-- Say Something Start -->
+
+<!-- Say Something End -->*/}
+
+  </main>
+
 }
 
 let BodySection = () => {
