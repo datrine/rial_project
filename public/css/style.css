@@ -1,0 +1,72 @@
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(196, 12, 241, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+.bttn {
+    background-image:linear-gradient(30deg,#4621ad,#ba75ed) ;
+    color: white;
+
+}
+.bttn:hover{
+    background:#4621ad ;
+}
+.bttn1{
+    background-image:linear-gradient(30deg,#8f66ff,#ba75ed) ;
+    color:#4621ad;
+}
+.btt{
+    background: #4621ad;
+    color: #fff;
+    border-radius: 5px;
+}
+.btt:hover{
+    background: #fd9c9c;
+    color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(221, 16, 170, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   
+}
+.bttn1:hover{
+    background-image:linear-gradient(30deg,#4621ad,#37075a) ;
+    color: white;
+}
+.text1 {
+    font-size:20px;
+    font-weight: 600;
+    color: #4621ad;
+}
+body{
+    background: #f0f2f7;
+}
+.white{
+    background:#ffffff;
+    border-bottom:2px solid #f0f2f7;
+    
+}
+.headtop{
+   background:#ffffff;
+    border-bottom:1px solid #f0f2f7;
+   
+    padding:10px;
+}
+#linkup{
+background:#fff; 
+ border-left:2px solid #fff ;
+  border-right:2px solid #eee ; 
+  padding:15px 56.2px 15px 56.2px; 
+
+  font-weight: 600;
+  color: #4621ad;
+  font-family: 'Courier New', Courier, monospace;
+}
+#linkup:hover{
+    background-image:linear-gradient(30deg,#8f66ff,#ba75ed) ; 
+    color: #fff;
+    
+     
+    }
+
+#navs{
+    background-color: transparent; 
+    border:0.5px solid #eee;
+}
