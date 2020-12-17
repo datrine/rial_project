@@ -14,9 +14,6 @@ export default function Airtime() {
                 <p>copyright 2020 &copy;. All right reserved.</p>
             </div>
         </footer>
-
-        {/*<!-- A2C Calculator-->*/}
-        <script src="/assets/js/a2ccalculator.js"></script>
         <Scripts />
     </>
 }
