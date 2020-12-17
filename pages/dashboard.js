@@ -5,6 +5,7 @@ import { Comp_Dashboard } from '../comps/specials/comp_dashboard';
 export default function Login() {
     return <>
     <CompHTMLHeader/>
+    <CompPreloader/>
     <Comp_Dashboard/>
     <Scripts/>
     </>

@@ -3,24 +3,16 @@ import dynamic from "next/dynamic"
 import { Header, CompPreloader, CompHTMLHeader, Scripts, BodyFooter } from "../comps/gen_page/gen_exporter"
 let BodyMainDyn = dynamic(() => import("../comps/specials/index_body_main").then(mod=>mod.BodyMain), { ssr: false })
 
-let CompPreloaderDyn = dynamic(() =>
-    import("../comps/gen_page/preloader").then(mod => mod.CompPreloader), { ssr: false })
 export default function Home() {
   return <>
     <>
       <CompHTMLHeader />
-      {/*<!-- Preloader Start -->*/}
-      <CompPreloaderDyn />
-      {/*<!-- Preloader Start -->*/}
+      <CompPreloader />
       <Header />
       <BodyMainDyn />
       <BodySection />
-      {/*<!-- ================ contact section end ================= -->*/}
       <BodyFooter />
     </>
-    {/*<!-- JS here -->
-
-<!-- All JS Custom Plugins Link Here here -->*/}
     <Scripts />
     <Link passHref={true} href="#top"><a id="scrollUp" style={{ position: "fixed", zIndex: 2147483647, display: "none" }}>
       <i className="ti-arrow-up"></i>

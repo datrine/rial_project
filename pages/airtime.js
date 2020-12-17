@@ -3,9 +3,7 @@ import { Comp_Airtime } from '../comps/specials/comp_airtime';
 export default function Airtime() {
     return <>
         <CompHTMLHeader />
-        {/*<!-- Preloader Start -->*/}
         <CompPreloader />
-        {/*<!-- Preloader Start -->*/}
 <Comp_Airtime/>
         <footer className=" " style={{ background: "#e3e3e3" }}>
             <div className="container">

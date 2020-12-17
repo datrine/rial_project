@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Head from 'next/head'
-import { Header, CompHTMLHeader, Comp_Carousel, Scripts } from "../comps/gen_page/gen_exporter"
+import { Header, CompHTMLHeader, Comp_Carousel, Scripts, CompPreloader } from "../comps/gen_page/gen_exporter"
 export default function Login() {
     return <>
         <CompHTMLHeader />
+        <CompPreloader/>
         <Header />
         <div style={{ marginTop: 100 }}>
             <div className="headtop">

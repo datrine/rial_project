@@ -2,6 +2,7 @@ import { useState } from "react";
 import Head from 'next/head';
 import Link from 'next/link';
 import { Comp_Header } from "./comp_header"
+import { SubHeader } from "./comp_sub_header";
 //component for the mobile menu
 function Comp_Dashboard({ isLoggedIn = true }) {
     /*<?php
@@ -33,10 +34,10 @@ if ($conn->connect_error) {
 
 ?> */
     return <>
-        <section style={{marginTop:"200"}}>
             <Comp_Header />
             <br />
-
+            <SubHeader/>
+        <section style={{marginTop:"220"}}>
             <section className="body1">
                 <div className="clearfix container">
                     <p className="float-right"><span><a href="/" className="bttn p-3">Home</a></span></p>
