@@ -39,7 +39,7 @@ let Comp_Login = () => {
                                     }} value="Login Account" className="btn card-btn1" name="login" id="login" />
                                     <br /><br />
                                     <p className="text-center">
-                                        <Link href="/forgetpassword"><a style={{ color: "#b626bf" }}>forget password</a></Link>   <br />
+                                        <Link href="/forget_password"><a style={{ color: "#b626bf" }}>forget password</a></Link>   <br />
                                         <Link href="/register"><a style={{ fontWeight: "600", color: "#b626bf" }}>Create an Account</a></Link>              </p>
                                 </form>
 
