@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import dynamic from "next/dynamic"
 import { Header, CompPreloader, CompHTMLHeader, Scripts, BodyFooter } from "../comps/gen_page/gen_exporter"
-let BodyMainDyn = dynamic(() => import("../comps/index_body_main").then(mod=>mod.BodyMain), { ssr: false })
+let BodyMainDyn = dynamic(() => import("../comps/specials/index_body_main").then(mod=>mod.BodyMain), { ssr: false })
 
 let CompPreloaderDyn = dynamic(() =>
     import("../comps/gen_page/preloader").then(mod => mod.CompPreloader), { ssr: false })
