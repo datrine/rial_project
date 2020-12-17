@@ -2,7 +2,6 @@ import { useState } from "react";
 import Head from 'next/head';
 import Link from 'next/link';
 import { Comp_Header } from "./comp_header"
-import {Comp_TopUp} from "../comps/specials/comp_top_up"
 //component for the mobile menu
 function Comp_Dashboard({ isLoggedIn = true }) {
     /*<?php
@@ -36,7 +35,6 @@ if ($conn->connect_error) {
     return <>
         <section style={{marginTop:"200"}}>
             <Comp_Header />
-            <Comp_TopUp/>
             <br />
 
             <section className="body1">

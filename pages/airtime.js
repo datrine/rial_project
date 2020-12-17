@@ -6,8 +6,6 @@ export default function Airtime() {
         {/*<!-- Preloader Start -->*/}
         <CompPreloader />
         {/*<!-- Preloader Start -->*/}
-
-        <Header />
 <Comp_Airtime/>
         <footer className=" " style={{ background: "#e3e3e3" }}>
             <div className="container">

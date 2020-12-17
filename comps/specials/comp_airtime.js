@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import Head from 'next/head'
 import { Comp_Header } from './comp_header';
-import { Comp_TopUp } from "../comps/specials/comp_top_up"
+import { SubHeader } from './comp_sub_header';
 
 let Comp_Airtime = () => {
     return <>
         <section >
             <Comp_Header isLoggedIn={true} />
-            <Comp_TopUp />
+            <SubHeader />
             <section className=" ">
                 <div className="container">
                     <div className="row">
