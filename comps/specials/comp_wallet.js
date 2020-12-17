@@ -7,7 +7,7 @@ import { Comp_Carousel } from '../gen_page/comp_carousel';
 let Comp_Wallet = () => {
     return <>
         <Comp_Auth />
-        <section>
+        <section style={{marginTop:"100"}}>
             <Comp_Header />
             <div className="headtop">
                 <section className="container justify-content-center">
@@ -37,11 +37,11 @@ let Comp_Wallet = () => {
                                 </li>
 
                                 <li className="nav-item " >
-                                    <a className="nav-link " id="linkup" href="wallet.php"><i className="fa fa-briefcase" style={{ fontSize: "25px", color: "#4621ad" }}></i> WALLET</a>
+                                    <a className="nav-link " id="linkup" href="/wallet"><i className="fa fa-briefcase" style={{ fontSize: "25px", color: "#4621ad" }}></i> WALLET</a>
                                 </li>
 
                                 <li className="nav-item " >
-                                    <a className="nav-link " id="linkup" href="profile.php"  ><i className="fa fa-user" style={{ fontSize: "25px", color: "#4621ad" }}></i> PROFILE</a>
+                                    <a className="nav-link " id="linkup" href="/profile"  ><i className="fa fa-user" style={{ fontSize: "25px", color: "#4621ad" }}></i> PROFILE</a>
                                 </li>
 
 
@@ -71,7 +71,7 @@ let Comp_Wallet = () => {
                                         <h4 className="p-2">Wallet Top-up<span>Amount</span></h4>
                                     </div>
                                     <div className="card-bottom">
-                                        <form className="form-group" action="initialize.php" method="POST">
+                                        <form className="form-group" action="" method="POST">
                                             <div className="input-group mb-3">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text" id="basiaddon1">₦</span>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Head from 'next/head';
 import Link from 'next/link';
 import { Comp_Header } from "./comp_header"
-import { Comp_Carousel } from "../gen_page/comp_carousel"
+import {Comp_TopUp} from "../comps/specials/comp_top_up"
 //component for the mobile menu
 function Comp_Dashboard({ isLoggedIn = true }) {
     /*<?php
@@ -36,55 +36,12 @@ if ($conn->connect_error) {
     return <>
         <section style={{marginTop:"200"}}>
             <Comp_Header />
-            <div className="headtop">
-                <section className="container justify-content-center">
-                    <nav className="navbar navbar-expand-md navbar-light p-0 " id="navs" >
-
-                        {/*<!-- Toggler/collapsibe Button -->*/}
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-
-                        {/*<!-- Navbar links -->*/}
-                        <div className="collapse navbar-collapse   " id="collapsibleNavbar">
-                            <ul className="navbar-nav   w-100">
-
-
-
-                                <li className="nav-item ">
-                                    <Link href="/dashboard" passHref><a className="nav-link active" id="linkup"> <i className="fas fa-home" style={{fontSize:"25px", color:"#4621ad"}}></i> DASHBOARD </a></Link>  </li>
-
-
-                                <li className="nav-item " >
-                                    <Link href="/airtime" passHref><a className="nav-link" id="linkup" ><i className="fas fa-money-bill-wave" style={{fontSize:"25px", color:"#4621ad"}}></i> AIRTIME TO CASH</a></Link></li>
-                                <li className="nav-item " >
-                                    <Link href="/airtime" passHref><a className="nav-link " id="linkup" ><i className="fas fa-money-bill-wave" style={{fontSize:"25px", color:"#4621ad"}}></i> REFERALLS</a></Link>  </li>
-
-                                <li className="nav-item " >
-                                    <Link href="/wallet" passHref><a className="nav-link " id="linkup"><i className="fa fa-briefcase" style={{fontSize:"25px", color:"#4621ad"}}></i> WALLET</a></Link>
-                                </li>
-
-                                <li className="nav-item " >
-                                    <a className="nav-link " id="linkup" href="/profile"  ><i className="fa fa-user" style={{fontSize:"25px", color:"#4621ad"}}></i> PROFILE</a>
-                                </li>
-
-
-
-                            </ul>
-                        </div>
-                    </nav>
-
-                </section>
-
-            </div>
-            <div className="container mt-3">
-                <Comp_Carousel />
-            </div>
-            <br /><br />
+            <Comp_TopUp/>
+            <br />
 
             <section className="body1">
                 <div className="clearfix container">
-                    <p className="float-right"><span><a href="index.php" className="bttn p-3">Home</a></span></p>
+                    <p className="float-right"><span><a href="/" className="bttn p-3">Home</a></span></p>
                     <p className="float-left text1 ">DASHBOARD</p>
                 </div><br />
                 <div className="container">
@@ -99,7 +56,7 @@ if ($conn->connect_error) {
 
                             <div className="card bg-light  mt-2">
                                 <div className="card-body  shadow p-4 ">
-                                    <p className="card-text float-left">WALLET BALLANCE
+                                    <p className="card-text float-left">WALLET BALANCE
                             <br /> <span>(₦) BALANCE</span></p>
                                     <i className='fas fa-wallet float-right' style={{fontSize:"25px", color:"#4621ad"}}></i>
                                 </div>
