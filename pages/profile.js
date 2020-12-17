@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Head from 'next/head'
-import { Header, CompHTMLHeader,Comp_Carousel} from "../comps/gen_page/gen_exporter"
+import { Header, CompHTMLHeader,Comp_Carousel, Scripts} from "../comps/gen_page/gen_exporter"
 export default function Login() {
     return <>
         <CompHTMLHeader />
@@ -20,7 +20,7 @@ export default function Login() {
                         <ul className="navbar-nav   w-100">
 
                             <li className="nav-item ">
-                                <a className="nav-link active" href="dashboard.php" id="linkup"> <i className="fas fa-home" style={{ fontSize: "25px", color: "#4621ad" }}></i> DASHBOARD </a>
+                                <a className="nav-link active" href="dashboard" id="linkup"> <i className="fas fa-home" style={{ fontSize: "25px", color: "#4621ad" }}></i> DASHBOARD </a>
                             </li>
 
                             <li className="nav-item " >
@@ -115,6 +115,8 @@ export default function Login() {
                 </div>
             </section>
         </section>
-    </div></>
+    </div>
+    <Scripts/>
+    </>
 }
 
