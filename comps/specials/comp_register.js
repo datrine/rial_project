@@ -54,7 +54,7 @@ function Comp_Register({ isLoggedIn = true }) {
                                     <input type="submit" style={{color:"#fff" , fontFamily: "'Courier New', Courier, monospace",fontFamily:600}} value="Register Account" className="btn card-btn1" name="register" id=""/>
                                         <br/>
                                         <p className="text-center">
-                                     <a href="/forgetpassword" style={{color:"#b626bf"}}>Forget Password?</a><br/>
+                                     <a href="/forget_password" style={{color:"#b626bf"}}>Forget Password?</a><br/>
                                     <a href="/login"  style={{color:"#b626bf"}}>Already have an account?Login?</a>
                                     </p>
                                 </form>
