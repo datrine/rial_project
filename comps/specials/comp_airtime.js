@@ -15,14 +15,12 @@ let Comp_Airtime = () => {
 
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 shadow-lg">
-
-
                             <div className="card bg-light  mt-2">
                                 <div className="card-body  shadow p-4  ">
                                     <div className="card-bottom">
                                         <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>A2C Calculator</h4>
-                                        <form className="form-group " action="">
-                                            <select name="select" className="form-control w-100" required aria-hidden="true">
+                                        <form className="form-group " className="" action="">
+                                            <select name="select" className="form-control w-100" required>
                                                 <option value="">Select...</option>
                                                 <option value="MTN TRANSFER">MTN TRANSFER</option>
                                                 <option value="AIRTIME TRANSFER">AIRTIME TRANSFER</option>
@@ -72,4 +70,13 @@ let Comp_Airtime = () => {
         <script src="/assets/js/a2ccalculator.js"></script>
     </>
 }
+
+function calculate(){
+    let airtime = document.getElementById('airtime').value;
+    let money;
+    money = airtime * 0.8;
+    document.getElementById('money').value = "N" + Math.floor(money);
+}
+
+
 export { Comp_Airtime }
