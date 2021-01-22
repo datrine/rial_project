@@ -163,10 +163,11 @@ let FormRegister = ({ hookChangeRegState }) => {
                     color: isValidatingUsernameState ? "green" : ((userNameValidObj?.msg) ? "red" : "green"),
                     textAlign: "left", fontSize: "13px"
                 }}>{
-                        isValidatingUsernameState && usernameState.length > 0 ? <FontAwesomeIcon icon={faSpinner} spin /> :
+                        isValidatingUsernameState ? <FontAwesomeIcon icon={faSpinner} spin /> :
                             (userNameValidObj.msg ? (<span><FontAwesomeIcon icon={faTimes} />
                                 <i className="w3-margin-left">{userNameValidObj.msg}</i>
-                            </span>) : <span><FontAwesomeIcon icon={faCheck} /> Validated</span>)
+                            </span>) : (usernameState.length > 0 ?
+                            <span><FontAwesomeIcon icon={faCheck} /> Validated</span>:"Required"))
                     }
                 </p>
                 <div className="row">
