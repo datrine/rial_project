@@ -2,8 +2,13 @@ import Link from 'next/link';
 import Head from 'next/head'
 import { Comp_Header } from './comp_header';
 import { SubHeader } from './comp_sub_header';
+import { checkUserDetails, buyAirtime } from "../../utils/airtime"
+import { useEffect } from 'react';
 
 let Comp_Airtime = () => {
+    useEffect(async () => {
+        console.log(await checkUserDetails())
+    }, [])
     return <>
         <section >
             <Comp_Header isLoggedIn={true} />
@@ -71,7 +76,7 @@ let Comp_Airtime = () => {
     </>
 }
 
-function calculate(){
+function calculate() {
     let airtime = document.getElementById('airtime').value;
     let money;
     money = airtime * 0.8;

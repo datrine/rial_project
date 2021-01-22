@@ -2,10 +2,10 @@
 let knex = require('knex')({
     client: 'mysql2',
     connection: {
-      host : 'localhost',
-      user : 'root',
-      password : 'alabi2david',
-      database : 'datadb'
+      host : 'eel.whogohost.com',
+      user : 'stylezns_datrine',
+      password : 'TeMi4ToPe',
+      database : 'stylezns_rialdb'
     }
   });
 

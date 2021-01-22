@@ -35,10 +35,10 @@ export default async function (req, res) {
                                 res.statusCode = 500;
                             })
                     }
-                }).catch(err => {
-                    console.log(err)
+                }).catch(error => {
+                    console.log(error)
                     res.statusCode = 500;
-                    return res.json({ err: "User with similar info already exists" });
+                    return res.json({ err: "Network or server error",error});
                 })
 
         }

@@ -28,10 +28,10 @@ export default async function (req, res) {
                         //await signIn("credentials",{username:data.userName,password:data.userPass})
                         return res.json({...returnedRes[0] })
                     }
-                }).catch(err => {
-                    console.log(err)
+                }).catch(error => {
+                    console.log(error)
                     res.statusCode = 500;
-                    return res.json({ err: "User with similar info already exists" });
+                    return res.json({ err: "Network error",error });
                 })
 
         }

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link"
 import { registerValidator, fetchError } from "../../utils/validators"
 import { signIn, signOut, useSession } from "next-auth/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 let user = {}
 function Comp_Register({ isLoggedIn = true }) {
@@ -66,50 +68,80 @@ function Comp_Register({ isLoggedIn = true }) {
 }
 
 let FormRegister = ({ hookChangeRegState }) => {
+    let [instanceState, changeInstanceState] = useState({
+        userPass: "",
+        userRePass: "",
+        userName: "",
+        userPhone: "",
+        referral: "",
+        userEmail: ""
+    });
+    //console.log(instanceState)
+    let [validState, changeValidState] = useState(false)
+    let [errorListState, changeErrorListState] = useState([])
     let [usernameState, changeUsernameState] = useState("")
     let [emailState, changeEmailState] = useState("")
     let [userPhoneState, changeUserPhoneState] = useState("")
     let [passwrdState, changePassWrdState] = useState("")
     let [repassState, changeRepassState] = useState("")
     let [referralState, changeReferralState] = useState("")
-    let val = registerValidator({
-        userEmail: emailState,
-        userPass: passwrdState,
-        userPhone: userPhoneState,
-        userName: usernameState,
-        userRePass: repassState,
-        referral: referralState
-    });
-    //console.log(val.errors)
-    let [canSubmit, toggleCanSubmit] = useState(val.valid)
+    let [changedState, changeChangedState] = useState(0)
+    let [isValidatingUsernameState, changeIsValidatingUsernameState] = useState(false)
+    let [isValidatingUserEmailState, changeIsValidatingUserEmailState] = useState(false)
+    let userNameValidObj = fetchError({ errorList: errorListState, prop: "userName" });
+    let userEmailValidObj = fetchError({ errorList: errorListState, prop: "userEmail" })
+    let [canSubmit, toggleCanSubmit] = useState(validState)
+    let [isSubmittingState, changeIsSubmittingState] = useState(false)
+
     useEffect(() => {
-        toggleCanSubmit(val.valid)
-    }, [val.valid])
+        if (changedState > 0) {
+            (async () => {
+                changeIsValidatingUsernameState(true)
+                changeIsValidatingUserEmailState(true)
+                let res = await registerValidator({
+                    userEmail: emailState,
+                    userPass: passwrdState,
+                    userPhone: userPhoneState,
+                    userName: usernameState,
+                    userRePass: repassState,
+                    referral: referralState,
+                    changedState
+                });
+                let { instance, valid, errorList } = res
+                changeInstanceState({ ...instance });
+                changeValidState(valid);
+                changeErrorListState(errorList);
+                changeIsValidatingUsernameState(false)
+                changeIsValidatingUserEmailState(false)
+            })()
+        }
+    }, [changedState])
+    useEffect(() => {
+        toggleCanSubmit(validState)
+    }, [validState])
+
     return <>
         <div className="card-bottom">
             <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>Create an Account!</h4>
-            <p className="text-danger"><b>{
-                (!canSubmit ? "Some Errors In The Form" : "")
+            <p><b style={{ color: "red" }}>{
+                (!canSubmit ? "Some errors in the form" : "")
             }</b></p>
             <form onSubmit={
                 async e => {
                     e.preventDefault();
+                    changeIsSubmittingState(true)
                     try {
                         let res = await fetch("/api/register", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
                             },
-                            body: JSON.stringify(val.instance)
+                            body: JSON.stringify(instanceState)
                         });
                         if (res.ok) {
                             let data = await res.json()
-                            console.log(val.instance)
-                            user = val.instance
-                            /* await signIn("credentials", {
-                                 username: val.instance.userName,
-                                 password: val.instance.userPass
-                             })*/
+                            user = instanceState;
+                            changeInstanceState(data)
                             if (data) {
                                 hookChangeRegState("success")
                             }
@@ -117,82 +149,98 @@ let FormRegister = ({ hookChangeRegState }) => {
                     } catch (error) {
                         console.log(error)
                     }
-
+                    changeIsSubmittingState(false)
                 }
             } className="form-group " action="" method="POST">
-                <p style={{ paddingBottom: 0, marginBottom: 0, textAlign: "left", color: "red" }}>*</p>
                 <input className="form-control" style={{ padding: "25px 10px 25px 10px" }}
                     type="text" name="userName" value={usernameState} onChange={
                         e => {
                             changeUsernameState(e.target.value)
+                            changeChangedState(changedState + 1)
                         }
                     } placeholder="Enter user name" required />
-                <span className="text-danger"> <b>{
-                    fetchError({ valObj: val, property: "userName" })?.message
-                }</b>
-                </span>
+                <p style={{
+                    color: isValidatingUsernameState ? "green" : ((userNameValidObj?.msg) ? "red" : "green"),
+                    textAlign: "left", fontSize: "13px"
+                }}>{
+                        isValidatingUsernameState && usernameState.length > 0 ? <FontAwesomeIcon icon={faSpinner} spin /> :
+                            (userNameValidObj.msg ? (<span><FontAwesomeIcon icon={faTimes} />
+                                <i className="w3-margin-left">{userNameValidObj.msg}</i>
+                            </span>) : <span><FontAwesomeIcon icon={faCheck} /> Validated</span>)
+                    }
+                </p>
                 <div className="row">
                     <div className="col-md-6">
-                        <p style={{ paddingBottom: 0, marginBottom: 0, textAlign: "left", color: "red" }}>*</p>
                         <input value={emailState} className="form-control" onChange={
                             e => {
                                 changeEmailState(e.target.value)
+                                changeChangedState(changedState + 1)
                             }
                         } type="email"
                             style={{ padding: "25px 10px 25px 10px" }} name="userEmail"
                             placeholder="Enter Email" required />
-                        <span className="text-danger">* <b>{
-                            fetchError({ valObj: val, property: "userEmail" })?.message
-                        }</b>
-                        </span>
-                        <p style={{ paddingBottom: 0, marginBottom: 0, textAlign: "left", color: "red" }}>*</p>
+                        <p style={{
+                            color: isValidatingUsernameState ? "green" :
+                                ((userEmailValidObj?.msg) ? "red" : "green"),
+                            textAlign: "left", fontSize: "13px"
+                        }}>{
+                                isValidatingUserEmailState ? <FontAwesomeIcon icon={faSpinner} spin /> :
+                                    (userEmailValidObj?.msg ? (<span><FontAwesomeIcon icon={faTimes} />
+                                        <i className="w3-margin-left">{userEmailValidObj.msg}</i>
+                                    </span>) : (emailState.length > 0 ?
+                                        <span><FontAwesomeIcon icon={faCheck} /> Validated</span> : "Required"))
+                            }
+                        </p>
                         <input value={userPhoneState} className="form-control" onChange={
                             e => {
                                 changeUserPhoneState(e.target.value)
+                                changeChangedState(changedState + 1)
                             }
                         } type="tel"
                             style={{ padding: "25px 10px 25px 10px" }} name="userPhone"
                             placeholder="Enter Phone eg. +2348088367337" />
-                        <span className="text-danger">* <b>{
-                            fetchError({ valObj: val, property: "userPhone" })?.message
-                        }</b>
-                        </span>
+                        <p style={{ textAlign: "left", color: "red", fontStyle: "italic", fontSize: "13px" }}>{
+                            fetchError({ errorList: errorListState, prop: "userPhone" })?.msg
+                        }
+                        </p>
                     </div>
                     <div className="col-md-6">
-                        <p style={{ paddingBottom: 0, marginBottom: 0, textAlign: "left", color: "red" }}>*</p>
                         <input value={passwrdState} onChange={
                             e => {
                                 changePassWrdState(e.target.value)
+                                changeChangedState(changedState + 1)
                             }
                         } className="form-control" type="password"
                             style={{ padding: "25px 10px 25px 10px" }} name="userPass"
                             placeholder="Enter Password" required />
-                        <span className="text-danger"><b>{
-                            passwrdState.length > 0 && passwrdState !== repassState ? "Passwords don't match" : ""
-                        }</b>
-                        </span>
-                        <p style={{ paddingBottom: 0, marginBottom: 0, textAlign: "left", color: "red" }}>*</p>
+                        <p style={{ textAlign: "left", color: "red", fontStyle: "italic", fontSize: "13px" }}>{
+                            fetchError({ errorList: errorListState, prop: "userPass" })?.msg
+                        }
+                        </p>
                         <input value={repassState} onChange={
                             e => {
                                 changeRepassState(e.target.value)
+                                changeChangedState(changedState + 1)
                             }
                         } className="form-control" type="password"
                             style={{ padding: "25px 10px 25px 10px" }} name="userRePass"
                             placeholder="Enter Comfirm Password" required />
-                        <span className="text-danger"><b>{
+                        <p style={{ textAlign: "left", color: "red", fontStyle: "italic", fontSize: "13px" }}>{
                             passwrdState.length > 0 && passwrdState !== repassState ? "Passwords don't match" : ""
-                        }</b>
-                        </span>
+                        }
+                        </p>
                     </div>
                 </div>
                 <input className="form-control" type="text"
                     style={{ padding: "25px 10px 25px 10px" }} name="referral"
                     placeholder="Who Refer you? (Optional)" />
-                <input disabled={!canSubmit} type="submit"
+                <button disabled={!canSubmit} type="submit"
                     style={{
                         color: "#fff", fontFamily: 600,
-                        fontFamily: "'Courier New', Courier, monospace",
-                    }} value="Register Account" className="btn card-btn1 w3-cyan" name="register" />
+                        fontFamily: "'Courier New', Courier, monospace", marginTop: "10px"
+                    }} className="btn card-btn1 w3-cyan" name="register">
+                    {isSubmittingState ? <FontAwesomeIcon icon={faSpinner} spin /> : "Register Account"}
+                </button>
                 <p className="text-center">
                     <a href="/forget_password" style={{ color: "#b626bf" }}>Forget Password?</a><br />
                     <a href="/login" style={{ color: "#b626bf" }}>Already have an account?Login?</a>
@@ -209,7 +257,11 @@ let SuccessfulReg = () => {
                 <button className="w3-btn w3-green w3-text-white" onClick={
                     e => {
                         let { userPass, userName, userEmail, ...rest } = user
-                        signIn("credentials", { username: userName, password: userPass, email: userEmail, ...rest })
+                        signIn("credentials", {
+                            username: userName,
+                            userEmailOrName: (userEmail || userName),
+                            password: userPass, email: userEmail, ...rest
+                        })
                     }
                 }>Log in to Continue</button>
             </p>
