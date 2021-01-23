@@ -2,10 +2,11 @@ import Link from 'next/link';
 import { useState, useEffect } from "react"
 import { signIn, signOut, useSession } from "next-auth/client";
 
-let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl }) => {
+let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl="/dashboard" }) => {
     let [emailOrUsernameState, changeEmailOrUsernameState] = useState("")
     let [passwordState, changePassWordState] = useState("")
     let [session, loading] = useSession()
+   
     useEffect(() => {
     }, [])
     return <>
@@ -57,6 +58,7 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl }) => {
                                     }} value="Login Account" className="btn card-btn1 w3-cyan"
                                         name="login" id="login" onClick={
                                             e => {
+                                                console.log(callbackUrl)
                                                 signIn("credentials", {
                                                     callbackUrl, password: passwordState,
                                                     userEmailOrName: emailOrUsernameState

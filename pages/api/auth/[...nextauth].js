@@ -65,6 +65,12 @@ const options = {
                 // return Promise.reject('/path/to/redirect')        // Redirect to a URL
             }
         },
+        redirect: async (url, baseUrl) => {
+           return Promise.resolve(url)
+          /*  return url.startsWith(baseUrl)
+                ? Promise.resolve(url)
+                : Promise.resolve(baseUrl)*/
+        },
         session: async (session, user) => {
             session.user = user
             return Promise.resolve(session)

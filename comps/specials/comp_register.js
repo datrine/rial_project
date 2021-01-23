@@ -244,7 +244,7 @@ let FormRegister = ({ hookChangeRegState }) => {
                 </button>
                 <p className="text-center">
                     <a href="/forget_password" style={{ color: "#b626bf" }}>Forget Password?</a><br />
-                    <a href="/login" style={{ color: "#b626bf" }}>Already have an account?Login?</a>
+                    <a href="/login" style={{ color: "#b626bf" }}>Already have an account? Login</a>
                 </p>
             </form>
         </div></>
