@@ -1,14 +1,28 @@
 import Link from 'next/link';
 import { useState, useEffect } from "react"
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, useSession } from "next-auth/client";
+import { useRouter } from 'next/router';
 
-let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl="/dashboard" }) => {
+let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" }) => {
+    let router = useRouter()
+    let { query: { errType, userCred } } = router;
     let [emailOrUsernameState, changeEmailOrUsernameState] = useState("")
     let [passwordState, changePassWordState] = useState("")
-    let [session, loading] = useSession()
-   
-    useEffect(() => {
-    }, [])
+    let viewErrorType = null
+    switch (errType) {
+        case "no_account":
+            viewErrorType = <span style={{ color: "red" }}>No account found for
+            <b style={{ color: "red", marginLeft: "5px" }}>{userCred}</b></span>
+            break;
+        case "no_match":
+            viewErrorType = <span style={{ color: "red" }}>No user credentials don't match</span>
+            break;
+            case "network_err":
+                viewErrorType = <span style={{ color: "red" }}>Network error</span>
+                break;
+        default:
+            break;
+    }
     return <>
         <section id="services" className="best-pricing pricing-padding" data-background="/assets/img/gallery/best_pricingbg.jpg">
             <div className="container">
@@ -31,13 +45,13 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl="/dashboard" }) =
                     <div className="col-xl-4 col-sm-8 col-lg-6 col-md-6 shadow-lg">
                         <div className="single-card  text-center mb-30">
                             <div className="card-top">
-                                <span> </span>
-                                <h4 >Welcome <span>Back!</span></h4>
+                                <h4 >Welcome</h4>
                             </div>
                             <div className="card-bottom">
-                                <p className="text-danger"><b></b></p>
+                                <p><b>{viewErrorType}</b></p>
                                 <div className="form-group">
-                                    <input className="form-control" style={{ padding: "25px 10px 25px 10px" }} type="text"
+                                    <input className="form-control"
+                                        style={{ padding: "25px 10px 25px 10px" }} type="text"
                                         name="userEmailOrName" id="" value={emailOrUsernameState}
                                         placeholder="Enter Email or Username" onChange={
                                             e => {

@@ -1,5 +1,5 @@
-import Head from "next/head"
 import {useEffect, useState} from "react"
+
 let CompPreloader=()=>{
     let [showPreloader,toggleShowPreloader]=useState(true);
     useEffect(()=>{

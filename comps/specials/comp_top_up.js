@@ -5,14 +5,6 @@ import { Comp_Header } from "./comp_header";
 import { SubHeader } from "./comp_sub_header";
 //component for the mobile menu
 function Comp_TopUp({ isLoggedIn = true }) {
-    /* <?php require_once "server.php";
-     if (isset($_GET['ref'])){
-         $_SESSION['ref'] = $_GET['ref'];
-         if($_SESSION["user"] != "user"){
-             header('location: login.php');
-         }
-     }
-     ?>*/
     return <>
         <Comp_Header />
         <section class="body1">
@@ -25,7 +17,7 @@ function Comp_TopUp({ isLoggedIn = true }) {
                         {/*<!-- Modal Header -->*/}
                         <div class="modal-header">
 
-                            <h4 class="modal-title" style={{fontSize:"25px", paddingBottom:"10px"}}>Data Topup</h4>
+                            <h4 class="modal-title" style={{ fontSize: "25px", paddingBottom: "10px" }}>Data Topup</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -75,7 +67,7 @@ function Comp_TopUp({ isLoggedIn = true }) {
                         {/*<!-- Modal Header -->*/}
                         <div class="modal-header">
 
-                            <h4 class="modal-title" style={{fontSize:"25px", paddingBottom:"10px"}}>CABLE Topup</h4>
+                            <h4 class="modal-title" style={{ fontSize: "25px", paddingBottom: "10px" }}>CABLE Topup</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -126,7 +118,7 @@ function Comp_TopUp({ isLoggedIn = true }) {
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h4 style={{fontSize:"25px", paddingBottom:"10px"}}>AIRTIME</h4>
+                            <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>AIRTIME</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -182,16 +174,16 @@ function Comp_TopUp({ isLoggedIn = true }) {
                             <div class="card-body  shadow p-4  ">
                                 <div class=" row ">
                                     <div class="col-xs-6 col-md-6 p-2">
-                                        <img src="/img/glo.png" alt="" style={{width:"100px"}} />
+                                        <img src="/img/glo.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="/img/mtn.png" alt="" style={{width:"100px"}} />
+                                        <img src="/img/mtn.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="/img/air.png" alt="" style={{width:"100px"}} />
+                                        <img src="/img/air.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="img/mob.png" alt="" style={{width:"100px"}} />
+                                        <img src="img/mob.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                 </div>
                                 <br />
@@ -201,7 +193,8 @@ function Comp_TopUp({ isLoggedIn = true }) {
                         </div>
 
                     </div>
-                    <div class="col-md-4 " >
+
+                    <div class="col-md-4">
                         <div class="card bg-light  mt-2">
                             <div class="card-top  shadow p-4 float-center ">
                                 <h4>CABLE TV</h4>
@@ -209,16 +202,16 @@ function Comp_TopUp({ isLoggedIn = true }) {
                             <div class="card-body  shadow p-4  ">
                                 <div class=" row ">
                                     <div class="col-xs-6 col-md-6 p-2">
-                                        <img src="/img/dst.png" alt="" style={{width:"100px"}} />
+                                        <img src="/img/dst.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="img/gotv.png" alt="" style={{width:"100px"}} />
+                                        <img src="img/gotv.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="/img/phcn.png" alt="" style={{width:"100px"}} />
+                                        <img src="/img/phcn.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="/img/sar.png" alt="" style={{width:"130px"}} />
+                                        <img src="/img/sar.png" alt="" style={{ width: "130px" }} />
                                     </div>
                                 </div>
                                 <br />
@@ -227,6 +220,7 @@ function Comp_TopUp({ isLoggedIn = true }) {
                             </div>
                         </div>
                     </div>
+                   
                     <div class="col-md-4">
                         <div class="card bg-light  mt-2">
                             <div class="card-top  shadow p-4 float-center ">
@@ -235,16 +229,16 @@ function Comp_TopUp({ isLoggedIn = true }) {
                             <div class="card-body  shadow p-4  ">
                                 <div class=" row ">
                                     <div class="col-xs-6 col-md-6 p-2">
-                                        <img src="img/glo.png" alt="" style={{width:"100px"}} />
+                                        <img src="img/glo.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="img/mtn.png" alt="" style={{width:"100px"}} />
+                                        <img src="img/mtn.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="img/air.png" alt="" style={{width:"100px"}} />
+                                        <img src="img/air.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                     <div class="col-xs-6  col-md-6 p-2">
-                                        <img src="img/mob.png" alt="" style={{width:"100px"}} />
+                                        <img src="img/mob.png" alt="" style={{ width: "100px" }} />
                                     </div>
                                 </div>
                                 <br />
@@ -256,7 +250,7 @@ function Comp_TopUp({ isLoggedIn = true }) {
         </section>
         <br />
 
-        <section class="p-3 mt-4" style={{backgroundColor: "#e3e3e3"}}>
+        <section class="p-3 mt-4" style={{ backgroundColor: "#e3e3e3" }}>
             <div class="container">
                 <p>copyright 2020 &copy;. All right reserved.</p>
             </div>

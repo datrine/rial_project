@@ -7,7 +7,7 @@ let CompHTMLHeader=()=>{
         <title>Riah Topup</title>
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="manifest" href="site.webmanifest" />
+        <link rel="manifest" href="/site.webmanifest" />
         <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.svg" />
 
         {/*<!-- CSS here -->*/}
@@ -23,7 +23,7 @@ let CompHTMLHeader=()=>{
         <link rel="stylesheet" href="/assets/css/nice-select.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
         <link rel="stylesheet" href="/css/login.css" />
-            <link rel="stylesheet" href="css/style.css"/>
+            <link rel="stylesheet" href="/css/style.css"/>
 
     </Head>
 </>

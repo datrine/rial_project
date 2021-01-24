@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch, faTimes, faBars, faHome, faListAlt, faCartPlus, faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faSearch, faTimes, faBars, faHome, faListAlt, faCartPlus, faArrowLeft, faUser }
+ from "@fortawesome/free-solid-svg-icons"
 import { Comp_Auth } from "./comp_auth"
 import { signOut, useSession } from "next-auth/client";
 //component for the mobile menu
@@ -45,16 +46,6 @@ function Comp_Header({ isLoggedIn = true }) {
         </div>
     </>
     }
-    /*<?php
-    require './auth.php';
-    require_once "./server.php";
-    if(empty($_SESSION['user'])){
-        header('location: login.php');
-    }
-    $myEmail = $_SESSION['user'];
-    $source = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM wallet WHERE userEmail = '$myEmail'"));
-
-?>*/
     return <>{view} </>;
 }
 

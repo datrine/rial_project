@@ -1,10 +1,7 @@
 import { useState } from "react";
-import Head from 'next/head';
-import Link from 'next/link';
 import { Comp_Header } from "./comp_header"
 import { SubHeader } from "./comp_sub_header";
-import { signIn, signOut, useSession } from "next-auth/client";
-import { Comp_Login } from "./comp_login";
+import { useSession } from "next-auth/client";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +26,7 @@ function Comp_Dashboard({ isLoggedIn = true }) {
 }
 
 function Substance({ user = { userEmail: "" } }) {
+    let [totalTransaction,changeTotalTransaction]=useState(0)
     return <>
         <section style={{ marginTop: "220" }}>
             <section className="body1">
@@ -53,8 +51,9 @@ function Substance({ user = { userEmail: "" } }) {
                         <div className="col-md-6">
                             <div className="card bg-light  mt-2">
                                 <div className="card-body  shadow p-4  ">
-                                    <p className="card-text float-left">Total Transactions
-                        <br /> <span>₦0 </span></p>
+                                    <p className="card-text float-left">
+                                        <b style={{ color: "#4621ad" }}>Total Transactions</b>
+                                        <br /> <span>₦ {totalTransaction} </span></p>
                                     <i className='fa fas-line-chart float-right' style={{ fontSize: "25px", color: "#4621ad" }}></i>
                                 </div>
                             </div>
@@ -65,7 +64,8 @@ function Substance({ user = { userEmail: "" } }) {
             <br />
             <section className="py-4 mb-5 container ">
                 <div className="clearfix">
-                    <Transaction customerEmail={user.userEmail} />
+                    <Transaction customerEmail={user.userEmail} 
+                    hookChangeTotalTransaction={changeTotalTransaction} />
                 </div>
             </section>
             <section className="p-3 mt-4" style={{ backgroundColor: "#e3e3e3" }}>
@@ -79,12 +79,10 @@ function Substance({ user = { userEmail: "" } }) {
 }
 
 let WalletSummary = ({ customerEmail }) => {
-    console.log(customerEmail)
     let [walletState, changeWalletState] = useState({})
     let [walletResponseTypeState, changeWalletResponseTypeState] = useState("loading");
-    useSession(() => {
+    useEffect(() => {
         (async () => {
-            console.log(customerEmail)
             console.log(`/api/${customerEmail}/wallet/total`)
             let res = await fetch(`/api/${customerEmail}/wallet/total`, {
                 method: "GET",
@@ -114,8 +112,9 @@ let WalletSummary = ({ customerEmail }) => {
             break;
         case "transaction":
             viewWallet = <><div className="card-body  shadow p-4 ">
-                <p className="card-text float-left">WALLET BALANCE
-        <br /> <span>(₦) {walletState.balance}</span></p>
+                <p className="card-text float-left">
+                    <b style={{ color: "#4621ad" }}>WALLET BALANCE</b>
+                    <br /> <span>(₦) {walletState.balance}</span></p>
                 <i className='fas fa-wallet float-right' style={{ fontSize: "25px", color: "#4621ad" }}></i>
             </div></>
             break;
@@ -128,7 +127,7 @@ let WalletSummary = ({ customerEmail }) => {
     </>
 }
 
-let Transaction = ({ customerEmail }) => {
+let Transaction = ({ customerEmail,hookChangeTotalTransaction }) => {
     let [transactionsState, changeTransactionsState] =
         useState([{ id: "", ref_num: "", email: "", transact_date: "", amount: "" }])
     let [transactionResponseTypeState, changeTransactionResponseTypeState] =
@@ -165,7 +164,7 @@ let Transaction = ({ customerEmail }) => {
     let smallviewOfTransactions = <> <div className="float-left  p-3 shadow-lg"
         style={{ width: "100%", border: "1px solid #e3e3e3" }}>
         <div>{
-            transactionsState.map((transaction, index) =><div key={index} >
+            transactionsState.map((transaction, index) => <div key={index} >
                 <p>Transaction ID <b>{transaction.id}</b></p>
                 <p>Email <b>{transaction.email}</b></p>
                 <p>Amount <b>{transaction.amount}</b></p>
@@ -210,11 +209,12 @@ let Transaction = ({ customerEmail }) => {
                 console.log(err)
                 changeTransactionResponseTypeState("error")
             }
-            if (transactions) {
-                console.log("uihui")
-                console.log(transactions)
-                console.log("uihui")
+            if (Array.isArray(transactions)) {
                 changeTransactionResponseTypeState("transaction")
+                let totalTransaction=transactions.reduce((prev,cur,index,trans)=>{
+                    return prev+cur.amount;
+                },0)
+                hookChangeTotalTransaction(totalTransaction)
                 changeTransactionsState(transactions);
             }
         })();
