@@ -1,7 +1,7 @@
-import { middlewareRunner } from "../../utils/utilFns"
+import { middlewareRunner } from "../../../utils/utilFns"
 import Cors from "cors"
-import knex from "../../utils/conn"
-import { registerValidator } from "../../utils/validators"
+import knex from "../../../utils/conn"
+import { adminRegisterValidator } from "../../../utils/validators"
 import { v4 } from "uuid"
 import bcrypt from "bcrypt"
 
@@ -13,13 +13,13 @@ export default async function (req, res) {
     try {
         if (req.method === "POST") {
             await middlewareRunner(req, res, cors);
-            let valResult = await registerValidator(req.body)
+            let valResult = await adminRegisterValidator(req.body)
             if (valResult.valid) {
-                let { userRePass,changedState, ...data } = req.body
+                let { adminRePass, ...data } = req.body
                 console.log(data)
-                let hashPass=await bcrypt.hash(data.userPass,8);
-                data.userPass=hashPass;
-                await knex("users").insert({ ...data, unique_code: v4(), reg_date: (new Date) }).
+                let hashPass = await bcrypt.hash(data.adminPass, 8);
+                data.adminPass = hashPass;
+                await knex("admintable").insert({ ...data, }).
                     then(async returnedRes => {
                         if (returnedRes) {
                             return res.json({ saved: true, res: "saved" })

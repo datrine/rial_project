@@ -39,10 +39,10 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
         <div className="pricing-card-area">
             <div className="container">
                 <div className="row">
-                    <div className="col-xl-4 col-sm-2 col-lg-4 col-md-6">
-
+                    <div className="col-xl-4 col-sm-2 col-lg-4 col-md-3">
+                        kgkhjkbkb
                     </div>
-                    <div className="col-xl-4 col-sm-8 col-lg-6 col-md-6 shadow-lg">
+                    <div className="col-xl-4 col-sm-8 col-lg-6 col-md-6 shadow-lg" style={{backgroundColor:"white"}}>
                         <div className="single-card  text-center mb-30">
                             <div className="card-top">
                                 <h4 >Welcome</h4>

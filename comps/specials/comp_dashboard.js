@@ -5,6 +5,7 @@ import { useSession } from "next-auth/client";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { PaymentApps } from "./payment"
 //component for the mobile menu
 function Comp_Dashboard({ isLoggedIn = true }) {
     let [session, loading] = useSession()
@@ -26,7 +27,7 @@ function Comp_Dashboard({ isLoggedIn = true }) {
 }
 
 function Substance({ user = { userEmail: "" } }) {
-    let [totalTransaction,changeTotalTransaction]=useState(0)
+    let [totalTransaction, changeTotalTransaction] = useState(0)
     return <>
         <section style={{ marginTop: "220" }}>
             <section className="body1">
@@ -64,8 +65,8 @@ function Substance({ user = { userEmail: "" } }) {
             <br />
             <section className="py-4 mb-5 container ">
                 <div className="clearfix">
-                    <Transaction customerEmail={user.userEmail} 
-                    hookChangeTotalTransaction={changeTotalTransaction} />
+                    <Transaction customerEmail={user.userEmail}
+                        hookChangeTotalTransaction={changeTotalTransaction} />
                 </div>
             </section>
             <section className="p-3 mt-4" style={{ backgroundColor: "#e3e3e3" }}>
@@ -88,16 +89,13 @@ let WalletSummary = ({ customerEmail }) => {
                 method: "GET",
             })
             let { wallet, err } = await res.json()
-            console.log("wallet")
             console.log(wallet)
-            console.log("wallet")
             if (err) {
-                console.log(err)
                 changeWalletResponseTypeState("error")
             }
             if (wallet) {
                 changeWalletResponseTypeState("transaction")
-                changeWalletState(wallet);
+                changeWalletState(wallet)
             }
         })();
     }, [])
@@ -114,7 +112,7 @@ let WalletSummary = ({ customerEmail }) => {
             viewWallet = <><div className="card-body  shadow p-4 ">
                 <p className="card-text float-left">
                     <b style={{ color: "#4621ad" }}>WALLET BALANCE</b>
-                    <br /> <span>(₦) {walletState.balance}</span></p>
+                    <br /> <span>₦ {walletState.balance}</span></p>
                 <i className='fas fa-wallet float-right' style={{ fontSize: "25px", color: "#4621ad" }}></i>
             </div></>
             break;
@@ -127,7 +125,7 @@ let WalletSummary = ({ customerEmail }) => {
     </>
 }
 
-let Transaction = ({ customerEmail,hookChangeTotalTransaction }) => {
+let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
     let [transactionsState, changeTransactionsState] =
         useState([{ id: "", ref_num: "", email: "", transact_date: "", amount: "" }])
     let [transactionResponseTypeState, changeTransactionResponseTypeState] =
@@ -206,14 +204,13 @@ let Transaction = ({ customerEmail,hookChangeTotalTransaction }) => {
             })
             let { transactions, err } = await res.json()
             if (err) {
-                console.log(err)
                 changeTransactionResponseTypeState("error")
             }
             if (Array.isArray(transactions)) {
                 changeTransactionResponseTypeState("transaction")
-                let totalTransaction=transactions.reduce((prev,cur,index,trans)=>{
-                    return prev+cur.amount;
-                },0)
+                let totalTransaction = transactions.reduce((prev, cur, index, trans) => {
+                    return prev + cur.amount;
+                }, 0)
                 hookChangeTotalTransaction(totalTransaction)
                 changeTransactionsState(transactions);
             }

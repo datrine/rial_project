@@ -26,17 +26,16 @@ function MyApp({ Component, pageProps }) {
     return foundArray.length > 0;
   })
   console.log(`Found match of ${router.pathname} :${pathNeedAuth}`);
-  //console.log(session);
-  return <>{ /* */pathNeedAuth && !session ?
+  return <>{pathNeedAuth && !session ?
     <Provider session={pageProps.session}>
-      <Login  callbackUrl={router.route} /></Provider> :
+      <Login callbackUrl={router.route} /></Provider> :
     <Provider session={pageProps.session}>
       <Component {...pageProps} />
     </Provider>}</>
 }
 
 function authList() {
-  return ["/admin", "/dashboard", "/wallet", "/profile"]
+  return ["/dashboard", "/wallet", "/profile", "/airtime","/data"]
 }
 
 async function mySessionFn(hookChangeSessionState) {

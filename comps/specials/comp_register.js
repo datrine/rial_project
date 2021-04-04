@@ -167,7 +167,7 @@ let FormRegister = ({ hookChangeRegState }) => {
                             (userNameValidObj.msg ? (<span><FontAwesomeIcon icon={faTimes} />
                                 <i className="w3-margin-left">{userNameValidObj.msg}</i>
                             </span>) : (usernameState.length > 0 ?
-                            <span><FontAwesomeIcon icon={faCheck} /> Validated</span>:"Required"))
+                                <span><FontAwesomeIcon icon={faCheck} /> Validated</span> : "Required"))
                     }
                 </p>
                 <div className="row">

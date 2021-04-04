@@ -59,7 +59,63 @@ const options = {
                 }
             }
         })
-    ],
+    ,
+        Providers.Credentials({
+            // The name to display on the sign in form (e.g. 'Sign in with...')
+            name: 'Admin Credentials',
+            id:"admincreds",
+            // The credentials is used to generate a suitable form on the sign in page.
+            // You can specify whatever fields you are expecting to be submitted.
+            // e.g. domain, username, password, 2FA token, etc.
+            credentials: {
+                username: { label: "Username", type: "text", placeholder: "jsmith" },
+                password: { label: "Password", type: "password" }
+            },
+            authorize: async (credentials) => {
+                console.log(credentials)
+                const userFn = /*credentials*/async ({ username, userEmailOrName, password }) => {
+                    // You need to provide your own logic here that takes the credentials
+                    // submitted and returns either a object representing a user or value
+                    // that is false/null if the credentials are invalid.
+                    // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
+                    return knex("admintable").where({
+                        adminEmail:userEmailOrName,
+                    }).orWhere({
+                        userEmail: userEmailOrName,
+                    }).select().then(async retResult => {
+                        if (retResult.length > 0) {
+                            let adminFound = retResult[0];
+                            let isValidPass = await bcrypt.compare(password, adminFound.adminPass)
+                            console.log(isValidPass)
+                            if (isValidPass) {
+                                credentials = { ...credentials, ...adminFound }
+                                return { user: { ...credentials } };
+                            } else {
+                                let err = { msg: "Username/email and password don't match", type: "no_match" }
+                                return { err };
+                            }
+                        }
+                        else {
+                            return { err: { msg: "No admin found", type: "no_account" } }
+                        }
+                    }).catch(e => {
+                        console.log(e)
+                        return { err: { msg: "Network error", type: "network_err" } }
+                    })
+                }
+                const { user, err } = await userFn(credentials)
+                if (user) {
+                    // Any user object returned here will be saved in the JSON Web Token
+                    return Promise.resolve(user)
+                    //return Promise.resolve(user)
+                } else if (err) {
+                    console.log(err)
+                    return Promise.reject(`${credentials.callbackUrl
+                        }?errType=${err.type}&userCred=${credentials.userEmailOrName}`);
+                }
+            }
+        })
+   ],
     pages: {
         signIn: '/login',
         signOut: '/signout',

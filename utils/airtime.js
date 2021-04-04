@@ -1,24 +1,21 @@
-async function checkUserDetails(opt = { username: "setsub", apiKey: "jdj54ikjjf", }) {
-    let res = await fetch("/api/airtime/checkBalance/", {
-        method: "GET",
-    })
-    return await res.json();
-}
-
-async function buyAirtime(options = {}) {
-    let res = await fetch("https://setsub.com/buyAirtime", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-            "Authorization": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: "username", apiKey: "jdj54ikjjf", network: "mtn",
-            amount: 100, beneficiaryNumber: "09038472927"
+async function buyAirtime(options = { operator: "", type: "", value: "", phone: "" }) {
+    try {
+        console.log(options)
+        let res = await fetch("/api/airtime/buyAirtime", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                "Authorization": "Token 66f2e5c39ac8640f13cd888f161385b12f7e5e92",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(options)
         })
-    })
-    return await res.json();
+        let data = await res.json();
+        console.log(data)
+        return data
+    } catch (error) {
+        return { err: error }
+    }
 }
 
-export { checkUserDetails, buyAirtime }
+export { buyAirtime }

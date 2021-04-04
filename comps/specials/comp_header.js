@@ -16,15 +16,15 @@ function Comp_Header({ isLoggedIn = true }) {
             <section id="" className="py-4 container" >
                 <div className="container-fluid" style={{padding:0}}>
                     <div className="row " >
-                        <div className="col-sm-6 col-6">
+                        <div className="col-sm-6 container-fluid">
                             <div className="logo">
                                 <a href="index.html">
                                     <img src="/assets/img/logo/logo.svg" alt="" style={{ width: "150px" }} /></a>
                             </div>
                         </div>
-                        <div className="col-sm-6 col-6" style={{ color: "#4621ad",paddingRight:"50px" }}>
+                        <div className="col-sm-6 container-fluid" style={{ color: "#4621ad",paddingRight:"50px" }}>
                             <i className='fas fa-wallet ' style={{ fontSize: "25px", color: "#4621ad" }}></i> SOURCE_BALANCE &nbsp; &nbsp; &nbsp;
-                        <img src="img/default-user-avatar.png" alt="" style={{ width: "40px" }} /><span>
+                        <img src="/img/default-user-avatar.png" alt="" style={{ width: "40px" }} /><span>
                                 <span className="dropdown" style={{ }}>
                                     <a className=" dropdown-toggle" data-toggle="dropdown">
                                         {session.user.username} &nbsp;</a>
