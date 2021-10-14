@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { CompHTMLHeader, CompPreloader, Header, Scripts } from "../comps/gen_page/gen_exporter"
+import { CompHTMLHeader, CompPreloader, Header, Scripts } from "../../comps/gen_page/gen_exporter"
 
 let AdminLogin = ({ csrfToken,callbackUrl }) => {
     let[session,loading]= useSession()
