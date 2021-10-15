@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 export default function Home() {
   let router = useRouter();
   let { query: { callbackUrl } } = router
-  let [session, loading] = useSession()
+  let [session, loading] = useSession();
   return <>
     <CompHTMLHeader />
     <CompPreloader />
