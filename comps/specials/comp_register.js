@@ -93,6 +93,11 @@ let FormRegister = ({ hookChangeRegState }) => {
     let [canSubmit, toggleCanSubmit] = useState(validState)
     let [isSubmittingState, changeIsSubmittingState] = useState(false)
 
+    let passwordValidObj = fetchError({
+        errorList: errorListState,
+        prop: "password"
+    });
+
     useEffect(() => {
         if (changedState > 0) {
             (async () => {
@@ -124,7 +129,7 @@ let FormRegister = ({ hookChangeRegState }) => {
         <div className="card-bottom">
             <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>Create an Account!</h4>
             <p><b style={{ color: "red" }}>{
-                (!canSubmit ? "Some errors in the form" : "")
+                (!canSubmit && changedState > 0 ? "Some errors in the form" : "")
             }</b></p>
             <form onSubmit={
                 async e => {
@@ -208,6 +213,7 @@ let FormRegister = ({ hookChangeRegState }) => {
                         }
                         </p>
                     </div>
+
                     <div className="col-md-6">
                         <input value={passwrdState} onChange={
                             e => {
@@ -217,9 +223,16 @@ let FormRegister = ({ hookChangeRegState }) => {
                         } className="form-control" type="password"
                             style={{ padding: "25px 10px 25px 10px" }} name="password"
                             placeholder="Enter Password" required />
-                        <p style={{ textAlign: "left", color: "red", fontStyle: "italic", fontSize: "13px" }}>{
-                            fetchError({ errorList: errorListState, prop: "password" })?.msg
-                        }
+                        <p style={{
+                            textAlign: "left", fontSize: "13px"
+                        }}>{
+                                passwordValidObj ? <>
+                                    <span style={{color: "red", fontStyle: "italic"
+                        }}> {passwordValidObj.msg}</span>
+                                </> : <>
+                                    <span style={{ color: "green",
+                        }}>Required</span></>
+                            }
                         </p>
                         <input value={repassState} onChange={
                             e => {
@@ -247,7 +260,7 @@ let FormRegister = ({ hookChangeRegState }) => {
                 </button>
                 <p className="text-center">
                     <a href="/forget_password" style={{ color: "#b626bf" }}>Forget Password?</a><br />
-                    <a href="/login" style={{ color: "#b626bf" }}>Already have an account? Login</a>
+                    <a href="/login" style={{ color: "#b626bf" }}>Already have an account?Login</a>
                 </p>
             </form>
         </div></>
@@ -262,11 +275,11 @@ let SuccessfulReg = () => {
                     e => {
                         let { password, username, email, ...rest } = user
                         signIn("credentials", {
-                            callbackUrl:"login",
+                            callbackUrl: "login",
                             username,
                             identifier: (email || username),
                             password: password, email: email, ...rest,
-                            
+
                         })
                     }
                 }>Log in to Continue</button>
