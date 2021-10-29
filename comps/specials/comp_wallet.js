@@ -17,7 +17,7 @@ let Comp_Wallet = () => {
     let user;
     console.log()
     let successHandler = async () => {
-        let res = await fetch(`/api/${session.user.userEmail}/wallet/add`, {
+        let res = await fetch(`/api/${session.user.username}/wallet/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -44,7 +44,7 @@ let Comp_Wallet = () => {
     useEffect(async () => {
         if (session) {
             user = session.user
-            let res = await fetch(`/api/${user.userEmail}/wallet/total/`, {
+            let res = await fetch(`/api/${user.username}/wallet/total/`, {
                 method: "GET",
             })
             let { wallet, err } = await res.json();

@@ -17,7 +17,7 @@ const options = {
             },
             authorize: async (credentials) => {
                 console.log(credentials)
-                const userFn = /*credentials*/async ({ username, userEmailOrName: identifier, password }) => {
+                const userFn = /*credentials*/async ({ identifier, password }) => {
                     // You need to provide your own logic here that takes the credentials
                     // submitted and returns either a object representing a user or value
                     // that is false/null if the credentials are invalid.
@@ -73,16 +73,16 @@ const options = {
             },
             authorize: async (credentials) => {
                 console.log(credentials)
-                const userFn = /*credentials*/async ({ username, userEmailOrName, password }) => {
+                const userFn = /*credentials*/async ({ identifier, password }) => {
                     // You need to provide your own logic here that takes the credentials
                     // submitted and returns either a object representing a user or value
                     // that is false/null if the credentials are invalid.
                     // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
                     return knex("admintable").where({
-                        adminEmail: userEmailOrName,
+                        email: identifier,
                     }).orWhere({
-                        userEmail: userEmailOrName,
-                    }).select().then(async retResult => {
+                        username: identifier,
+                    }).andWhere({role:"admin"}).select().then(async retResult => {
                         if (retResult.length > 0) {
                             let adminFound = retResult[0];
                             let isValidPass = await bcrypt.compare(password, adminFound.adminPass)

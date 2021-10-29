@@ -10,14 +10,14 @@ export default async function (req, res) {
     try {
         if (req.method === "GET") {
             const {
-                query: { userEmailOrName, userName },
+                query: { username },
             } = req
-            let userEmail = userEmailOrName
+            //console.log(username)
             await middlewareRunner(req, res, cors);
-            await knex("users").where({ referral: userEmail }).orWhere({ referral: userName })
+            await knex("transactions").where({ username })
                 .then(async returnedRes => {
                     console.log(returnedRes)
-                    return res.json({ referrals: returnedRes })
+                    return res.json({ transactions: returnedRes })
                 }).catch(error => {
                     console.log(error)
                     //res.statusCode = 500;
@@ -26,6 +26,6 @@ export default async function (req, res) {
 
         }
     } catch (error) {
-        console.error({ error, err: error.message });
+        console.error(error.message);
     }
 }

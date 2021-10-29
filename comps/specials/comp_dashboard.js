@@ -26,7 +26,7 @@ function Comp_Dashboard({ isLoggedIn = true }) {
     </>;
 }
 
-function Substance({ user = { userEmail: "" } }) {
+function Substance({ user = { email: "" } }) {
     let [totalTransaction, changeTotalTransaction] = useState(0)
     return <>
         <section style={{ marginTop: "220" }}>
@@ -46,7 +46,7 @@ function Substance({ user = { userEmail: "" } }) {
                         <div className="col-md-6 " >
 
                             <div className="card bg-light  mt-2">
-                                <WalletSummary customerEmail={user.userEmail} />  </div>
+                                <WalletSummary customerEmail={user.email} />  </div>
 
                         </div>
                         <div className="col-md-6">
@@ -65,7 +65,7 @@ function Substance({ user = { userEmail: "" } }) {
             <br />
             <section className="py-4 mb-5 container ">
                 <div className="clearfix">
-                    <Transaction customerEmail={user.userEmail}
+                    <Transaction customerEmail={user.email}
                         hookChangeTotalTransaction={changeTotalTransaction} />
                 </div>
             </section>
@@ -189,8 +189,10 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
             viewOfTransactionResponseType = <>
                 <div className="float-left  p-3 shadow-lg"
                     style={{ width: "100%", border: "1px solid #e3e3e3" }}>
-                    <p style={{ textAlign: "center" }}><FontAwesomeIcon icon={faSpinner} spin />
-                    </p></div>
+                    <p style={{ textAlign: "center" }}>
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                    </p>
+                </div>
             </>
             break;
         default:

@@ -23,6 +23,9 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
         default:
             break;
     }
+    useEffect(()=>{
+        console.log("lolll")
+    });
     return <>
         <section id="services" className="best-pricing pricing-padding" data-background="/assets/img/gallery/best_pricingbg.jpg">
             <div className="container">
@@ -40,7 +43,6 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
             <div className="container">
                 <div className="row">
                     <div className="col-xl-4 col-sm-2 col-lg-4 col-md-3">
-                        kgkhjkbkb
                     </div>
                     <div className="col-xl-4 col-sm-8 col-lg-6 col-md-6 shadow-lg" style={{backgroundColor:"white"}}>
                         <div className="single-card  text-center mb-30">
@@ -73,9 +75,10 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
                                         name="login" id="login" onClick={
                                             e => {
                                                 console.log(callbackUrl)
+
                                                 signIn("credentials", {
                                                     callbackUrl, password: passwordState,
-                                                    userEmailOrName: emailOrUsernameState
+                                                    identifier: emailOrUsernameState
                                                 });
                                             }
                                         } />

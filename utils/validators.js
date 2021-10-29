@@ -180,7 +180,7 @@ let registerValidator = async (instance = {
 }
 
 let adminRegisterValidator = async (instance = {
-    adminEmail: "", adminPass: "", adminRePass: ""
+    adminEmail: "", adminPass: "", adminRePass: "", role: "admin"
 }) => {
     let { adminEmail, adminPass, adminRePass, } = instance
     //console.log(instance)
@@ -311,7 +311,10 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
     else {
         if (operator === "MTN") {
             let foundMatch = false;
-            let mtnList = ["0803", "0703", "0903", "0806", "0706", "0813", "0810", "0814", "0816"]
+            let mtnList =
+                ["0803", "0703", "0903", "0806", "0706", "0813", "0810", "0814", "0816",
+                    "+234803", "+234703", "+234903", "+234806", "+234706", "+234813", "+234810",
+                    "+234814", "+234816"]
             for (const operator of mtnList) {
                 if (phoneNum.trim().startsWith(operator)) {
                     foundMatch = true;
@@ -330,7 +333,9 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
 
         if (operator === "GLO") {
             let foundMatch = false;
-            let gloList = ["0705", "0805", "0807", "0811", "0815", "0905"]
+            let gloList =
+                ["0705", "0805", "0807", "0811", "0815", "0905",
+                    "+234705", "+234805", "+234807", "+234811", "+234815", "+234905"]
             for (const operator of gloList) {
                 if (phoneNum.trim().startsWith(operator)) {
                     foundMatch = true;
@@ -349,7 +354,9 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
 
         if (operator === "Airtel") {
             let foundMatch = false;
-            let airtelList = ["0701", "0708", "0802", "0808", "0812", "0901", "0902", "0907"]
+            let airtelList =
+                ["0701", "0708", "0802", "0808", "0812", "0901", "0902", "0907", "+234701",
+                 "+234708", "+234802", "+234808", "+234812", "+234901", "+234902", "+234907"]
             for (const operator of airtelList) {
                 if (phoneNum.trim().startsWith(operator)) {
                     foundMatch = true;
@@ -403,4 +410,4 @@ let fetchError = ({ errorList = [], prop = "" }) => {
     }
 }
 
-export { registerValidator, fetchError, phoneValidator,adminRegisterValidator }
+export { registerValidator, fetchError, phoneValidator, adminRegisterValidator }
