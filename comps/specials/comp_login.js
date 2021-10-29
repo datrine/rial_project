@@ -12,18 +12,18 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
     switch (errType) {
         case "no_account":
             viewErrorType = <span style={{ color: "red" }}>No account found for
-            <b style={{ color: "red", marginLeft: "5px" }}>{userCred}</b></span>
+                <b style={{ color: "red", marginLeft: "5px" }}>{userCred}</b></span>
             break;
         case "no_match":
             viewErrorType = <span style={{ color: "red" }}>No user credentials don't match</span>
             break;
-            case "network_err":
-                viewErrorType = <span style={{ color: "red" }}>Network error</span>
-                break;
+        case "network_err":
+            viewErrorType = <span style={{ color: "red" }}>Network error</span>
+            break;
         default:
             break;
     }
-    useEffect(()=>{
+    useEffect(() => {
         console.log("lolll")
     });
     return <>
@@ -44,7 +44,7 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
                 <div className="row">
                     <div className="col-xl-4 col-sm-2 col-lg-4 col-md-3">
                     </div>
-                    <div className="col-xl-4 col-sm-8 col-lg-6 col-md-6 shadow-lg" style={{backgroundColor:"white"}}>
+                    <div className="col-xl-4 col-sm-8 col-lg-6 col-md-6 shadow-lg" style={{ backgroundColor: "white" }}>
                         <div className="single-card  text-center mb-30">
                             <div className="card-top">
                                 <h4 >Welcome</h4>

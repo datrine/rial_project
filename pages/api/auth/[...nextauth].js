@@ -15,8 +15,10 @@ const options = {
                 username: { label: "Username", type: "text", placeholder: "jsmith" },
                 password: { label: "Password", type: "password" }
             },
-            authorize: async (credentials) => {
+            authorize: async (credentials, req) => {
+                console.log("credentials")
                 console.log(credentials)
+                console.log("credentials")
                 const userFn = /*credentials*/async ({ identifier, password }) => {
                     // You need to provide your own logic here that takes the credentials
                     // submitted and returns either a object representing a user or value
@@ -82,7 +84,7 @@ const options = {
                         email: identifier,
                     }).orWhere({
                         username: identifier,
-                    }).andWhere({role:"admin"}).select().then(async retResult => {
+                    }).andWhere({ role: "admin" }).select().then(async retResult => {
                         if (retResult.length > 0) {
                             let adminFound = retResult[0];
                             let isValidPass = await bcrypt.compare(password, adminFound.adminPass)
@@ -125,6 +127,9 @@ const options = {
     },
     callbacks: {
         signIn: async (user, account, profile) => {
+            console.log("user")
+            console.log(user)
+            console.log("user")
             const isAllowedToSignIn = true
             if (isAllowedToSignIn) {
                 return Promise.resolve(true)
@@ -137,9 +142,8 @@ const options = {
             }
         },
         redirect: async (url, baseUrl) => {
-            console.log(baseUrl);
-            console.log(url);
-            return url.startsWith(baseUrl) ? url : baseUrl
+            let u = new URL(url, baseUrl)
+            return u.href;
             /*  return url.startsWith(baseUrl)
                   ? Promise.resolve(url)
                   : Promise.resolve(baseUrl)*/
@@ -157,7 +161,9 @@ const options = {
                 let { password, ...rest } = user;
                 token = { ...token, ...rest }
             }
+            console.log("useryyy")
             console.log(user)
+            console.log("useryyy")
             return Promise.resolve(token)
         }
     }
