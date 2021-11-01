@@ -12,7 +12,6 @@ export default async function (req, res) {
             const {
                 query: { email, username },
             } = req
-            let email = email
             await middlewareRunner(req, res, cors);
             await knex("users").where({ referrer: email }).orWhere({ referral: username })
                 .then(async returnedRes => {
