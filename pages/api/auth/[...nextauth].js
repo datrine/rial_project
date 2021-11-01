@@ -141,7 +141,8 @@ const options = {
                 // return Promise.reject('/path/to/redirect')        // Redirect to a URL
             }
         },
-        redirect: async (url, baseUrl) => {
+        redirect: async (url, baseUrl = process.env.SELF_URL) => {
+            console.log("baseUrl: "+baseUrl)
             let u = new URL(url, baseUrl)
             return u.href;
             /*  return url.startsWith(baseUrl)
@@ -161,9 +162,6 @@ const options = {
                 let { password, ...rest } = user;
                 token = { ...token, ...rest }
             }
-            console.log("useryyy")
-            console.log(user)
-            console.log("useryyy")
             return Promise.resolve(token)
         }
     }
