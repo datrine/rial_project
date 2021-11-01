@@ -141,7 +141,7 @@ const options = {
                 // return Promise.reject('/path/to/redirect')        // Redirect to a URL
             }
         },
-        redirect: async (url, baseUrl = process.env.SELF_URL) => {
+        redirect: async (url, baseUrl) => {
             console.log("baseUrl: "+baseUrl)
             let u = new URL(url, baseUrl)
             return u.href;
