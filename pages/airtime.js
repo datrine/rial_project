@@ -4,12 +4,7 @@ export default function Airtime() {
     return <>
         <CompHTMLHeader />
         <CompPreloader />
-<Comp_Airtime/>
-        <footer className=" " style={{ background: "#e3e3e3" }}>
-            <div className="container">
-                <p>copyright 2020 &copy;. All right reserved.</p>
-            </div>
-        </footer>
+        <Comp_Airtime />
         <Scripts />
     </>
 }

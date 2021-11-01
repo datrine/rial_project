@@ -94,7 +94,7 @@ let Comp_Airtime = () => {
                 </section>
                 <section className="p-3 mt-4" style={{ backgroundColor: "#e3e3e3" }}>
                     <div className="container">
-                        <p>copyright 2020 &copy;. All right reserved.</p>
+                        <p style={{textAlign:"center"}}>copyright 2020 &copy;. All right reserved.</p>
                     </div>
                 </section>
             </section>

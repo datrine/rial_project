@@ -5,11 +5,6 @@ export default function Airtime() {
         <CompHTMLHeader />
         <CompPreloader />
         <Comp_Data />
-        <footer className=" " style={{ background: "#e3e3e3" }}>
-            <div className="container">
-                <p>copyright {(new Date).getFullYear()} &copy;. All right reserved.</p>
-            </div>
-        </footer>
         <Scripts />
     </>
 }
