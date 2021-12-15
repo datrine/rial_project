@@ -25,6 +25,7 @@ export default async function handler(req, res) {
             if (!phone) {
                 throw "No phone"
             }
+            amount=Number(amount)
             let getUserResponse = await getUser({ email });
 
             if (getUserResponse.err) {
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
             }
             let user = getUserResponse.user;
             let username = user.username
+            console.log(req.body)
             let getWalletResponse = await getWallet({ username });
             if (getWalletResponse.err) {
                 console.log(getWalletResponse.err)
