@@ -1,14 +1,10 @@
 import { useState } from "react";
-import Link from "next/link"
-import Head from "next/head"
 import { Comp_Header } from "./comp_header";
 import { FormAirtime } from "./comp_airtime";
 import { SubHeader } from "./comp_sub_header";
-import { buyAirtime } from "../../utils/cable_tv";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { PaymentApps } from "./payment"
 import { FormInternetData } from "./comp_data";
+import { session } from "next-auth/client";
+import { Comp_CableTV, FormCableTV } from "./comp_cable";
 //component for the mobile menu
 function Comp_TopUp({ isLoggedIn = true, user }) {
     return <>
@@ -18,9 +14,9 @@ function Comp_TopUp({ isLoggedIn = true, user }) {
             {/*<!-- The Modal airtime-->*/}
             <AirtimeModal user={user} />
             {/*<!-- The Modal cable tv-->*/}
-            <CableTvModal />
+            <CableTvModal user={user} />
             {/*<!-- The Modal data -->*/}
-            <DataModal />
+            <DataModal user={user} />
             <div className="clearfix container">
                 <p className="float-right"><span><a href="/" className="bttn p-3">Home</a></span></p>
                 <p className="float-left text1 ">Topup</p>
@@ -32,10 +28,10 @@ function Comp_TopUp({ isLoggedIn = true, user }) {
                         <AirtimeDiv />
                     </div>
                     <div className="col-md-4">
-                        <CableDiv />
+                        <DataDiv />
                     </div>
                     <div className="col-md-4">
-                        <DataDiv />
+                        <CableDiv />
                     </div>
                 </div>
             </div>
@@ -100,7 +96,7 @@ function CableDiv({ }) {
                     </div>
                 </div>
                 <br />
-                <button className="bttn p-3 shadow-lg "
+                <button disabled className="bttn p-3 shadow-lg "
                     data-toggle="modal" data-target="#cabletv">Buy Sub</button>
             </div>
         </div>
@@ -138,52 +134,98 @@ function DataDiv(params) {
 
 function AirtimeModal({ user }) {
     let view = null;
-    let [viewType, changeViewType] = useState("purchase")
-    let viewToResult = null
+    let [viewType, changeViewType] = useState("airtime")
+    let [viewToResult, changeViewToResult] = useState(null)
     let onSuccess = (res) => {
         changeViewType("success");
         viewToResult = <>
             <h3>{res}</h3>
         </>
+        changeViewToResult(viewToResult)
     }
     let onFailure = ({ err, message }) => {
-        changeViewType("failure");
+        console.log(err)
         viewToResult = <>
             <h3>{err}</h3>
             <p>{message}</p>
         </>
+        changeViewToResult(viewToResult)
+        changeViewType("failure");
     }
     switch (viewType) {
         case "success":
-            <SuccessfulTransaction />
+            view = <SuccessfulTransaction changeView={changeViewType} />
             break;
         case "failure":
-            <FailedTransaction view={viewToResult} />
+            view = <FailedTransaction view={viewToResult} changeView={changeViewType} />
+            break;
+        case "airtime":
+            view =
+                <FormAirtime user={user} onFailure={onFailure} onSuccess={onSuccess} />
             break;
         default:
-            view = <>
-                <div className="modal" id="buyairtime" role="dialog">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>AIRTIME</h4>
-                                <button type="button" className="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div className="modal-body">
-                                <FormAirtime onFailure={onFailure} onSuccess={onSuccess} /></div>
-                            <div className="modal-footer">
-                                <button type="button" className="btt p-3" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
+            view =
+                <FormAirtime user={user} onFailure={onFailure} onSuccess={onSuccess} />
             break;
     }
-    return <>{view}</>
+    return <>
+        <div className="modal" id="buyairtime" role="dialog">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>AIRTIME</h4>
+                        <button onClick={e => {
+                            changeViewType("airtime")
+                        }} type="button" className="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div className="modal-body">
+                        {view}
+                    </div>
+                    <div className="modal-footer">
+                        <button onClick={e => {
+                            changeViewType("airtime")
+                        }} type="button" className="btt p-3" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </>
 }
 
-function CableTvModal({ }) {
+function CableTvModal({ user }) {
+    let view = null;
+    let [viewType, changeViewType] = useState("airtime")
+    let [viewToResult, changeViewToResult] = useState(null)
+    let onSuccess = (res) => {
+        changeViewType("success");
+        viewToResult = <>
+            <h3>{res}</h3>
+        </>
+        changeViewToResult(viewToResult)
+    }
+    let onFailure = ({ err, message }) => {
+        console.log(err)
+        viewToResult = <>
+            <h3>{err}</h3>
+            <p>{message}</p>
+        </>
+        changeViewToResult(viewToResult)
+        changeViewType("failure");
+    }
+    switch (viewType) {
+        case "success":
+            view = <SuccessfulTransaction changeView={changeViewType} />
+            break;
+        case "failure":
+            view = <FailedTransaction view={viewToResult} changeView={changeViewType} />
+            break;
+        case "airtime":
+            view = <FormCableTV user={user} onFailure={onFailure} onSuccess={onSuccess} />
+            break;
+        default:
+            view = <FormCableTV user={user} onFailure={onFailure} onSuccess={onSuccess} />
+            break;
+    }
     return <>
         <div className="modal" id="cabletv">
             <div className="modal-dialog">
@@ -197,26 +239,7 @@ function CableTvModal({ }) {
                     </div>
                     {/*<!-- Modal body -->*/}
                     <div className="modal-body">
-                        <form className="form-group " action="">
-                            <div className="form-group">
-                                <select className="form-control" required
-                                    style={{ display: "block" }} >
-                                    <option value="">Select</option>
-                                    <option value="">DSTV</option>
-                                    <option value="">GoTV</option>
-                                    <option value="">Startimes</option>
-                                    <option value="">PHCN</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <input type="text" className="form-control w-100" placeholder="Card Number" required />
-                            </div>
-                            <div className="form-group" id="card-select">
-                            </div>
-                            <br />
-                            <button name="buy" className="p-3  btt">Buy now..</button>
-                            <br />
-                        </form>
+                        {view}
                     </div>
                     { /* <!-- Modal footer -->*/}
                     <div className="modal-footer">
@@ -228,7 +251,42 @@ function CableTvModal({ }) {
     </>
 }
 
-function DataModal(params) {
+function DataModal({ user }) {
+    let view = null;
+    let [viewType, changeViewType] = useState("data")
+    let [viewToResult, changeViewToResult] = useState(null)
+    let onSuccess = (res) => {
+        changeViewType("success");
+        viewToResult = <>
+            <h3>{res}</h3>
+        </>
+        changeViewToResult(viewToResult)
+    }
+    let onFailure = ({ err, message }) => {
+        console.log(err)
+        viewToResult = <>
+            <h3>{err}</h3>
+            <p>{message}</p>
+        </>
+        changeViewToResult(viewToResult)
+        changeViewType("failure");
+    }
+    switch (viewType) {
+        case "success":
+            view = <SuccessfulTransaction changeView={changeViewType} />
+            break;
+        case "failure":
+            view = <FailedTransaction view={viewToResult} changeView={changeViewType} />
+            break;
+        case "airtime":
+            view =
+                <FormInternetData user={user} onFailure={onFailure} onSuccess={onSuccess} />
+            break;
+        default:
+            view =
+                <FormInternetData user={user} onFailure={onFailure} onSuccess={onSuccess} />
+            break;
+    }
     return <>
         <div className="modal" id="datatopup">
             <div className="modal-dialog">
@@ -236,14 +294,19 @@ function DataModal(params) {
                     {/*<!-- Modal Header -->*/}
                     <div className="modal-header">
                         <h4 className="modal-title" style={{ fontSize: "25px", paddingBottom: "10px" }}>Data Topup</h4>
-                        <button type="button" className="close" data-dismiss="modal">&times;</button>
+                        <button onClick={e => {
+                            changeViewType("data")
+                        }} type="button" className="close" data-dismiss="modal">&times;</button>
                     </div>
                     {/*<!-- Modal body -->*/}
                     <div className="modal-body">
-                        <FormInternetData/></div>
+                        {view}
+                    </div>
                     {/*<!-- Modal footer -->*/}
                     <div className="modal-footer">
-                        <button type="button" className="btt p-3" data-dismiss="modal">Close</button>
+                        <button onClick={e => {
+                            changeViewType("data")
+                        }} type="button" className="btt p-3" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -253,30 +316,18 @@ function DataModal(params) {
 
 function SuccessfulTransaction({ view }) {
     return <>
-        <div style={{
-            display: "flex", justifyContent: "center", alignItems: "center",
-            position: "absolute", backgroundColor: "transparent",
-            top: 0, bottom: 0, left: 0, right: 0
-        }}>
-            <p style={{textAlign: "right"
-            }}><FontAwesomeIcon icon={faTimes} /></p>
+        <form className="form-group ">
             {view}
-        </div></>
+        </form></>
 }
 
-function FailedTransaction({ view }) {
+function FailedTransaction({ view, changeView }) {
+    console.log("Failed...")
     return <>
-        <div style={{
-            display: "flex", justifyContent: "center", alignItems: "center",
-            position: "absolute", backgroundColor: "transparent", top: 0, bottom: 0, left: 0, right: 0
-        }}>
-            <p style={{
-                position: "absolute",
-                top: 0, bottom: 0, left: 0, right: 0, textAlign: "right"
-            }}><FontAwesomeIcon icon={faTimes} /></p>
+        <form className="form-group ">
             {view}
-            <p>Failed...</p>
-        </div></>
+        </form>
+    </>
 }
 
 export { Comp_TopUp }

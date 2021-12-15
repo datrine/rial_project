@@ -41,6 +41,7 @@ export default async function (req, res) {
 
         }
     } catch (error) {
-        console.error(error.message);
+        console.log(error.message);
+        return { err: error }
     }
 }

@@ -5,10 +5,11 @@ import { SubHeader } from './comp_sub_header';
 import { buyData, fetchDataPlans } from "../../utils/data"
 import { checkUserDetails } from "../../utils/userAcc"
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/client';
+import { session, useSession } from 'next-auth/client';
 import { fetchError, phoneValidator } from '../../utils/validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { airtel_dataObj, etisalat_dataObj, glo_dataObj, mtn_corperate_dataObj, mtn_smedataObj, mtn_sme_copyObj } from '../../utils/data_palaver/plans';
 
 let Comp_Data = () => {
     let [rialAccDetails, changeRialAccDetails] = useState({})
@@ -81,7 +82,7 @@ let Comp_Data = () => {
                         <p>
                             We buy Bulk Airtime of all Network (SnS/VTU) at a good rate starting from 5k & above with an instant payment to your bank account once verified.
                             You would need to chat with us to sell your excess airtime. Click the button below to start a conversation on WhatsApp with us . Thank you very much
-    </p>
+                        </p>
                         <a href="https://wa.me/+2348130335681" style={{ color: "#fff", fontFamily: "'Courier New', Courier, monospace", fontFamily: 600 }} className="btn card-btn1">
                             <img src="/img/002-whatsapp.svg" alt="" width="25px" /> &nbsp;Chat with us</a>
                     </div>
@@ -104,10 +105,14 @@ let Comp_Data = () => {
 }
 
 function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }) {
-    let [dataPlansState, changeDataPlansState] = useState([])
-    let [planIdState, changePlanIdState] = useState("")
+    let [dataPlansState, changeDataPlansState] = useState([
+        { displayName: "Select data plan", value: "", price: "" }
+    ]);
+    let [planState, changePlanState] = useState({
+        displayName: "", value: "", price: ""
+    });
     let [phoneNumState, changePhoneNumState] = useState("")
-    let [operatorState, changeOperatorState] = useState("")
+    let [dataServiceState, changeDataServiceState] = useState("")
     let [changedState, changeChangedState] = useState(0)
 
 
@@ -119,57 +124,128 @@ function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }
     let [canSubmit, toggleCanSubmit] = useState(validState)
     let [isSubmittingState, changeIsSubmittingState] = useState(false)
     useEffect(() => {
-        let res = phoneValidator({ phoneNum: phoneNumState, operator: operatorState });
+        let getOperator = (dataService) => {
+            switch (dataService) {
+                case "mtn_sme_copy":
+                case "mtn_corperate_data":
+                case "mtn_sme":
+                    return "mtn"
+                case "Glo_data":
+                    return "glo"
+                case "Etisalat_data":
+                    return "9mobile"
+                case "Airtel_data_gd":
+                    return "airtel"
+
+                default:
+                    return "mtn"
+            }
+        }
+        let res = phoneValidator({ phoneNum: phoneNumState, operator: getOperator(dataServiceState) });
         let { valid, errorList, instance } = res
         changeValidState(valid)
         changeErrorListState(errorList)
-    }, [changedState])
+    }, [changedState]);
+
+    useEffect(() => {
+        let dataPlans = [
+            { displayName: "Select data plan", value: "", price: "" }]
+        if (dataServiceState === "mtn_sme_copy") {
+            dataPlans.push(...mtn_sme_copyObj.plans);
+            changeDataPlansState(dataPlans)
+        }
+
+        else if (dataServiceState === "mtn_corperate_data") {
+            dataPlans.push(...mtn_corperate_dataObj.plans);
+            changeDataPlansState(dataPlans)
+        }
+
+        else if (dataServiceState === "mtn_sme") {
+            dataPlans.push(...mtn_smedataObj.plans);
+            changeDataPlansState(dataPlans)
+        }
+
+        else if (dataServiceState === "Glo_data") {
+            dataPlans.push(...glo_dataObj.plans);
+            changeDataPlansState(dataPlans)
+        }
+
+        else if (dataServiceState === "Etisalat_data") {
+            dataPlans.push(...etisalat_dataObj.plans);
+            changeDataPlansState(dataPlans)
+        }
+
+        else if (dataServiceState === "Airtel_data_gd") {
+            dataPlans.push(...airtel_dataObj.plans);
+            changeDataPlansState(dataPlans)
+        }
+    }, [dataServiceState])
+
     return <>
         <form className="form-group " className="" onSubmit={
             async e => {
-                e.preventDefault();
-                let { res, err, errObj } = await buyData({
-                    operator: operatorState,
-                    phonenum: phoneNumState, plan_id: planIdState, type: "data"
-                });
-                if (res) {
-                    console.log("ffff")
-                    onSuccess(res)
+                try {
+                    e.preventDefault();
+                   let planObj= dataPlansState.find(item=>item.value===planState)
+                    let res = await fetch("/api/pay/data", {
+                        method: "post",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            serviceID: dataServiceState,
+                            phone: phoneNumState,
+                            plan: planObj.value,
+                            email: user.email,
+                            amount: planObj.price
+                        })
+                    });
+                    let data = await res.json();
+                    let { saved, err, } = data
+                    if (err) {
+                        console.log(err)
+                        onFailure({ err, })
+                    }
+                    if (saved) {
+                        console.log(saved)
+                        onSuccess(saved)
+                    }
+                } catch (error) {
+                    console.log(error)
+                    onFailure({ err: error })
                 }
-                else if (err) {
-                    console.log(err)
-                    onFailure({ err, ...errObj })
-                }
+
             }
         }>
             {typeof window !== "undefined" ?
-                <select value={operatorState}
+                <select value={dataServiceState}
                     onChange={
                         async e => {
-                            changeOperatorState(e.target.value)
+                            changeDataServiceState(e.target.value)
                             changeChangedState(changedState + 1)
-                            let dataplans = await getDataPlans({ operator: e.target.value });
-                            changeDataPlansState(dataplans)
-                            changePlanIdState("")
+                            // let dataplans = await getDataPlans({ operator: e.target.value });
+                            // changeDataPlansState(dataplans)
+                            //changePlanIdState("")
                         }
                     } className="form-control w-100" suppressHydrationWarning>
                     <option value="">Select...</option>
-                    <option value="MTN">MTN Recharge</option>
-                    <option value="GLO">GLO Recharge</option>
-                    <option value="9mobile">9mobile Recharge</option>
-                    <option value="Airtel">AIRTEL Recharge</option>
+                    <option value="mtn_sme_copy">MTN Direct Data</option>
+                    <option value="mtn_corperate_data">MTN CORPORATE GIFTING Data</option>
+                    <option value="mtn_sme">MTN SME Data</option>
+                    <option value="Glo_data">GLO Data</option>
+                    <option value="Etisalat_data">9mobile Data</option>
+                    <option value="Airtel_data_gd">AIRTEL Data</option>
                 </select> : null}
             {operatorValidObj?.msg}
             <br />
-            <select value={planIdState} className="form-control w-100" type="text" onChange={
+            <select value={planState} className="form-control w-100" type="text" onChange={
                 e => {
-                    changePlanIdState(e.target.value)
+                    changePlanState(e.target.value)
                 }
             } placeholder="Airtime amount">
-                <option value="">Select Data plan</option>
-                {dataPlansState.map(({ plan_id, label, operator, price }, index) =>
-                    <option key={index} value={plan_id}>
-                        {label} 	(₦{price})
+                {dataPlansState.map(({ value, displayName, price }, index) =>
+                    <option key={index} value={value}>
+                        {displayName} 	(₦{price})
                     </option>)}
             </select>
             <br />
@@ -229,6 +305,7 @@ function SuccessfulRecharge({ resInfo, hookChangeResType }) {
 }
 
 function FailedRecharge({ resInfo, hookChangeResType }) {
+    console.log(resInfo)
     return <>
         <div style={{
             display: "flex", justifyContent: "center", alignItems: "center",
@@ -247,7 +324,9 @@ function FailedRecharge({ resInfo, hookChangeResType }) {
                 </p>
                 <p className="w3-padding w3-text-red" >
                     <span>Transaction failed</span>
-                </p></div>
+                </p>
+                {resInfo}
+                </div>
         </div></>
 }
 

@@ -11,8 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import DashboardFooter from './dashboard_footer';
 
-let Comp_Airtime = ({user}) => {
-   let [session]= useSession()
+let Comp_CableTV = ({ user }) => {
+    let [session] = useSession()
     let [rialAccDetails, changeRialAccDetails] = useState({})
     let [resType, changeResType] = useState("none")
     let [resInfo, changeResInfo] = useState({})
@@ -22,7 +22,7 @@ let Comp_Airtime = ({user}) => {
         changeResInfo(res)
     }
 
-    let onFailure = ({err}) => {
+    let onFailure = ({ err }) => {
         console.log(err)
         changeResType("failure")
         changeResInfo(err)
@@ -77,7 +77,7 @@ let Comp_Airtime = ({user}) => {
                                         <div className="card-bottom">
                                             <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>A2C Calculator</h4>
 
-                                            <FormAirtime
+                                            <FormCableTV
                                                 onSuccess={onSuccess} onFailure={onFailure}
                                                 user={user} />
                                         </div>
@@ -107,13 +107,11 @@ let Comp_Airtime = ({user}) => {
     </>
 }
 
-function FormAirtime({ user, onSuccess = () => { }, onFailure = () => { } }) {
+function FormCableTV({ user, onSuccess = () => { }, onFailure = () => { } }) {
     let [airtimeAmountState, changeAirtimeAmountState] = useState(0)
     let [phoneNumState, changePhoneNumState] = useState("")
     let [operatorState, changeOperatorState] = useState("MTN")
     let [changedState, changeChangedState] = useState(0)
-
-
     let [validState, changeValidState] = useState(false)
     let [errorListState, changeErrorListState] = useState([])
     let [isValidatingPhoneNumState, changeIsValidatingPhoneNumState] = useState(false)
@@ -128,11 +126,11 @@ function FormAirtime({ user, onSuccess = () => { }, onFailure = () => { } }) {
         changeErrorListState(errorList)
     }, [changedState])
     return <>
-        <form className="form-group " className="" onSubmit={
+        <form className="form-group " action="" onSubmit={
             async e => {
                 try {
                     e.preventDefault();
-                    let res = await fetch("/api/pay/airtime", {
+                    let res = await fetch("/api/pay/cable_tv", {
                         method: "post",
                         headers: {
                             "Content-Type": "application/json"
@@ -160,58 +158,25 @@ function FormAirtime({ user, onSuccess = () => { }, onFailure = () => { } }) {
                 }
             }
         }>
-            {typeof window !== "undefined" ?
-                <select value={operatorState}
-                    onChange={
-                        e => {
-                            changeOperatorState(e.target.value)
-                            changeChangedState(changedState + 1)
-                        }
-                    } className="form-control w-100" suppressHydrationWarning>
-                    <option value="">Select...</option>
-                    <option value="mtn">MTN Recharge</option>
-                    <option value="glo">GLO Recharge</option>
-                    <option value="etisalat">9mobile Recharge</option>
-                    <option value="airtel">AIRTEL Recharge</option>
-                </select> : null}
-            {operatorValidObj?.msg}
+            <div className="form-group">
+                <select className="form-control" required
+                    style={{ display: "block" }} >
+                    <option value="">Select</option>
+                    <option value="">DSTV</option>
+                    <option value="">GoTV</option>
+                    <option value="">Startimes</option>
+                    <option value="">PHCN</option>
+                </select>
+            </div>
+            <div className="form-group">
+                <input type="text" className="form-control w-100" placeholder="Card Number" required />
+            </div>
+            <div className="form-group" id="card-select">
+            </div>
             <br />
-
-            <input value={phoneNumState} className="form-control" type="text"
-                style={{ padding: "25px 10px 25px 10px" }} onChange={
-                    e => {
-                        changePhoneNumState(e.target.value)
-                        changeChangedState(changedState + 1)
-                    }
-                } placeholder="Phone number" />
-            {phoneNumValidObj?.msg}
+            <button name="buy" className="p-3  btt">Buy now..</button>
             <br />
-
-            <input className="form-control" type="text"
-                style={{ padding: "25px 10px 25px 10px" }} name=""
-                id="airtime" onChange={
-                    e => {
-                        changeAirtimeAmountState(e.target.value)
-                    }
-                } placeholder="Airtime amount" />
-            <br />
-
-            <input className="form-control" type="text"
-                style={{ padding: "25px 10px 25px 10px" }} value={calculateAirtime(airtimeAmountState)}
-                placeholder="You will recieve N 0" readOnly />
-            <br />
-
-            <a name="submit" style={{
-                color: "#fff",
-                fontFamily: "'Courier New', Courier, monospace", fontFamily: 600
-            }}
-                className="btn card-btn1">Submit</a>
-            <br />
-
-            <button type="submit" name="buy"
-                disabled={!validState} className="p-3  btt">Buy nowo</button>
         </form>
-
     </>
 }
 
@@ -220,7 +185,6 @@ function calculateAirtime(airtime) {
     money = Math.floor(airtime * 1.00);
     return `You receive N ${money} worth of airtime.`
 }
-
 
 function SuccessfulRecharge({ resInfo, hookChangeResType }) {
     return <>
@@ -268,10 +232,10 @@ function FailedRecharge({ resInfo, hookChangeResType }) {
                     <span>Transaction failed</span>
                 </p>
                 <p className="w3-padding w3-text-white" >
-                {resInfo}
+                    {resInfo}
                 </p>
-                </div>
+            </div>
         </div></>
 }
 
-export { Comp_Airtime, FormAirtime }
+export { Comp_CableTV, FormCableTV }

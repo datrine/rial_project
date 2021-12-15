@@ -8,16 +8,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PaymentApps } from "./payment"
 
-let Comp_Wallet = () => {
-    let [session, loading] = useSession()
+let Comp_Wallet = ({ user }) => {
     let [showPaymentView, changeShowPaymentView] = useState(false)
     let [walletState, changeWalletState] = useState({})
     let [topUpAMTState, changeTopUpAMTState] = useState(100)
     let [isProcessing, changeIsProcessing] = useState(false)
-    let user;
-    console.log()
+
     let successHandler = async () => {
-        let res = await fetch(`/api/${session.user.username}/wallet/add`, {
+        let res = await fetch(`/api/${user.username}/wallet/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -33,17 +31,14 @@ let Comp_Wallet = () => {
 
     let cancelHandler = async () => {
         changeIsProcessing(false)
-        changeShowPaymentView(false)
     }
 
     let failureHandler = async () => {
         changeIsProcessing(false)
-        changeShowPaymentView(false)
     }
 
     useEffect(async () => {
-        if (session) {
-            user = session.user
+        if (user) {
             let res = await fetch(`/api/${user.username}/wallet/total/`, {
                 method: "GET",
             })
@@ -53,10 +48,9 @@ let Comp_Wallet = () => {
                 changeWalletState(wallet)
             }
         }
-    }, [session, showPaymentView])
+    }, [user, showPaymentView])
 
-    if (session) {
-        user = session.user;
+    if (user) {
         return <>
             <Comp_Auth />
             <section>
@@ -76,12 +70,13 @@ let Comp_Wallet = () => {
                                             <h4 className="p-2">Wallet Top-up<span> Amount</span></h4>
                                         </div>
                                         <div className="card-bottom">
+                                            {walletState.balance?
                                             <form className="form-group" onSubmit={
                                                 async e => {
                                                     try {
                                                         e.preventDefault()
                                                         changeIsProcessing(true)
-                                                        changeShowPaymentView(true)
+                                                        //changeShowPaymentView(true)
                                                     } catch (error) {
 
                                                     }
@@ -106,11 +101,11 @@ let Comp_Wallet = () => {
                                                             }
                                                         } aria-describedby="basiaddon1" />
                                                 </div>
-                                                <button type="submit" name="pay"
+                                                <button type="submit" name="pay" data-toggle="modal" data-target="#paymentModal"
                                                     style={{ color: "#fff", fontFamily: 600 }} className="btn card-btn1 w3-cyan">
                                                     {isProcessing ? <FontAwesomeIcon icon={faSpinner} spin /> : "Top up"}
                                                 </button>
-                                            </form>
+                                            </form>:null}
                                         </div>
                                     </div>
                                     <div className="col-xl-3 col-lg-3 col-md-6">
@@ -127,15 +122,15 @@ let Comp_Wallet = () => {
             </section>
             {/*<!-- A2C Calculator-->*/}
             <script src="/assets/js/a2ccalculator.js"></script>
-            {showPaymentView ? <PaymentApps failureHandler={failureHandler}
+             <PaymentApps failureHandler={failureHandler}
                 successHandler={successHandler} cancelHandler={cancelHandler} customerObjProps={
                     {
-                        email: user.userEmail,
+                        email: user.email,
                         amount: topUpAMTState,
-                        lastname: user.userName,
-                        firstname: user.userName
+                        lastname: user.lastname,
+                        firstname: user.firstname
                     }
-                } /> : null}
+                } /> 
         </>
     }
     return <>

@@ -16,7 +16,7 @@ export default async function (req, res) {
             await middlewareRunner(req, res, cors);
             await knex("wallets").where({ username }).increment({
                 balance: req.body.amt
-            }).update({ updateOn: new Date() }).then(async returnedRes => {
+            }).update({ updatedOn: new Date() }).then(async returnedRes => {
                 if (returnedRes) {
                     console.log(returnedRes)
                     //console.log(`token: ${token}`)

@@ -288,7 +288,7 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
     let { phoneNum, operator } = instance
     phoneNum = phoneNum.trim()
     let errorList = []
-    let operatorList = ["MTN", "GLO", "Airtel", "9mobile"]
+    let operatorList = ["mtn", "glo", "airtel", "9mobile"]
     if (operatorList.indexOf(operator) === -1) {
         let errObj = {
             msg: "Mobile operator unknown",
@@ -309,7 +309,7 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
         errorList.push(errObj)
     }
     else {
-        if (operator === "MTN") {
+        if (operator === "mtn") {
             let foundMatch = false;
             let mtnList =
                 ["0803", "0703", "0903", "0806", "0706", "0813", "0810", "0814", "0816",
@@ -331,7 +331,7 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
             }
         }
 
-        if (operator === "GLO") {
+        if (operator === "glo") {
             let foundMatch = false;
             let gloList =
                 ["0705", "0805", "0807", "0811", "0815", "0905",
@@ -352,7 +352,7 @@ let phoneValidator = (instance = { phoneNum: "", operator: "" }) => {
             }
         }
 
-        if (operator === "Airtel") {
+        if (operator === "airtel") {
             let foundMatch = false;
             let airtelList =
                 ["0701", "0708", "0802", "0808", "0812", "0901", "0902", "0907", "+234701",

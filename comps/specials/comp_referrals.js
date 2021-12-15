@@ -8,18 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PaymentApps } from "./payment"
 
-let Comp_Referrals = () => {
-    let [session, loading] = useSession()
+let Comp_Referrals = ({user }) => {
     let [referralsState, changeReferralsState] = useState([])
     let [isProcessing, changeIsProcessing] = useState(false)
-    let user;
 
     useEffect(async () => {
         (async () => {
-            if (session) {
+            if (user) {
                 changeIsProcessing(true)
                 let url =
-                    `/api/${session.user.userEmail}/referrals?userName=${session.user.userName}`
+                    `/api/${user.usename}/referrals?username=${user.username}`
                 let res = await fetch(`${url}`, {
                     method: "GET",
                     headers: {
@@ -32,10 +30,9 @@ let Comp_Referrals = () => {
                 changeIsProcessing(false)
             }
         })()
-    }, [session])
+    }, [user])
 
-    if (session) {
-        user = session.user;
+    if (user) {
         return <>
             <Comp_Auth />
             <section>

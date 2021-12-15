@@ -49,8 +49,12 @@ let Comp_Profile = ({ user }) => {
                                         <div className="card-bottom">
                                             <form className="form-group " method="POST">
                                                 <p className="text-danger"><b></b></p>
-                                                <input className="form-control" style={{ padding: "25px 10px 25px 10px" }} defaultValue={user.userName} type="text" name="" id="" readonly /><br />
-                                                <input className="form-control" type="text" defaultValue={user.userEmail} style={{ padding: "25px 10px 25px 10px" }} name="" id="" readonly /><br />
+                                                <input className="form-control" 
+                                                style={{ padding: "25px 10px 25px 10px" }} 
+                                                defaultValue={user.userName} type="text" name="" id=""
+                                                placeholder="Username" readOnly /><br />
+                                                <input className="form-control" type="text" defaultValue={user.userEmail} 
+                                                style={{ padding: "25px 10px 25px 10px" }} name="" id="" readonly /><br />
                                                 <br />
                                                 <input className="form-control" type="text" defaultValue={user.userPhone} style={{ padding: "25px 10px 25px 10px" }} name="" id="" readonly /><br />
                                                 <p style={{ fontSize: "20px" }} className="p-2 text-left">Change Password</p>

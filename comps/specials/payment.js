@@ -5,32 +5,27 @@ import { v3, v4 } from "uuid"
 import { sendMail } from "../../utils/email"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
-let PaymentApps = (propsFromParent = {
-    successHandler: async () => { },
-    cancelHandler: async () => { },
-    failureHandler: async () => { }, customerObjProps: {
-        email: "",
-        lastname: "",
-        firstname: "",
-        amount: 0.0
-    }
-}) => {
+/**
+ * 
+ * @param {object} propsFromParent 
+ * @param {function} propsFromParent.successHandler
+ * @param {function} propsFromParent.cancelHandler
+ * @param {function} propsFromParent.failureHandler
+ * @param {{ email: "",lastname: "", firstname: "", amount: 0.0}} propsFromParent.customerObjProps
+ * @param {object} propsFromParent 
+ * @returns 
+ */
+let PaymentApps = (propsFromParent) => {
     let [paymentState, changePaymentState] = useState("prepay") //prepay||pay_success||pay_fail
     let prePay = <div className="container-fluid" style={{
-        position: "fixed", top: 0, bottom: 0, left: 0, right: 0, display: "flex",
-        justifyContent: "center", alignItems: "center", alignContent:"space-around",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        flexDirection: "column", zIndex: 1000
+        display: "flex",
+        justifyContent: "center", alignItems: "center", alignContent: "space-around",
+        flexDirection: "column"
     }}>
         <p style={{
-            position: "absolute", top: 0, left: 0, right: 0, textAlign: "right",
-            backgroundColor: "transparent",width:"100%"
-        }}><button onClick={
-            e => {
-                changePaymentState("pay_cancel")
-            }
-        }><FontAwesomeIcon icon={faTimes} /></button></p>
+            textAlign: "right",
+            backgroundColor: "transparent", width: "100%"
+        }}><button><FontAwesomeIcon icon={faTimes} /></button></p>
         <CartQuickSummary {...propsFromParent} />
         {/* <FlutterWave {...propsFromParent} />*/}
         <Paystack hookChangePaymentState={changePaymentState}  {...propsFromParent} />
@@ -61,7 +56,26 @@ let PaymentApps = (propsFromParent = {
             break;
     }
     return <>
-        {paymentState === "prepay" ? view : null}
+        <div onBlur={e => {
+            propsFromParent.cancelHandler()
+        }} id="paymentModal" className="modal" tabIndex="-1">
+            <div className="modal-dialog  modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Payment Options</h5>
+                        <button type="button" onClick={
+                            e => {
+                                propsFromParent.cancelHandler()
+                            }
+                        } className="close" data-dismiss="modal"
+                            aria-label="Close">X</button>
+                    </div>
+                    <div className="modal-body">
+                        {paymentState === "prepay" ? view : null}
+                    </div>
+                </div>
+            </div>
+        </div>
     </>
 }
 
@@ -82,7 +96,7 @@ let Paystack = ({ customerObjProps, hookChangePaymentState, ...propsFromParent }
     const initializePayment = usePaystackPayment({
         reference,
         email: customerObjProps.email,
-        amount: customerObjProps.amount,
+        amount: customerObjProps.amount * 100,
         firstname: customerObjProps.fname,
         lastname: customerObjProps.lname,
         //quantity: cartObjProps.totalQty,
