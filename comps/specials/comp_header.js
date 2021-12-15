@@ -8,12 +8,12 @@ import { signOut, useSession } from "next-auth/client";
 //component for the mobile menu
 function Comp_Header({ isLoggedIn = true }) {
     let [session, loading] = useSession();
-    let [sourceBalanceState,changeBalanceState]=useState(0)
+    let [sourceBalanceState, changeBalanceState] = useState(0)
     useEffect(() => {
         (async () => {
             try {
                 if (session) {
-                    let {username} = session.user
+                    let { username } = session.user
                     let res = await fetch(`/api/${username}/wallet/total`);
                     let data = await res.json()
                     let { err, wallet } = data
@@ -44,9 +44,12 @@ function Comp_Header({ isLoggedIn = true }) {
                             </div>
                             <div className="col-sm-6 container-fluid" style={{ color: "#4621ad", paddingRight: "50px" }}>
                                 <i className='fas fa-wallet ' style={{ fontSize: "25px", color: "#4621ad" }}>
-                                </i>Balance: ₦ {(()=>{
+                                </i>Balance: ₦ {(() => {
                                     console.log(sourceBalanceState)
-                                   return Number(sourceBalanceState).toFixed()})()} &nbsp; &nbsp; &nbsp;
+                                    let numString =sourceBalanceState
+                                     numString =isNaN(numString)?0.00:numString 
+                                    return numString
+                                })()} &nbsp; &nbsp; &nbsp;
                                 <img src="/img/default-user-avatar.png" alt="" style={{ width: "40px" }} /><span>
                                     <span className="dropdown" style={{}}>
                                         <a className=" dropdown-toggle" data-toggle="dropdown">

@@ -46,7 +46,7 @@ function Substance({ user = { email: "" } }) {
                         <div className="col-md-6 " >
 
                             <div className="card bg-light  mt-2">
-                                <WalletSummary customerEmail={user.email} />  </div>
+                                <WalletSummary username={user.username} />  </div>
 
                         </div>
                         <div className="col-md-6">
@@ -79,13 +79,13 @@ function Substance({ user = { email: "" } }) {
     </>
 }
 
-let WalletSummary = ({ customerEmail }) => {
+let WalletSummary = ({username }) => {
     let [walletState, changeWalletState] = useState({})
     let [walletResponseTypeState, changeWalletResponseTypeState] = useState("loading");
     useEffect(() => {
         (async () => {
-            console.log(`/api/${customerEmail}/wallet/total`)
-            let res = await fetch(`/api/${customerEmail}/wallet/total`, {
+            console.log(`/api/${username}/wallet/total`)
+            let res = await fetch(`/api/${username}/wallet/total`, {
                 method: "GET",
             })
             let { wallet, err } = await res.json()
