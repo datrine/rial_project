@@ -93,6 +93,7 @@ let CartQuickSummary = ({ cartObjProps, customerObjProps }) => {
 
 let Paystack = ({ customerObjProps, hookChangePaymentState, ...propsFromParent }) => {
     let reference = v4();
+    let publicKey="pk_live_95dd87418e8e526a49286942925cc99b2472a718"
     const initializePayment = usePaystackPayment({
         reference,
         email: customerObjProps.email,
@@ -100,7 +101,7 @@ let Paystack = ({ customerObjProps, hookChangePaymentState, ...propsFromParent }
         firstname: customerObjProps.fname,
         lastname: customerObjProps.lname,
         //quantity: cartObjProps.totalQty,
-        publicKey: 'pk_test_7cef28e87845e0bb56c5c709d5a3cf9aae065714',
+        publicKey,
     });
     // you can call this function anything
     const onSuccess = (reference) => {
