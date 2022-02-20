@@ -10,9 +10,10 @@ import { fetchError, phoneValidator } from '../../utils/validators';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import DashboardFooter from './dashboard_footer';
+import { LogoBar, ProfileBar } from './reusables';
 
-let Comp_Airtime = ({user}) => {
-   let [session]= useSession()
+let Comp_Airtime = ({ user }) => {
+    let [session] = useSession()
     let [rialAccDetails, changeRialAccDetails] = useState({})
     let [resType, changeResType] = useState("none")
     let [resInfo, changeResInfo] = useState({})
@@ -22,7 +23,7 @@ let Comp_Airtime = ({user}) => {
         changeResInfo(res)
     }
 
-    let onFailure = ({err}) => {
+    let onFailure = ({ err }) => {
         console.log(err)
         changeResType("failure")
         changeResInfo(err)
@@ -62,41 +63,54 @@ let Comp_Airtime = ({user}) => {
                 break;
         }
         return <>
-            <section >
-                <Comp_Header isLoggedIn={true} />
+            <div className="w3-container"
+                style={{
+                    paddingTop: 10, paddingLeft: 5,
+                    display: "flex", justifyContent: "space-between"
+                }}>
                 <SubHeader />
-                <section className=" " style={{ marginTop: "10px" }}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xl-3 col-lg-3 col-md-3">
 
-                            </div>
-                            <div className="col-xl-6 col-lg-6 col-md-6 shadow-lg">
-                                <div className="card bg-light  mt-2">
-                                    <div className="card-body  shadow p-4  ">
-                                        <div className="card-bottom">
-                                            <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>A2C Calculator</h4>
+                <ProfileBar />
+            </div>
 
-                                            <FormAirtime
-                                                onSuccess={onSuccess} onFailure={onFailure}
-                                                user={user} />
-                                        </div>
+            <div className="w3-container"
+                style={{
+                    paddingTop: 10, paddingLeft: 5,
+                    display: "flex", justifyContent: "center"
+                }}>
+                <LogoBar />
+            </div>
+            <section className=" " style={{ marginTop: "10px" }}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xl-3 col-lg-3 col-md-3">
+
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 shadow-lg">
+                            <div className="card bg-light  mt-2">
+                                <div className="card-body  shadow p-4  ">
+                                    <div className="card-bottom">
+                                        <h4 style={{ fontSize: "25px", paddingBottom: "10px" }}>A2C Calculator</h4>
+
+                                        <FormAirtime
+                                            onSuccess={onSuccess} onFailure={onFailure}
+                                            user={user} />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <p>
-                            We buy Bulk Airtime of all Network (SnS/VTU) at a good rate starting from 5k & above with an instant payment to your bank account once verified.
-                            You would need to chat with us to sell your excess airtime. Click the button below to start a conversation on WhatsApp with us . Thank you very much
-                        </p>
-                        <a href="https://wa.me/+2348130335681" style={{ color: "#fff", fontFamily: "'Courier New', Courier, monospace", fontFamily: 600 }} className="btn card-btn1">
-                            <img src="/img/002-whatsapp.svg" alt="" width="25px" /> &nbsp;Chat with us</a>
                     </div>
 
-                </section>
-                <DashboardFooter />
+                    <p>
+                        We buy Bulk Airtime of all Network (SnS/VTU) at a good rate starting from 5k & above with an instant payment to your bank account once verified.
+                        You would need to chat with us to sell your excess airtime. Click the button below to start a conversation on WhatsApp with us . Thank you very much
+                    </p>
+                    <a href="https://wa.me/+2348130335681" style={{ color: "#fff", fontFamily: "'Courier New', Courier, monospace", fontFamily: 600 }} className="btn card-btn1">
+                        <img src="/img/002-whatsapp.svg" alt="" width="25px" /> &nbsp;Chat with us</a>
+                </div>
+
             </section>
+            <DashboardFooter />
             {/*<!-- A2C Calculator-->*/}
             {view}
             <script src="/assets/js/a2ccalculator.js"></script>
@@ -226,7 +240,7 @@ function SuccessfulRecharge({ resInfo, hookChangeResType }) {
     return <>
         <div style={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            position: "absolute", backgroundColor: "transparent", top: 0, bottom: 0, left: 0, right: 0
+            position: "absolute", backgroundColor: "rgba(0,0,0,0.5)", top: 0, bottom: 0, left: 0, right: 0
         }}>
             <p style={{
                 position: "absolute",
@@ -251,7 +265,8 @@ function FailedRecharge({ resInfo, hookChangeResType }) {
     return <>
         <div style={{
             display: "flex", justifyContent: "center", alignItems: "center",
-            position: "absolute", top: 0, right: 0, bottom: 0, left: 0
+            position: "absolute", top: 0, right: 0, bottom: 0, left: 0,
+            backgroundColor: "rgba(0,0,0,0.5)"
 
         }}>
             <div style={{ backgroundColor: "rgba(0,0,0,0.8)", width: "250px" }}>
@@ -268,9 +283,9 @@ function FailedRecharge({ resInfo, hookChangeResType }) {
                     <span>Transaction failed</span>
                 </p>
                 <p className="w3-padding w3-text-white" >
-                {resInfo}
+                    {resInfo}
                 </p>
-                </div>
+            </div>
         </div></>
 }
 

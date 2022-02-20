@@ -1,8 +1,7 @@
 let SubHeader = () => {
     return <>
-        <div>
             <section className="container justify-content-center">
-                <nav className="navbar navbar-expand-lg navbar-light p-0 " id="navs" >
+                <nav style={{borderStyle:"none"}} className="navbar navbar-expand-lg navbar-light p-0 " id="navs" >
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -13,7 +12,7 @@ let SubHeader = () => {
                                 <i className="fas fa-home" style={{ fontSize: "25px", color: "#4621ad" }}></i> DASHBOARD </a>
                             </li>
                             <li className="nav-item " >
-                                <a className="nav-link" id="linkup" href="/airtime" ><i className="fas fa-money-bill-wave" style={{ fontSize: "25px", color: "#4621ad" }}></i> AIRTIME TO CASH</a>
+                                <a className="nav-link" id="linkup" href="/airtime" ><i className="fas fa-money-bill-wave" style={{ fontSize: "25px", color: "#4621ad" }}></i> Buy Airtime</a>
                             </li>
                             <li className="nav-item " >
                                 <a className="nav-link" id="linkup" href="/referrals" ><i className="fas fa-money-bill-wave" style={{ fontSize: "25px", color: "#4621ad" }}></i> REFERRALS</a>
@@ -30,7 +29,7 @@ let SubHeader = () => {
                     </div>
                 </nav>
             </section>
-        </div>
+       
     </>
 }
 

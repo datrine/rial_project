@@ -6,16 +6,30 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { PaymentApps } from "./payment"
+import { BalanceBar ,LogoBar,ProfileBar} from "./reusables";
 //component for the mobile menu
+
 function Comp_Dashboard({ isLoggedIn = true }) {
     let [session, loading] = useSession()
     let view = null
     if (session) {
         view = <Substance user={session.user} />;
         return <>
-            <Comp_Header />
+            <div className="w3-container"
+                style={{ paddingTop: 10, paddingLeft: 5,
+                 display: "flex", justifyContent: "space-between" }}>
+                <SubHeader /> 
+             
+                <ProfileBar />
+            </div>
+
+            <div className="w3-container"
+                style={{ paddingTop: 10, paddingLeft: 5,
+                 display: "flex", justifyContent:"center" }}>
+               <LogoBar/>
+            </div>
             <br />
-            <SubHeader />
+            <Comp_Header />
             {view}
         </>;
     }
@@ -79,7 +93,7 @@ function Substance({ user = { email: "" } }) {
     </>
 }
 
-let WalletSummary = ({username }) => {
+let WalletSummary = ({ username }) => {
     let [walletState, changeWalletState] = useState({})
     let [walletResponseTypeState, changeWalletResponseTypeState] = useState("loading");
     useEffect(() => {

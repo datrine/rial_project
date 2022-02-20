@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/client';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PaymentApps } from "./payment"
+import { LogoBar, ProfileBar } from './reusables';
 
 let Comp_Wallet = ({ user }) => {
     let [showPaymentView, changeShowPaymentView] = useState(false)
@@ -52,25 +53,38 @@ let Comp_Wallet = ({ user }) => {
 
     if (user) {
         return <>
-            <Comp_Auth />
-            <section>
-                <Comp_Header />
+            <div className="w3-container"
+                style={{
+                    paddingTop: 10, paddingLeft: 5,
+                    display: "flex", justifyContent: "space-between"
+                }}>
                 <SubHeader />
-                <section className=" " style={{ marginTop: "50px" }}>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xl-3 col-lg-3 col-md-3">
 
-                            </div>
-                            <div className="col-xl-6 col-lg-6 col-md-6 shadow-lg">
-                                <div className="card bg-light  mt-2">
-                                    <div className="card-body  shadow p-4  ">
-                                        <div className="card-bottom">
-                                            <br />
-                                            <h4 className="p-2">Wallet Top-up<span> Amount</span></h4>
-                                        </div>
-                                        <div className="card-bottom">
-                                            {walletState.balance?
+                <ProfileBar />
+            </div>
+
+            <div className="w3-container"
+                style={{
+                    paddingTop: 10, paddingLeft: 5,
+                    display: "flex", justifyContent: "center"
+                }}>
+                <LogoBar />
+            </div>
+            <section className=" " style={{ marginTop: "50px" }}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xl-3 col-lg-3 col-md-3">
+
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 shadow-lg">
+                            <div className="card bg-light  mt-2">
+                                <div className="card-body  shadow p-4  ">
+                                    <div className="card-bottom">
+                                        <br />
+                                        <h4 className="p-2">Wallet Top-up<span> Amount</span></h4>
+                                    </div>
+                                    <div className="card-bottom">
+                                        {walletState.balance ?
                                             <form className="form-group" onSubmit={
                                                 async e => {
                                                     try {
@@ -105,24 +119,22 @@ let Comp_Wallet = ({ user }) => {
                                                     style={{ color: "#fff", fontFamily: 600 }} className="btn card-btn1 w3-cyan">
                                                     {isProcessing ? <FontAwesomeIcon icon={faSpinner} spin /> : "Top up"}
                                                 </button>
-                                            </form>:null}
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-3 col-lg-3 col-md-6">
-
+                                            </form> : null}
                                     </div>
                                 </div>
+                                <div className="col-xl-3 col-lg-3 col-md-6">
 
+                                </div>
                             </div>
+
                         </div>
                     </div>
-                </section>
-
-
+                </div>
             </section>
+
             {/*<!-- A2C Calculator-->*/}
             <script src="/assets/js/a2ccalculator.js"></script>
-             <PaymentApps failureHandler={failureHandler}
+            <PaymentApps failureHandler={failureHandler}
                 successHandler={successHandler} cancelHandler={cancelHandler} customerObjProps={
                     {
                         email: user.email,
@@ -130,7 +142,7 @@ let Comp_Wallet = ({ user }) => {
                         lastname: user.lastname,
                         firstname: user.firstname
                     }
-                } /> 
+                } />
         </>
     }
     return <>
