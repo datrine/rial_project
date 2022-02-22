@@ -14,11 +14,10 @@ export default async function (req, res) {
         if (req.method === "GET") {
             await middlewareRunner(req, res, cors);
               let transactions=  await knex.select("*").from("transactions");
-              console.log(transactions)
-              knex.destroy()
+              console.log(transactions);
               return res.json({ transactions})
         }
     } catch (error) {
-        console.error(error);
+        console.log(error);
     }
 }

@@ -101,7 +101,6 @@ const options = {
                         console.log(e)
                         return { err: { msg: "Network error", type: "network_err" } }
                     }).finally(()=>{
-                        knex.destroy();
                     })
                 }
                 const { user, err } = await userFn(credentials)
