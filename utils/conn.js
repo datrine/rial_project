@@ -31,7 +31,7 @@ knex.schema.hasTable("users").then(function (exists) {
 
   (async () => {
     let hasStateColumn = await knex.schema.hasColumn("users", "state");
-    console.log(hasStateColumn)
+    console.log("hasStateColumn.....")
     if (!hasStateColumn) {
       console.log("hasStateColumn")
      return knex.schema.alterTable("users", (builder) => {

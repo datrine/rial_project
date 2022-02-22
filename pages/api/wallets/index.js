@@ -15,6 +15,7 @@ export default async function (req, res) {
             await middlewareRunner(req, res, cors);
               let wallets=  await knex.select("*").from("users");
               console.log(wallets)
+              knex.destroy();
               return res.json({wallets})
         }
     } catch (error) {

@@ -72,9 +72,6 @@ const options = {
                 password: { label: "Password", type: "password" }
             },
             authorize: async (credentials) => {
-                console.log("admin creds")
-                console.log(credentials)
-                console.log("admin creds")
                 const userFn = /*credentials*/async ({ identifier, password }) => {
                     // You need to provide your own logic here that takes the credentials
                     // submitted and returns either a object representing a user or value
@@ -87,9 +84,8 @@ const options = {
                     }).select().then(async retResult => {
                         if (retResult.length > 0) {
                             let adminFound = retResult[0];
-                            console.log(password)
                             let isValidPass = await bcrypt.compare(password, adminFound.passhash)
-                            console.log(isValidPass)
+                           
                             if (isValidPass) {
                                 credentials = { ...credentials, ...adminFound }
                                 return { user: { ...credentials } };
@@ -104,6 +100,8 @@ const options = {
                     }).catch(e => {
                         console.log(e)
                         return { err: { msg: "Network error", type: "network_err" } }
+                    }).finally(()=>{
+                        knex.destroy();
                     })
                 }
                 const { user, err } = await userFn(credentials)

@@ -29,7 +29,10 @@ export default async function (req, res) {
                         console.log(error)
                         res.statusCode = 500;
                         return res.json({ err: "Network error", error });
-                    })
+                    }).finally(()=>{
+                        knex.destroy();
+                    });
+                    
             }
             else{
                 throw valResult.errorList

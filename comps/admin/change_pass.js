@@ -30,8 +30,15 @@ function DashContent(params) {
 }
 
 function FormBar(params) {
+
     return <>
-        <form class="form-group " >
+        <form onSubmit={async e=>{
+            try {
+                
+            } catch (error) {
+                
+            }
+        }} class="form-group " >
             <p class="text-danger"><b></b></p>
             <input class="form-control" style={{ padding: "25px 10px 25px 10px" }} value="<?= $customer['adminEmail']; ?>" placeholder="Current Email" type="email" name="email" id="" readonly /><br />
             <input class="form-control" type="password" placeholder="Current Password" value="<?= $customer['adminPass']; ?>" style={{ padding: "25px 10px 25px 10px" }} name="pass" id="" readonly /><br />
