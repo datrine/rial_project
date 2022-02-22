@@ -8,6 +8,7 @@ const options = {
         Providers.Credentials({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Credentials',
+            id:"usercreds",
             // The credentials is used to generate a suitable form on the sign in page.
             // You can specify whatever fields you are expecting to be submitted.
             // e.g. domain, username, password, 2FA token, etc.
@@ -16,9 +17,6 @@ const options = {
                 password: { label: "Password", type: "password" }
             },
             authorize: async (credentials, req) => {
-                console.log("credentials")
-                console.log(credentials)
-                console.log("credentials")
                 const userFn = /*credentials*/async ({ identifier, password }) => {
                     // You need to provide your own logic here that takes the credentials
                     // submitted and returns either a object representing a user or value
@@ -74,20 +72,23 @@ const options = {
                 password: { label: "Password", type: "password" }
             },
             authorize: async (credentials) => {
+                console.log("admin creds")
                 console.log(credentials)
+                console.log("admin creds")
                 const userFn = /*credentials*/async ({ identifier, password }) => {
                     // You need to provide your own logic here that takes the credentials
                     // submitted and returns either a object representing a user or value
                     // that is false/null if the credentials are invalid.
                     // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
                     return knex("admintable").where({
-                        email: identifier,
-                    }).orWhere({
                         username: identifier,
-                    }).andWhere({ role: "admin" }).select().then(async retResult => {
+                    }).orWhere({
+                        email: identifier,
+                    }).select().then(async retResult => {
                         if (retResult.length > 0) {
                             let adminFound = retResult[0];
-                            let isValidPass = await bcrypt.compare(password, adminFound.adminPass)
+                            console.log(password)
+                            let isValidPass = await bcrypt.compare(password, adminFound.passhash)
                             console.log(isValidPass)
                             if (isValidPass) {
                                 credentials = { ...credentials, ...adminFound }

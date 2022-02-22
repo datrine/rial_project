@@ -1,11 +1,12 @@
 import validator from 'validator';
 import { memoFn } from "./utilFns"
 let host = process.env.SELF_URL || process.env.NEXT_PUBLIC_SELF_URL
+
 let registerValidator = async (instance = {
     email: "", username: "", phone_num: "", password: "", repass: "", referrer
 }) => {
-    let { email, username, password, phone_num, repass, referrer } = instance
-    //console.log(instance)
+    let { email="", username="", password="", phone_num="", repass="", referrer } = instance
+   
     let errorList = []
 
     if (!validator.isLength(username, { min: 1 })) {
@@ -180,36 +181,36 @@ let registerValidator = async (instance = {
 }
 
 let adminRegisterValidator = async (instance = {
-    adminEmail: "", adminPass: "", adminRePass: "", role: "admin"
+    email: "", password: "", repass: "", role: "admin"
 }) => {
-    let { adminEmail, adminPass, adminRePass, } = instance
-    //console.log(instance)
+    let { email="", password="", repass="", } = instance
+    
     let errorList = []
 
-    if (!validator.isEmail(adminEmail)) {
+
+    if (!validator.isEmail(email)) {
         let errObj = {
             msg: "Email is not valid",
             info: "Ensure email is a valid format",
             prop: "email",
-            value: adminEmail,
+            value: email,
         }
         errorList.push(errObj)
     }
-
-    else if (validator.isEmail(adminEmail)) {
+    else if (validator.isEmail(email)) {
         try {
-            let res = await memoFn(fetch, `${host}/api/verify/email?q=${adminEmail}`, {
+            let res = await memoFn(fetch, `${host}/api/verify/admin/email?q=${email}`, {
                 method: "GET"
-            }, `email_${adminEmail}`)
+            }, `email_${email}`)
             let resObj = {};
             if (("bodyUsed" in res) && (res.bodyUsed === false)) {
-                resObj = await memoFn(`email_${adminEmail}`, await res.json())
+                resObj = await memoFn(`email_${email}`, await res.json())
             }
             else if (("isExistingEmail" in res)) {
-                resObj = await memoFn(`email_${adminEmail}`);
+                resObj = await memoFn(`email_${email}`);
             }
             else {
-                resObj = await memoFn(`email_${adminEmail}`);
+                resObj = await memoFn(`email_${email}`);
             }
             let { isExistingEmail, err } = resObj
             if (isExistingEmail) {
@@ -217,7 +218,7 @@ let adminRegisterValidator = async (instance = {
                     msg: "Email already exists",
                     info: "Ensure email is unique",
                     prop: "email",
-                    value: adminEmail,
+                    value: email,
                 }
                 errorList.push(errObj)
             } else if (err) {
@@ -225,7 +226,7 @@ let adminRegisterValidator = async (instance = {
                     msg: typeof err === "string" ? err : err.msg,
                     info: "Retry later please...",
                     prop: "email",
-                    value: adminEmail,
+                    value: email,
                 }
                 errorList.push(errObj)
             }
@@ -235,23 +236,23 @@ let adminRegisterValidator = async (instance = {
                 msg: err,
                 info: "Retry later please...",
                 prop: "email",
-                value: adminEmail,
+                value: email,
             }
             errorList.push(errObj)
         }
     }
-
-    if (validator.isAlpha(adminPass)) {
+/**
+    if (validator.isAlpha(password)) {
         let errObj = {
             msg: "Password not valid without a number or a special character",
             info: "Include a number or a special character",
             prop: "password",
-            value: adminPass,
+            value: password,
         }
         errorList.push(errObj)
     }
 
-    let passwordScore = validator.isStrongPassword(adminPass,
+    let passwordScore = validator.isStrongPassword(password,
         {
             minLength: 6, minLowercase: 1, minUppercase: 0, minNumbers: 1,
             pointsForContainingNumber: 10,
@@ -263,17 +264,17 @@ let adminRegisterValidator = async (instance = {
             msg: "Password not strong enough",
             info: "Ensure password length is at least 6 characters and has at least a number",
             prop: "password",
-            value: adminPass,
+            value: password,
         }
         errorList.push(errObj)
-    }
+    } */
 
-    if (!validator.equals(adminPass, adminRePass)) {
+    if (!validator.equals(password, repass)) {
         let errObj = {
             msg: "Passwords don't match",
             info: "",
             prop: "password",
-            value: adminPass,
+            value: password,
         }
         errorList.push(errObj)
     }

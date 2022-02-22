@@ -1,0 +1,57 @@
+.invoice{
+	padding: 20px;
+	font-size: 150px;
+	text-align: center;
+	border-bottom:5px solid #007bff; 
+	font-family: "ralyway";
+	color: rgb(64, 68, 59);
+}
+
+.topn{
+	margin-bottom: 150px;
+}
+.head1{
+	margin-bottom: 20px;
+}
+.topup{
+	margin-top: 50px; 
+	text-align: right;
+}
+.ctop{
+	margin-top: 10px; 
+}
+.ptop{
+	padding: 20px;
+	border-top: 5px solid #007bff;
+	border-bottom: 5px solid #007bff;
+}
+.p2top{
+	padding: 20px;
+	border-bottom: 5px solid #007bff;
+}
+.strong{
+	text-align: right;
+}
+.wick{
+	text-align: left;
+}
+.top{
+	background-color: #007bff;
+	border: 1px solid #007bff;
+	color: #ffffff;
+}
+.tbodyprint{
+	border: 1px solid #007bff;
+
+}
+.h4p{
+	padding-top: 5px;
+	color: #007bff;
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.pai{
+	padding: 5px;
+	color: #000;
+
+}

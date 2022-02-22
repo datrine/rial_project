@@ -1,3 +1,4 @@
+import { signIn, signout } from "next-auth/client"
 import { useState } from "react"
 
 export function Comp_AdminLogin() {
@@ -44,23 +45,25 @@ export function Comp_AdminLogin() {
 }
 
 let FormLogin = () => {
-   let[emailState,changeEmailState]= useState("")
+   let[identifierState,changeIdentifierState]= useState("")
    let[passwordState,changePasswordState]= useState("")
     return <>
         <form onSubmit={
             e=>{
-                console.log(callbackUrl)
-                signIn("credentials", {
-                    callbackUrl, password: passwordState,
-                    userEmailOrName: emailOrUsernameState
+                e.preventDefault();
+                signIn("admincreds", {
+                    callbackUrl:"/admin", 
+                    password: passwordState,
+                    identifier: identifierState,
+                    redirect:false
                 });
             }
         }>
             <div className="form-group">
                 <label className="medium float-left">Email</label>
-                <input value={emailState} onChange={
+                <input value={identifierState} onChange={
                     e=>{
-                        changeEmailState(e.target.value)
+                        changeIdentifierState(e.target.value)
                     }
                 } className="form-control py-4" type="email" placeholder="Enter email address" />
             </div>

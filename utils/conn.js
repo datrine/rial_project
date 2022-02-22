@@ -28,6 +28,19 @@ knex.schema.hasTable("users").then(function (exists) {
       usersTbl.string("unique_code");
     })
   }
+
+  (async () => {
+    let hasStateColumn = await knex.schema.hasColumn("users", "state");
+    console.log(hasStateColumn)
+    if (!hasStateColumn) {
+      console.log("hasStateColumn")
+     return knex.schema.alterTable("users", (builder) => {
+        builder.enum("state", ["banned", "active"]).defaultTo("active");
+        console.log("hasStateColumn")
+      });
+    }
+  })();
+
 }).catch(err => console.log(err));
 
 knex.schema.hasTable("wallets").then(function (exists) {
@@ -40,7 +53,7 @@ knex.schema.hasTable("wallets").then(function (exists) {
       usersTbl.dateTime("updatedOn", { precision: 6 }).defaultTo(knex.fn.now(6));
     })
   }
-  else{
+  else {
     knex.schema.hasColumn("wallets")
   }
 }).catch(err => console.log(err));
@@ -57,4 +70,20 @@ knex.schema.hasTable("transactions").then(function (exists) {
     })
   }
 }).catch(err => console.log(err))
+
+
+knex.schema.hasTable("admintable").then(function (exists) {
+  if (!exists) {
+    return knex.schema.createTable("admintable", function (usersTbl) {
+      usersTbl.string("username");
+      usersTbl.string("email");
+      usersTbl.string("passhash");
+      usersTbl.string("password");
+      usersTbl.dateTime("last_login", { precision: 6 }).defaultTo(knex.fn.now(6));
+      usersTbl.dateTime("createdOn", { precision: 6 }).defaultTo(knex.fn.now(6));
+      usersTbl.dateTime("updatedOn", { precision: 6 }).defaultTo(knex.fn.now(6));
+    })
+  }
+}).catch(err => console.log(err));
+
 export default knex;

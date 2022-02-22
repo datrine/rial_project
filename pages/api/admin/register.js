@@ -1,7 +1,7 @@
 import { middlewareRunner } from "../../../utils/utilFns"
 import Cors from "cors"
 import knex from "../../../utils/conn"
-import { adminRegisterValidator } from "../../../utils/validators"
+import { adminRegisterValidator, registerValidator } from "../../../utils/validators"
 import { v4 } from "uuid"
 import bcrypt from "bcrypt"
 
@@ -13,12 +13,13 @@ export default async function (req, res) {
     try {
         if (req.method === "POST") {
             await middlewareRunner(req, res, cors);
+            console.log(req.body)
             let valResult = await adminRegisterValidator(req.body)
             if (valResult.valid) {
-                let { adminRePass, ...data } = req.body
-                console.log(data)
-                let hashPass = await bcrypt.hash(data.adminPass, 8);
-                data.adminPass = hashPass;
+                let { repass, password, changedState, ...data } = req.body
+                let passhash = await bcrypt.hash(password, 8);
+                
+                data.passhash = passhash;
                 await knex("admintable").insert({ ...data, }).
                     then(async returnedRes => {
                         if (returnedRes) {
@@ -30,8 +31,12 @@ export default async function (req, res) {
                         return res.json({ err: "Network error", error });
                     })
             }
+            else{
+                throw valResult.errorList
+            }
         }
     } catch (error) {
-        console.error(error.message);
+        console.log(error);
+        res.json({ error })
     }
 }
