@@ -7,7 +7,7 @@ let knex = require('knex')({
     password: 'TeMi4ToPe',
     database: 'medikedu_rialdb'
   },
-  pool: { min: 0, max: 7 }
+  pool: { min: 0, max: 10 }
 });
 
 knex.schema.hasTable("users").then(function (exists) {

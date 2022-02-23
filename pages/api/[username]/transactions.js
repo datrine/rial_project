@@ -1,6 +1,7 @@
 import { middlewareRunner } from "../../../utils/utilFns"
 import Cors from "cors"
 import knex from "../../../utils/conn"
+import { getSession } from "next-auth/client";
 
 const cors = Cors({
     methods: ['GET', 'HEAD', 'POST']
@@ -8,6 +9,10 @@ const cors = Cors({
 
 export default async function (req, res) {
     try {
+        let session= await getSession({req});
+        if (!session) {
+            throw "No session is active for req."
+        }
         if (req.method === "GET") {
             const {
                 query: { username },

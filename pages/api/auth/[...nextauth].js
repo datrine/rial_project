@@ -29,6 +29,10 @@ const options = {
                     }).select().then(async retResult => {
                         if (retResult.length > 0) {
                             let userFound = retResult[0];
+                            if (userFound.state==="banned") {
+                                let err = { msg: "User has been banned", type: "banned" }
+                                return { err };
+                            }
                             let isValidPass = await bcrypt.compare(password, userFound.passhash)
                             console.log(isValidPass)
                             if (isValidPass) {
@@ -58,8 +62,7 @@ const options = {
                         }?errType=${err.type}&userCred=${credentials.userEmailOrName}`);
                 }
             }
-        })
-        ,
+        }),
         Providers.Credentials({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Admin Credentials',

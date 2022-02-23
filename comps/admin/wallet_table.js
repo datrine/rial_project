@@ -1,11 +1,11 @@
 import { signIn } from "next-auth/client"
 import { createContext, useContext, useEffect, useState } from "react"
-import { UserContext } from "../ctxs";
+import { UserContext, WalletContext } from "../ctxs";
 import { DashFooter, DashHeader, DashMainBar, DashSideBar, OtherScripts } from "./reusable"
 createContext({
     user: undefined
 });
-export function Comp_AdminUserTbl() {
+export function Comp_AdminWalletTbl() {
     console.log("uuuuuu")
     return <>
         <Dashboard />
@@ -95,14 +95,14 @@ function DashContent(params) {
 }
 
 function UserTable(params) {
-    let [usersState, changeUsers] = useState([])
+    let [walletsState, changeWallets] = useState([])
     useEffect(() => {
         (async () => {
             try {
 
-                let res = await fetch(`/api/users`);
-                let { users } = await res.json();
-                changeUsers(users)
+                let res = await fetch(`/api/wallets`);
+                let { wallets } = await res.json();
+                changeWallets(wallets)
             } catch (error) {
                 console.log(error)
             }
@@ -114,20 +114,15 @@ function UserTable(params) {
                 <tr>
                     <th>#</th>
                     <th>Username</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>State</th>
-                    <th>Reg Date</th>
-                    <th>Referral</th>
-                    <th>Unique Id</th>
-                    <th>Status</th>
+                    <th>Balance</th>
+                    <th>Transaction Date</th>
                 </tr>
             </thead>
             <tbody>
-                {usersState.map((user, index) => <>
-                    <UserContext.Provider value={{ user }} key={index} >
+                {walletsState.map((wallet, index) => <>
+                    <WalletContext.Provider value={{ wallet }} key={index} >
                         <RowInfo index={index} />
-                    </UserContext.Provider>
+                    </WalletContext.Provider>
                 </>)}
 
 
@@ -138,70 +133,14 @@ function UserTable(params) {
 }
 
 function RowInfo({ index }) {
-    let { user } = useContext(UserContext);
-    let [userState, changedUserState] = useState(user)
-    let [banBtnState, changedBanBtnState] = useState(user.state==="active"||user.state==="activate"?"ban":"activate");
-    let handleClickBanBtn = () => { }
-    switch (banBtnState) {
-        case "ban":
-            handleClickBanBtn = async e => {
-                try {
-                    let res = await fetch(`/api/admin/actions/ban_user`, {
-                        method: "post",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ identifier: userState.email })
-                    });
-                    let data = await res.json();
-                    if (data.saved) {
-                        changedUserState({ ...user, state: "banned" })
-                        changedBanBtnState("activate")
-                    }
-                } catch (error) {
-
-                }
-            }
-            break;
-
-        case "activate":
-            handleClickBanBtn = async e => {
-                try {
-                    let res = await fetch(`/api/admin/actions/activate_user`, {
-                        method: "post",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ identifier: userState.email })
-                    });
-                    let data = await res.json();
-                    if (data) {
-                        changedUserState({ ...user, state: "active" })
-                        changedBanBtnState("ban")
-                    }
-                } catch (error) {
-
-                }
-            }
-            break;
-        default:
-            break;
-    }
+    let { wallet } = useContext(WalletContext);
+    let [walletState, changedWalletState] = useState(wallet)
     return <>
         <tr key={index}>
             <td>{index + 1}</td>
-            <td>{userState.username}</td>
-            <td>{userState.email}</td>
-            <td>{userState.phone_num}</td>
-            <td>{userState.state || ""}</td>
-            <td>{new Date(userState.createdOn).toLocaleDateString()}</td>
-
-            <td>{userState.referrer || ""}</td>
-            <td>{userState.unique_code}</td>
-            <td class="text-center">
-                <button onClick={handleClickBanBtn}
-                    class="btn btn-danger"
-                    style={{ color: "#fff" }}>{banBtnState}</button></td>
+            <td>{walletState.username}</td>
+            <td>{walletState.balance}</td>
+            <td>{new Date(walletState.createdOn).toLocaleDateString()}</td>
         </tr>
     </>
 }

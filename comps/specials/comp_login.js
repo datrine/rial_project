@@ -20,6 +20,8 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
         case "network_err":
             viewErrorType = <span style={{ color: "red" }}>Network error</span>
             break;
+            case "banned":
+                viewErrorType = <span style={{ color: "red" }}>User has been banned</span>
         default:
             break;
     }
@@ -76,7 +78,7 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
                                             e => {
                                                 console.log(callbackUrl)
 
-                                                signIn("credentials", {
+                                                signIn("usercreds", {
                                                     callbackUrl, password: passwordState,
                                                     identifier: emailOrUsernameState
                                                 });
