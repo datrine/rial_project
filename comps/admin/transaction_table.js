@@ -1,12 +1,10 @@
 import { signIn } from "next-auth/client"
 import { createContext, useContext, useEffect, useState } from "react"
-import { UserContext, WalletContext } from "../ctxs";
+import { TransactionContext, UserContext, WalletContext } from "../ctxs";
 import { DashFooter, DashHeader, DashMainBar, DashSideBar, OtherScripts } from "./reusable"
-createContext({
-    user: undefined
-});
-export function Comp_AdminWalletTbl() {
-    console.log("uuuuuu")
+
+
+export function Comp_AdminTransactionTbl() {
     return <>
         <Dashboard />
     </>
@@ -95,14 +93,14 @@ function DashContent(params) {
 }
 
 function UserTable(params) {
-    let [walletsState, changeWallets] = useState([])
+    let [transactionsState, changeTransactionsState] = useState([])
     useEffect(() => {
         (async () => {
             try {
 
-                let res = await fetch(`/api/wallets`);
-                let { wallets } = await res.json();
-                changeWallets(wallets)
+                let res = await fetch(`/api/transactions`);
+                let { transactions } = await res.json();
+                changeTransactionsState(transactions)
             } catch (error) {
                 console.log(error)
             }
@@ -114,33 +112,32 @@ function UserTable(params) {
                 <tr>
                     <th>#</th>
                     <th style={{textAlign:"left"}}>Username</th>
-                    <th style={{textAlign:"left"}}>Balance (₦)</th>
-                    <th>Creation Date</th>
+                    <th style={{textAlign:"left"}}>Platform Of Payment</th>
+                    <th style={{textAlign:"left"}}>Request Id</th>
+                    <th>Date Of Last Transaction</th>
                 </tr>
             </thead>
             <tbody>
-                {walletsState.map((wallet, index) => <>
-                    <WalletContext.Provider value={{ wallet }} key={index} >
+                {transactionsState.map((wallet, index) => <>
+                    <TransactionContext.Provider value={{ transaction: wallet }} key={index} >
                         <RowInfo index={index} />
-                    </WalletContext.Provider>
+                    </TransactionContext.Provider>
                 </>)}
-
-
-
             </tbody>
         </table>
     </>
 }
 
 function RowInfo({ index }) {
-    let { wallet } = useContext(WalletContext);
-    let [walletState, changedWalletState] = useState(wallet)
+    let { transaction } = useContext(TransactionContext);
+    let [transactionState, changedTransactionState] = useState(transaction)
     return <>
         <tr key={index}>
             <td>{index + 1}</td>
-            <td style={{textAlign:"left"}}>{walletState.username}</td>
-            <td style={{textAlign:"left"}}>{walletState.balance}</td>
-            <td>{new Date(walletState.createdOn).toLocaleDateString()}</td>
+            <td style={{textAlign:"left"}}>{transactionState.username}</td>
+            <td style={{textAlign:"left"}}>{transactionState.platform}</td>
+            <td style={{textAlign:"left"}}>{transactionState.requestID}</td>
+            <td>{new Date(transactionState.updatedOn).toLocaleDateString()}</td>
         </tr>
     </>
 }

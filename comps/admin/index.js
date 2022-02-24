@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/client"
+import { signIn, signOut } from "next-auth/client"
 import { useEffect, useState } from "react"
 import { DashFooter, DashHeader, DashMainBar, DashSideBar, OtherScripts } from "./reusable"
 
@@ -59,7 +59,7 @@ function WalletDiv(params) {
                 <div class="card-body">
                     {walletCount} Wallets</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="wallet.php">View Details</a>
+                    <a class="small text-white stretched-link" href="/admin/wallet">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -86,7 +86,7 @@ function TransactionDiv(params) {
             <div class="card bg-info text-white mb-4">
                 <div class="card-body">{transactionCount} Transactions</div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="transaction.php">View Details</a>
+                    <a class="small text-white stretched-link" href="/admin/transaction">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -181,7 +181,10 @@ function Dashboard(params) {
                         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 
-                            <a class="dropdown-item" href="logout.php">Logout</a>
+                            <a class="dropdown-item" onClick={e => {
+                                e.preventDefault();
+                                signOut()
+                            }}>Logout</a>
                         </div>
                     </li>
                 </ul>
