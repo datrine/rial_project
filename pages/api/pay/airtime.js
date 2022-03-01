@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             let requestID = v4();
-            let { serviceID, amount, email, phone } = req.body;
+            let { serviceID, phone, email, amount } = req.body;
             if (!serviceID) {
                 throw "No Service ID "
             }
@@ -82,8 +82,10 @@ export default async function handler(req, res) {
             if (insertRes) {
                 console.log("transaction saved")
             }
-            let subtractBalanceResponse = await subtractBalance({ username,
-                 amountToSubtract: amount,wallet:holdBalanceResponse.wallet })
+            let subtractBalanceResponse = await subtractBalance({
+                username,
+                amountToSubtract: amount, wallet: holdBalanceResponse.wallet
+            })
 
             if (subtractBalanceResponse.err) {
                 console.log("subtractBalanceResponse.err")
@@ -91,7 +93,10 @@ export default async function handler(req, res) {
                 throw subtractBalanceResponse.err
             }
 
-            let releaseBalanceResponse = await releaseBalance({ username });
+            let releaseBalanceResponse = await releaseBalance({
+                username,
+                amountToRelease: amount
+            });
 
             console.log(releaseBalanceResponse.info)
 

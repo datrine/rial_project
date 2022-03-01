@@ -14,7 +14,7 @@ let params;
  * @param {number} param0.amountToVerify
  * @returns 
  */
-async function subtractBalance({ username, amountToSubtract,wallet }) {
+async function subtractBalance({ username, amountToSubtract, wallet }) {
     try {
         let updateResponse = await knex("wallets").where({
             username
@@ -27,7 +27,7 @@ async function subtractBalance({ username, amountToSubtract,wallet }) {
                 proceed: false
             }
         }
-        let {wallet: updateWallet} = await getWallet({ username })
+        let { wallet: updateWallet } = await getWallet({ username })
         return { proceed: true, wallet: updateWallet };
     } catch (error) {
 
@@ -103,15 +103,14 @@ async function holdBalance({ username, amountToVerify, }) {
         let updateResponse = await knex("wallets").where({
             username
         }).update({
-            amountOnHold: amountToVerify,
             hold: true,
             holdTime: new Date()
-        });
+        }).increment({amountOnHold:amountToVerify});
         console.log(updateResponse)
         if (!updateResponse) {
             return { err: "No hold made.", proceed: false, }
         }
-        let {wallet: updateWallet} = await getWallet({ username })
+        let { wallet: updateWallet } = await getWallet({ username })
         return { info: "Update made.", wallet: updateWallet, proceed: true }
     } catch (error) {
         throw { err: error }
@@ -120,18 +119,19 @@ async function holdBalance({ username, amountToVerify, }) {
 
 /**
  * 
- * @param {params} param0 
+ * @param {object} param0
+ * @param {string} param0.string
+ * @param {number} param0.amountToRelease
  * @returns 
  */
-async function releaseBalance({ username }) {
+async function releaseBalance({ username, amountToRelease }) {
     try {
         let updateResponse = await knex("wallets").where({
             username
         }).update({
-            amountOnHold: 0.0,
             hold: true,
             holdTime: undefined
-        });
+        }).decrement({ amountOnHold: amountToRelease });
         if (!updateResponse) {
             return { info: "No release made. Already released", }
         }
