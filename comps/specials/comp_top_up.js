@@ -145,6 +145,7 @@ function AirtimeModal({ user }) {
     }
     let onFailure = ({ err, message }) => {
         console.log(err)
+        console.log(message)
         viewToResult = <>
             <h3>{err}</h3>
             <p>{message}</p>

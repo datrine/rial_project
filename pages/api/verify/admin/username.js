@@ -1,6 +1,6 @@
 import { middlewareRunner } from "../../../../utils/utilFns"
 import Cors from "cors"
-import knex from "../../../../utils/conn"
+import createDBConn from "../../../../utils/conn"
 
 const cors = Cors({
     methods: ['GET', 'HEAD', 'POST']
@@ -8,6 +8,7 @@ const cors = Cors({
 
 export default async function (req, res) {
     try {
+        let knex=createDBConn()
         if (req.method === "GET") {
             const {
                 query: { q },

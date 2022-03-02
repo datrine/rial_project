@@ -6,27 +6,32 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { PaymentApps } from "./payment"
-import { BalanceBar ,LogoBar,ProfileBar} from "./reusables";
+import { BalanceBar, LogoBar, ProfileBar } from "./reusables";
 //component for the mobile menu
 
 function Comp_Dashboard({ isLoggedIn = true }) {
     let [session, loading] = useSession()
     let view = null
+    console.log(session)
     if (session) {
         view = <Substance user={session.user} />;
         return <>
             <div className="w3-container"
-                style={{ paddingTop: 10, paddingLeft: 5,
-                 display: "flex", justifyContent: "space-between" }}>
-                <SubHeader /> 
-             
+                style={{
+                    paddingTop: 10, paddingLeft: 5,
+                    display: "flex", justifyContent: "space-between"
+                }}>
+                <SubHeader />
+
                 <ProfileBar />
             </div>
 
             <div className="w3-container"
-                style={{ paddingTop: 10, paddingLeft: 5,
-                 display: "flex", justifyContent:"center" }}>
-               <LogoBar/>
+                style={{
+                    paddingTop: 10, paddingLeft: 5,
+                    display: "flex", justifyContent: "center"
+                }}>
+                <LogoBar />
             </div>
             <br />
             <Comp_Header />
@@ -79,7 +84,7 @@ function Substance({ user = { email: "" } }) {
             <br />
             <section className="py-4 mb-5 container ">
                 <div className="clearfix">
-                    <Transaction customerEmail={user.email}
+                    <Transaction customerUsername={user.username}
                         hookChangeTotalTransaction={changeTotalTransaction} />
                 </div>
             </section>
@@ -139,7 +144,7 @@ let WalletSummary = ({ username }) => {
     </>
 }
 
-let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
+let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
     let [transactionsState, changeTransactionsState] =
         useState([{ id: "", ref_num: "", email: "", transact_date: "", amount: "" }])
     let [transactionResponseTypeState, changeTransactionResponseTypeState] =
@@ -154,18 +159,18 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
         <table className="table table-hover" width="100%" style={{ textAlign: "center", border: "1px solid #eee " }}>
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Transaction ID</th>
-                    <th>Email</th>
                     <th>Amount (₦) </th>
                     <th>Date | time</th>
                 </tr>
             </thead>
             <tbody>
-                {transactionsState.map((transaction, index) => <tr key={index} >
-                    <td>{transaction.id}</td>
-                    <td>{transaction.email}</td>
+                {transactionsState.map((transaction, index) => <tr key={index + 1} >
+                    <td>{index+1}</td>
+                    <td>{transaction.requestID}</td>
                     <td>  {transaction.amount}</td>
-                    <td>{transaction.transact_date}</td>
+                    <td>{new Date(transaction.createdOn).toLocaleDateString()}</td>
                 </tr>)}
 
             </tbody>
@@ -173,14 +178,13 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
     </div>
     </>
 
-    let smallviewOfTransactions = <> <div className="float-left  p-3 shadow-lg"
+    let smallViewOfTransactions = <> <div className="float-left  p-3 shadow-lg"
         style={{ width: "100%", border: "1px solid #e3e3e3" }}>
         <div>{
-            transactionsState.map((transaction, index) => <div key={index} >
-                <p>Transaction ID <b>{transaction.id}</b></p>
-                <p>Email <b>{transaction.email}</b></p>
+            transactionsState.map((transaction, index) =><><div key={index} >
+                <p>Transaction ID <b>{transaction.requestID}</b></p>
                 <p>Amount <b>{transaction.amount}</b></p>
-                <p>Date | time  <b>{transaction.transact_date}</b></p></div>
+                <p>Date | time  <b>{new Date(transaction.createdOn).toLocaleDateString()}</b></p></div></> 
             )
         }
         </div>
@@ -190,8 +194,9 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
     switch (transactionResponseTypeState) {
         case "transaction":
             viewOfTransactionResponseType = <>
-                {screenWidth > 700 ? largeViewOfTransactions : smallviewOfTransactions}</>
+                {screenWidth > 700 ? largeViewOfTransactions : smallViewOfTransactions}</>
             break;
+
         case "error":
             viewOfTransactionResponseType = <>
                 <div className="float-left  p-3 shadow-lg"
@@ -199,6 +204,7 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
                     <p>Error loading transactions</p>
                 </div>  </>
             break;
+
         case "loading":
             viewOfTransactionResponseType = <>
                 <div className="float-left  p-3 shadow-lg"
@@ -215,7 +221,7 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
 
     useEffect(() => {
         (async () => {
-            let res = await fetch(`/api/${customerEmail}/transactions/`, {
+            let res = await fetch(`/api/${customerUsername}/transactions/`, {
                 method: "GET",
             })
             let { transactions, err } = await res.json()
@@ -223,12 +229,12 @@ let Transaction = ({ customerEmail, hookChangeTotalTransaction }) => {
                 changeTransactionResponseTypeState("error")
             }
             if (Array.isArray(transactions)) {
-                changeTransactionResponseTypeState("transaction")
                 let totalTransaction = transactions.reduce((prev, cur, index, trans) => {
-                    return prev + cur.amount;
+                    return prev + Number(cur.amount);
                 }, 0)
                 hookChangeTotalTransaction(totalTransaction)
                 changeTransactionsState(transactions);
+                changeTransactionResponseTypeState("transaction")
             }
         })();
     }, [])

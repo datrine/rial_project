@@ -1,6 +1,6 @@
 import { middlewareRunner } from "../../../../utils/utilFns"
 import Cors from "cors"
-import knex from "../../../../utils/conn"
+import createDBConn from "../../../../utils/conn"
 import { getSession } from "next-auth/client";
 
 const cors = Cors({
@@ -9,6 +9,7 @@ const cors = Cors({
 
 export default async function (req, res) {
     try {
+        let knex=createDBConn();
       let session= await getSession({req});
       if (!session) {
           throw "No session is active for req."

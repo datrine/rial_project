@@ -26,7 +26,7 @@ let Comp_Login = ({ csrfToken, hookChangeRegState, callbackUrl = "/dashboard" })
             break;
     }
     useEffect(() => {
-        console.log("lolll")
+        console.log("lol")
     });
     return <>
         <section id="services" className="best-pricing pricing-padding" data-background="/assets/img/gallery/best_pricingbg.jpg">

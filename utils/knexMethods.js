@@ -1,5 +1,5 @@
 import Knex from "knex";
-import knex from "./conn";
+import createDBConn from "./conn";
 
 /**
  * 
@@ -16,6 +16,7 @@ let params;
  */
 async function subtractBalance({ username, amountToSubtract, wallet }) {
     try {
+        let knex=createDBConn()
         let updateResponse = await knex("wallets").where({
             username
         }).update({
@@ -43,6 +44,7 @@ async function subtractBalance({ username, amountToSubtract, wallet }) {
  */
 async function verifyBalance({ wallet, amountToVerify }) {
     try {
+        let knex=createDBConn()
         console.log(`Amount to verify: ${amountToVerify}. Wallet balance: ${wallet.balance}`)
         if (amountToVerify > wallet.balance) {
             return { err: "You don't have sufficient balance.", wallet, proceed: false }
@@ -65,6 +67,7 @@ async function verifyBalance({ wallet, amountToVerify }) {
  */
 async function getWallet({ username }) {
     try {
+        let knex=createDBConn()
         let wallets = await knex.select("*").from("wallets").where({ username });
         let wallet = wallets[0]
         if (!wallet) {
@@ -74,15 +77,12 @@ async function getWallet({ username }) {
     } catch (error) {
     }
 }
-/**
- * 
- * @param {params} param0 
- * @returns 
- */
+
 async function getUser({ email }) {
     try {
+        let knex=createDBConn()
         console.log(email)
-        let users = await knex("users").where({ email }).select("*");
+        let users = await knex("users").where({ email }).select();
         let user = users[0]
         if (!user) {
             return { err: "User does not exist." }
@@ -99,7 +99,7 @@ async function getUser({ email }) {
  */
 async function holdBalance({ username, amountToVerify, }) {
     try {
-
+        let knex=createDBConn()
         let updateResponse = await knex("wallets").where({
             username
         }).update({
@@ -126,6 +126,7 @@ async function holdBalance({ username, amountToVerify, }) {
  */
 async function releaseBalance({ username, amountToRelease }) {
     try {
+      let knex=  createDBConn()
         let updateResponse = await knex("wallets").where({
             username
         }).update({

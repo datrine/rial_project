@@ -1,12 +1,13 @@
 
 import { v4 } from "uuid"
 import Cors from "cors"
-import knex from "../../../utils/conn"
+import createDBConn from "../../../utils/conn"
 import FormData from "form-data"
 import { getUser, getWallet, holdBalance, releaseBalance, subtractBalance, verifyBalance } from "../../../utils/knexMethods"
 let apiKey = process.env.apiKey
 export default async function handler(req, res) {
     if (req.method === "POST") {
+        let knex=createDBConn()
         try {
             let requestID = v4();
             let { serviceID, plan,amount, email, phone } = req.body;
