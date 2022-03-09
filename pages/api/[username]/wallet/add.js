@@ -17,10 +17,10 @@ export default async function (req, res) {
             const {
                 query: { username },
             } = req
-
+            let amount=Number(req.body.amt) 
             await middlewareRunner(req, res, cors);
             await knex("wallets").where({ username }).increment({
-                balance: req.body.amt
+                balance:amount
             }).update({ updatedOn: new Date() }).then(async returnedRes => {
                 if (returnedRes) {
                     console.log(returnedRes)
