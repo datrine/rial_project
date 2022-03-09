@@ -34,7 +34,7 @@ export default async function handler(req, res) {
             }
             let user = getUserResponse.user;
             let username = user.username
-            console.log(req.body)
+            
             let getWalletResponse = await getWallet({ username });
             if (getWalletResponse.err) {
                 console.log(getWalletResponse.err)
@@ -47,8 +47,6 @@ export default async function handler(req, res) {
             });
 
             if (balanceVerifyResponse.err) {
-                console.log("balanceVerifyResponse.err")
-                console.log(balanceVerifyResponse.err)
                 throw balanceVerifyResponse.err
             }
 
@@ -84,7 +82,7 @@ export default async function handler(req, res) {
                 throw `Abtospay code ${data.code}. status: ${data.status}`
             }
             res.json({ saved: true, })
-            let insertRes = await knex("transactions").insert({ username, requestID, platform: "abtospay" });
+            let insertRes = await knex("transactions").insert({ username,amount, requestID, platform: "abtospay" });
 
             if (insertRes) {
                 console.log("transaction saved")
@@ -95,12 +93,12 @@ export default async function handler(req, res) {
             })
 
             if (subtractBalanceResponse.err) {
-                console.log("subtractBalanceResponse.err")
-                console.log(subtractBalanceResponse.err)
                 throw subtractBalanceResponse.err
             }
 
-            let releaseBalanceResponse = await releaseBalance({ username });
+            let releaseBalanceResponse = await releaseBalance({ 
+                username,
+                amountToRelease: amount });
 
             console.log(releaseBalanceResponse.info)
 
