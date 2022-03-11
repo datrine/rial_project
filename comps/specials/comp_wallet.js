@@ -9,7 +9,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PaymentApps } from "./payment"
 import { LogoBar, ProfileBar } from './reusables';
 
-let Comp_Wallet = ({ user }) => {
+let Comp_Wallet = ({  }) => {
     let [session, loading] = useSession()
     let user=session.user;
     let [showPaymentView, changeShowPaymentView] = useState(false)
