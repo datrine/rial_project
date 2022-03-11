@@ -119,6 +119,53 @@ async function holdBalance({ username, amountToVerify, }) {
 
 /**
  * 
+ * @param {object} param0 
+ * @returns 
+ */
+
+ async function updateTransaction({ username,requestID, state, }) {
+    try {
+        let knex=createDBConn()
+        let updateResponse = await knex("transactions").where({
+            username,requestID
+        }).update({
+            state,
+            updatedOn: new Date()
+        });
+        
+        if (!updateResponse) {
+            return { err: "No transaction changes made.", proceed: false, }
+        }
+        return { info: "Update made to transaction.", proceed: true }
+    } catch (error) {
+        throw { err: error }
+    }
+}
+
+/**
+ * 
+ * @param {params} param0 
+ * @returns 
+ */
+
+ async function startTransaction({ username,requestID,amount,service ,platform="abtospay"}) {
+    try {
+        let knex=createDBConn()
+        
+        let insertRes = await knex("transactions").
+        insert({ username,amount,state:"successful", requestID, platform,service});
+
+        if (!insertRes) {
+            return { err: "Transaction not started.", proceed: false, }
+        }
+        console.log("Transaction saved...")
+        return { info: "Transaction saved.", proceed: true }
+    } catch (error) {
+        throw { err: error }
+    }
+}
+/**
+ * 
  * @param {object} param0
  * @param {string} param0.string
  * @param {number} param0.amountToRelease
@@ -151,5 +198,5 @@ export {
     subtractBalance,
     verifyBalance,
     getWallet,
-    getUser
+    getUser,startTransaction,updateTransaction
 };

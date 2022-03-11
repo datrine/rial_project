@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
     let foundArray = router.pathname.match(pathRegex) || []
     return foundArray.length > 0;
   })
-  console.log(`Found match of ${router.pathname} :${pathNeedAuth}`);
+  console.log(`Found match of. ${router.pathname} :${pathNeedAuth}`);
   return <>{pathNeedAuth && !session ?
     <Provider session={pageProps.session}>
       <Login callbackUrl={router.route} /></Provider> :
@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 function authList() {
-  return ["/dashboard", "/wallet", "/profile", "/airtime","/data"]
+  return ["/dashboard", "/wallet", "/profile", "/airtime", "/data"]
 }
 
 async function mySessionFn(hookChangeSessionState) {

@@ -148,7 +148,6 @@ function AirtimeModal({ user }) {
         console.log(message)
         viewToResult = <>
             <h3>{err}</h3>
-            <p>{message}</p>
         </>
         changeViewToResult(viewToResult)
         changeViewType("failure");
@@ -208,7 +207,6 @@ function CableTvModal({ user }) {
         console.log(err)
         viewToResult = <>
             <h3>{err}</h3>
-            <p>{message}</p>
         </>
         changeViewToResult(viewToResult)
         changeViewType("failure");
@@ -267,7 +265,6 @@ function DataModal({ user }) {
         console.log(err)
         viewToResult = <>
             <h3>{err}</h3>
-            <p>{message}</p>
         </>
         changeViewToResult(viewToResult)
         changeViewType("failure");

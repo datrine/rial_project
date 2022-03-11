@@ -2,26 +2,35 @@
  * @type {import("knex")()}
  */
 let knex;
+let counter = 0;
 let createDBConn = () => {
-  if (knex) {
-    return knex;
-  }
-
-  knex = require('knex')({
-    client: 'mysql2',
-    connection: {
-      host: 'wgh9.whogohost.com',
-      user: 'medikedu_datrine',
-      password: 'TeMi4ToPe',
-      database: 'medikedu_rialdb',
-
-    },
-    pool: {
-      min: 0, max: 10,
+  try {
+    if (knex) {
+      console.log(Object.keys(knex.client));
+      console.log(Object.keys(knex.client.pool));
+      console.log("Pools already used: " + knex.client.pool.pendingCreates.length);
+      return knex;
     }
-  });
+    console.log(knex)
+    knex = require('knex')({
+      client: 'mysql2',
+      connection: {
+        host: 'wgh9.whogohost.com',
+        user: 'medikedu_datrine',
+        password: 'TeMi4ToPe',
+        database: 'medikedu_rialdb',
 
-  return knex;
+      },
+      pool: {
+        min: 1, max: 1,
+      }
+    });
+    console.log("Counter: " + ++counter)
+
+    return knex;
+  } catch (error) {
+
+  }
 }
 async function startTables(params) {
   try {
@@ -47,7 +56,6 @@ async function startTables(params) {
 
       (async () => {
         let hasStateColumn = await knex.schema.hasColumn("users", "state");
-        console.log("hasStateColumn.....")
         if (!hasStateColumn) {
           console.log("hasStateColumn")
           return knex.schema.alterTable("users", (builder) => {
@@ -81,6 +89,7 @@ async function startTables(params) {
           usersTbl.string("email");
           usersTbl.string("requestID");
           usersTbl.string("platform");
+          usersTbl.decimal("amount", 2);
           usersTbl.dateTime("createdOn", { precision: 6 }).defaultTo(knex.fn.now(6));
           usersTbl.dateTime("updatedOn", { precision: 6 }).defaultTo(knex.fn.now(6));
         })
@@ -88,13 +97,11 @@ async function startTables(params) {
     }).catch(err => console.log(err));
 
     (async () => {
-      let hasAmountColumn = await knex.schema.hasColumn("transactions", "amount");
-
-      console.log("hasAmountColumn");
+      let hasAmountColumn = await knex.schema.hasColumn("transactions", "service");
       if (!hasAmountColumn) {
         return knex.schema.alterTable("transactions", (builder) => {
-          builder.decimal("amount", 2).defaultTo(0.0);
-          console.log("hasAmountColumn");
+          builder.enum("service", ["data", "electricity", "airtime", "cable tv", "topup"]).defaultTo("airtime");
+          console.log("hasService");
         });
       }
     })();

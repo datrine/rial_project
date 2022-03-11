@@ -167,7 +167,7 @@ let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
             </thead>
             <tbody>
                 {transactionsState.map((transaction, index) => <tr key={index + 1} >
-                    <td>{index+1}</td>
+                    <td>{index + 1}</td>
                     <td>{transaction.requestID}</td>
                     <td>  {transaction.amount}</td>
                     <td>{new Date(transaction.createdOn).toLocaleDateString()}</td>
@@ -181,10 +181,10 @@ let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
     let smallViewOfTransactions = <> <div className="float-left  p-3 shadow-lg"
         style={{ width: "100%", border: "1px solid #e3e3e3" }}>
         <div>{
-            transactionsState.map((transaction, index) =><><div key={index} >
-                <p>Transaction ID <b>{transaction.requestID}</b></p>
+            transactionsState.map((transaction, index) => <><div className="card" key={index} >
+                <p>Transaction ID <b>{((id)=>(id.substring(0,4)+"..."+id.substring(id.length-5,id.length)))(transaction.requestID||"")}</b></p>
                 <p>Amount <b>{transaction.amount}</b></p>
-                <p>Date | time  <b>{new Date(transaction.createdOn).toLocaleDateString()}</b></p></div></> 
+                <p>Date | time  <b>{new Date(transaction.createdOn).toLocaleDateString()}</b></p></div></>
             )
         }
         </div>
@@ -229,9 +229,11 @@ let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
                 changeTransactionResponseTypeState("error")
             }
             if (Array.isArray(transactions)) {
-                let totalTransaction = transactions.reduce((prev, cur, index, trans) => {
-                    return prev + Number(cur.amount);
-                }, 0)
+                let totalTransaction = transactions.filter(
+                    (transaction) => transaction.state === "successful").reverse().reduce(
+                        (prev, cur, index, trans) => {
+                            return prev + Number(cur.amount);
+                        }, 0)
                 hookChangeTotalTransaction(totalTransaction)
                 changeTransactionsState(transactions);
                 changeTransactionResponseTypeState("transaction")

@@ -1,7 +1,7 @@
 import Head from "next/head"
 let CompHTMLHeader=()=>{
     return<>
-    <Head>
+    <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <title>Riah Topup</title>
@@ -25,7 +25,7 @@ let CompHTMLHeader=()=>{
         <link rel="stylesheet" href="/css/login.css" />
             <link rel="stylesheet" href="/css/style.css"/>
 
-    </Head>
+    </head>
 </>
 }
 

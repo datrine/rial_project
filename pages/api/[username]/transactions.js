@@ -8,8 +8,8 @@ const cors = Cors({
 });
 
 export default async function (req, res) {
-    try {
         let knex=createDBConn()
+    try {
         let session= await getSession({req});
         if (!session) {
             throw "No session is active for req."
@@ -22,7 +22,7 @@ export default async function (req, res) {
             await middlewareRunner(req, res, cors);
             await knex("transactions").where({ username })
                 .then(async returnedRes => {
-                    console.log(returnedRes)
+                   // console.log(returnedRes)
                     return res.json({ transactions: returnedRes })
                 }).catch(error => {
                     console.log(error)
@@ -33,5 +33,7 @@ export default async function (req, res) {
         }
     } catch (error) {
         console.error(error.message);
+        
+    }finally{
     }
 }

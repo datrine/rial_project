@@ -10,12 +10,16 @@ import { PaymentApps } from "./payment"
 import { LogoBar, ProfileBar } from './reusables';
 
 let Comp_Wallet = ({ user }) => {
+    let [session, loading] = useSession()
+    let user=session.user;
     let [showPaymentView, changeShowPaymentView] = useState(false)
     let [walletState, changeWalletState] = useState({})
     let [topUpAMTState, changeTopUpAMTState] = useState(100)
     let [isProcessing, changeIsProcessing] = useState(false)
 
     let successHandler = async () => {
+        try {
+            
         let res = await fetch(`/api/${user.username}/wallet/add`, {
             method: "POST",
             headers: {
@@ -28,6 +32,9 @@ let Comp_Wallet = ({ user }) => {
         changeTopUpAMTState(0)
         changeIsProcessing(false)
         changeShowPaymentView(false)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     let cancelHandler = async () => {

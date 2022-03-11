@@ -5,7 +5,8 @@ let WalletContext= createContext({
     /**
      * @type {wallet}
      */
-wallet:undefined
+wallet:undefined,
+changeContext:()=>{}
 });
 
 export {WalletContext}

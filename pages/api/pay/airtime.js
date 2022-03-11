@@ -2,11 +2,11 @@
 import { v4 } from "uuid"
 import createDBConn from "../../../utils/conn"
 import FormData from "form-data"
-import { getUser, getWallet, holdBalance, releaseBalance, subtractBalance, verifyBalance } from "../../../utils/knexMethods"
+import { getUser, getWallet, holdBalance, releaseBalance, startTransaction, subtractBalance, updateTransaction, verifyBalance } from "../../../utils/knexMethods"
 let apiKey = process.env.apiKey
 export default async function handler(req, res) {
     if (req.method === "POST") {
-        let knex=createDBConn()
+        let knex = createDBConn()
         try {
             let requestID = v4();
             let { serviceID, phone, email, amount } = req.body;
@@ -30,6 +30,13 @@ export default async function handler(req, res) {
             }
             let user = getUserResponse.user;
             let username = user.username
+            
+            let startTransactionResponse = 
+            await startTransaction({ requestID, amount, username,service:"airtime" });
+            if (startTransactionResponse.err) {
+                console.log(startTransactionResponse.err)
+                throw startTransactionResponse.err
+            }
 
             let getWalletResponse = await getWallet({ username });
             if (getWalletResponse.err) {
@@ -41,7 +48,7 @@ export default async function handler(req, res) {
                 wallet: getWalletResponse.wallet,
                 amountToVerify: amount
             });
-            
+
 
             if (balanceVerifyResponse.err) {
                 throw balanceVerifyResponse.err
@@ -76,10 +83,10 @@ export default async function handler(req, res) {
                 throw `Abtospay code ${data.code}. status: ${data.status}`
             }
             res.json({ saved: true, })
-            let insertRes = await knex("transactions").insert({ username,amount, requestID, platform: "abtospay" });
 
-            if (insertRes) {
-                console.log("transaction saved")
+            let updatedTransactionRes = await updateTransaction({ username, requestID, state: "successful" })
+            if (updatedTransactionRes) {
+                console.log(updatedTransactionRes)
             }
             let subtractBalanceResponse = await subtractBalance({
                 username,
@@ -98,6 +105,8 @@ export default async function handler(req, res) {
             console.log(releaseBalanceResponse.info)
 
         } catch (error) {
+            //record transaction as failed
+            let updatedTransactionRes = await updateTransaction({ username, requestID, state: "failed" })
             console.log(error)
             res.json({ err: error })
         }
