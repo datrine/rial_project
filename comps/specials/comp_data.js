@@ -151,17 +151,20 @@ function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }
         let dataPlans = [
             { displayName: "Select data plan", value: "", price: "" }]
         if (dataServiceState === "mtn_sme_copy") {
-            dataPlans.push(...mtn_sme_copyObj.plans);
+            dataPlans.push(...mtn_sme_copyObj.plans.sort(
+                (a, b) => Number(a.price) > Number(b.price)));
             changeDataPlansState(dataPlans)
         }
 
         else if (dataServiceState === "mtn_corperate_data") {
-            dataPlans.push(...mtn_corperate_dataObj.plans);
+            dataPlans.push(...mtn_corperate_dataObj.plans.sort(
+                (a, b) => Number(a.price) > Number(b.price)));
             changeDataPlansState(dataPlans)
         }
 
         else if (dataServiceState === "mtn_sme") {
-            dataPlans.push(...mtn_smedataObj.plans);
+            dataPlans.push(...mtn_smedataObj.plans.sort(
+                (a, b) => Number(a.price) > Number(b.price)));
             changeDataPlansState(dataPlans)
         }
 
@@ -186,7 +189,7 @@ function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }
             async e => {
                 try {
                     e.preventDefault();
-                   let planObj= dataPlansState.find(item=>item.value===planState)
+                    let planObj = dataPlansState.find(item => item.value === planState)
                     let res = await fetch("/api/pay/data", {
                         method: "post",
                         headers: {
@@ -326,7 +329,7 @@ function FailedRecharge({ resInfo, hookChangeResType }) {
                     <span>Transaction failed</span>
                 </p>
                 {resInfo}
-                </div>
+            </div>
         </div></>
 }
 

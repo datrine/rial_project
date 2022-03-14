@@ -4,106 +4,76 @@ let mtn_sme_copyObj = {
     "fixedPrice": true,
     "plans": [
         {
-            "displayName": "1.5GB ---- 30 Days (Direct)",
-            "value": "221",
-            "price": "980"
+          "displayName": "1.5GB ---- 30 Days (Direct)",
+          "value": "221",
+          "price": "960"
         },
         {
-            "displayName": "100MB ---- 1 Day(Direct)",
-            "value": "226",
-            "price": "98"
+          "displayName": "10GB ---- 30 Days(Direct)",
+          "value": "198",
+          "price": "2880"
         },
         {
-            "displayName": "10GB ---- 30 Days(Direct)",
-            "value": "198",
-            "price": "2940"
+          "displayName": "120GB ---- 30 Days(Direct)",
+          "value": "204",
+          "price": "19200"
         },
         {
-            "displayName": "120GB ---- 30 Days(Direct)",
-            "value": "204",
-            "price": "19600"
+          "displayName": "12GB ---- 30 Days(Direct)",
+          "value": "199",
+          "price": "3840"
         },
         {
-            "displayName": "12GB ---- 30 Days(Direct)",
-            "value": "199",
-            "price": "3430"
+          "displayName": "1GB ---- 7 days(Direct)",
+          "value": "233",
+          "price": "480"
         },
         {
-            "displayName": "13GB ---- 30 Days(Direct)",
-            "value": "200",
-            "price": "3920"
+          "displayName": "200GB ---- 30 Days(Direct)",
+          "value": "212",
+          "price": "28800"
         },
         {
-            "displayName": "1GB ---- 1 day(Direct)",
-            "value": "227",
-            "price": "294"
+          "displayName": "20GB ---- 30 Days(Direct)",
+          "value": "201",
+          "price": "4800"
         },
         {
-            "displayName": "1GB ---- 7 days(Direct)",
-            "value": "233",
-            "price": "490"
+          "displayName": "2GB ---- 2 Day(Direct)",
+          "value": "228",
+          "price": "480"
         },
         {
-            "displayName": "200GB ---- 30 Days(Direct)",
-            "value": "212",
-            "price": "29400"
+          "displayName": "2GB ---- 30 Day(Direct)",
+          "value": "222",
+          "price": "1152"
         },
         {
-            "displayName": "200MB ---- 2 days(Direct)",
-            "value": "229",
-            "price": "196"
+          "displayName": "4.5GB ---- 30 days(Direct)",
+          "value": "223",
+          "price": "1920"
         },
         {
-            "displayName": "20GB ---- 30 Days(Direct)",
-            "value": "201",
-            "price": "4900"
+          "displayName": "40GB ---- 30 Days(Direct)",
+          "value": "202",
+          "price": "9600"
         },
         {
-            "displayName": "2GB ---- 2 Day(Direct)",
-            "value": "228",
-            "price": "490"
+          "displayName": "6GB ---- 30 Days(Direct)",
+          "value": "197",
+          "price": "2400"
         },
         {
-            "displayName": "2GB ---- 30 Day(Direct)",
-            "value": "222",
-            "price": "1176"
+          "displayName": "6GB ---- 7 Days (Direct)",
+          "value": "231",
+          "price": "1440"
         },
         {
-            "displayName": "350MB ---- 7 days(Direct)",
-            "value": "230",
-            "price": "294"
-        },
-        {
-            "displayName": "4.5GB ---- 30 days(Direct)",
-            "value": "223",
-            "price": "1960"
-        },
-        {
-            "displayName": "40GB ---- 30 Days(Direct)",
-            "value": "202",
-            "price": "9800"
-        },
-        {
-            "displayName": "6GB ---- 30 Days(Direct)",
-            "value": "197",
-            "price": "2450"
-        },
-        {
-            "displayName": "6GB ---- 7 Days (Direct)",
-            "value": "231",
-            "price": "1470"
-        },
-        {
-            "displayName": "750MB ---- 14 days(Direct)",
-            "value": "232",
-            "price": "490"
-        },
-        {
-            "displayName": "75GB ---- 30 Days(Direct)",
-            "value": "203",
-            "price": "14700"
+          "displayName": "75GB ---- 30 Days(Direct)",
+          "value": "203",
+          "price": "14400"
         }
-    ]
+      ]
 }
 
 let mtn_corperate_dataObj = {

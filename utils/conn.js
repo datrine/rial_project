@@ -6,8 +6,6 @@ let counter = 0;
 let createDBConn = () => {
   try {
     if (knex) {
-      console.log(Object.keys(knex.client));
-      console.log(Object.keys(knex.client.pool));
       console.log("Pools already used: " + knex.client.pool.pendingCreates.length);
       return knex;
     }

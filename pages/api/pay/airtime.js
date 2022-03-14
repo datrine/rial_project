@@ -5,10 +5,11 @@ import FormData from "form-data"
 import { getUser, getWallet, holdBalance, releaseBalance, startTransaction, subtractBalance, updateTransaction, verifyBalance } from "../../../utils/knexMethods"
 let apiKey = process.env.apiKey
 export default async function handler(req, res) {
+    let username = ""
+    let requestID = "";
     if (req.method === "POST") {
-        let knex = createDBConn()
         try {
-            let requestID = v4();
+            requestID = v4();
             let { serviceID, phone, email, amount } = req.body;
             console.log(req.body)
             if (!serviceID) {
@@ -29,10 +30,10 @@ export default async function handler(req, res) {
                 throw getUserResponse.err
             }
             let user = getUserResponse.user;
-            let username = user.username
-            
-            let startTransactionResponse = 
-            await startTransaction({ requestID, amount, username,service:"airtime" });
+            username = user.username
+
+            let startTransactionResponse =
+                await startTransaction({ requestID, amount, username, service: "airtime" });
             if (startTransactionResponse.err) {
                 console.log(startTransactionResponse.err)
                 throw startTransactionResponse.err
@@ -106,7 +107,12 @@ export default async function handler(req, res) {
 
         } catch (error) {
             //record transaction as failed
-            let updatedTransactionRes = await updateTransaction({ username, requestID, state: "failed" })
+            if (username && requestID) {
+
+                let updatedTransactionRes =
+                    await updateTransaction({ username, requestID, state: "failed" })
+                console.log(updatedTransactionRes)
+            }
             console.log(error)
             res.json({ err: error })
         }

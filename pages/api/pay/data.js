@@ -3,14 +3,16 @@ import { v4 } from "uuid"
 import Cors from "cors"
 import createDBConn from "../../../utils/conn"
 import FormData from "form-data"
-import { getUser, getWallet, holdBalance, releaseBalance, subtractBalance, verifyBalance } from "../../../utils/knexMethods"
+import { getUser, getWallet, holdBalance, releaseBalance, startTransaction, subtractBalance, updateTransaction, verifyBalance } from "../../../utils/knexMethods"
 let apiKey = process.env.apiKey
 export default async function handler(req, res) {
+    let username = ""
+    let requestID = "";
     if (req.method === "POST") {
-        let knex = createDBConn()
         try {
-            let requestID = v4();
+            requestID = v4();
             let { serviceID, plan, amount, email, phone } = req.body;
+            console.log(req.body)
             if (!serviceID) {
                 throw "No Service ID "
             }
@@ -27,13 +29,14 @@ export default async function handler(req, res) {
                 throw "No phone"
             }
             amount = Number(amount)
+            console.log(amount+"...amount")
             let getUserResponse = await getUser({ email });
 
             if (getUserResponse.err) {
                 throw getUserResponse.err
             }
             let user = getUserResponse.user;
-            let username = user.username;
+            username = user.username;
 
             let startTransactionResponse =
                 await startTransaction({ requestID, amount, username, service: "airtime" });
@@ -117,7 +120,12 @@ export default async function handler(req, res) {
         } catch (error) {
             console.log(error)
             //record transaction as failed
-            let updatedTransactionRes = await updateTransaction({ username, requestID, state: "failed" })
+            if (username&&requestID) {
+                
+                let updatedTransactionRes =
+            await updateTransaction({ username, requestID, state: "failed" })
+             console.log(updatedTransactionRes)
+            }
 
             res.json({ err: error })
         }
