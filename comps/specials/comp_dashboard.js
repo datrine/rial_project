@@ -72,7 +72,7 @@ function Substance({ user = { email: "" } }) {
                             <div className="card bg-light  mt-2">
                                 <div className="card-body  shadow p-4  ">
                                     <p className="card-text float-left">
-                                        <b style={{ color: "#4621ad" }}>Total Transactions</b>
+                                        <b style={{ color: "#4621ad" }}>Total Succesful Transactions</b>
                                         <br /> <span>₦ {totalTransaction} </span></p>
                                     <i className='fa fas-line-chart float-right' style={{ fontSize: "25px", color: "#4621ad" }}></i>
                                 </div>
@@ -162,6 +162,7 @@ let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
                     <th>#</th>
                     <th>Transaction ID</th>
                     <th>Amount (₦) </th>
+                    <th>State </th>
                     <th>Date | time</th>
                 </tr>
             </thead>
@@ -170,6 +171,7 @@ let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
                     <td>{index + 1}</td>
                     <td>{transaction.requestID}</td>
                     <td>  {transaction.amount}</td>
+                    <td>  {transaction.state}</td>
                     <td>{new Date(transaction.createdOn).toLocaleDateString()}</td>
                 </tr>)}
 
@@ -184,6 +186,7 @@ let Transaction = ({ customerUsername, hookChangeTotalTransaction }) => {
             transactionsState.map((transaction, index) => <><div className="card" key={index} >
                 <p>Transaction ID <b>{((id)=>(id.substring(0,4)+"..."+id.substring(id.length-5,id.length)))(transaction.requestID||"")}</b></p>
                 <p>Amount <b>{transaction.amount}</b></p>
+                <p>State <b>{transaction.state}</b></p>
                 <p>Date | time  <b>{new Date(transaction.createdOn).toLocaleDateString()}</b></p></div></>
             )
         }
