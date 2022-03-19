@@ -97,10 +97,7 @@ export default async function handler(req, res) {
             if (updatedTransactionRes) {
                 console.log(updatedTransactionRes)
             }
-
-            if (insertRes) {
-                console.log("transaction saved")
-            }
+            
             let subtractBalanceResponse = await subtractBalance({
                 username,
                 amountToSubtract: amount, wallet: holdBalanceResponse.wallet

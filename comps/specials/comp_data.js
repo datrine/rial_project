@@ -128,7 +128,7 @@ function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }
             switch (dataService) {
                 case "mtn_sme_copy":
                 case "mtn_corperate_data":
-                case "mtn_sme":
+                case "mtn_sme_mega":
                     return "mtn"
                 case "Glo_data":
                     return "glo"
@@ -162,7 +162,7 @@ function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }
             changeDataPlansState(dataPlans)
         }
 
-        else if (dataServiceState === "mtn_sme") {
+        else if (dataServiceState === "mtn_sme_mega") {
             dataPlans.push(...mtn_smedataObj.plans.sort(
                 (a, b) => Number(a.price) > Number(b.price)));
             changeDataPlansState(dataPlans)
@@ -234,7 +234,7 @@ function FormInternetData({ user, onSuccess = () => { }, onFailure = () => { } }
                     <option value="">Select...</option>
                     <option value="mtn_sme_copy">MTN Direct Data</option>
                     <option value="mtn_corperate_data">MTN CORPORATE GIFTING Data</option>
-                    <option value="mtn_sme">MTN SME Data</option>
+                    <option value="mtn_sme_mega">MTN SME Data</option>
                     <option value="Glo_data">GLO Data</option>
                     <option value="Etisalat_data">9mobile Data</option>
                     <option value="Airtel_data_gd">AIRTEL Data</option>
